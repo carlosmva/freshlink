@@ -244,7 +244,7 @@
   width: 0;
   min-width: 0;
   height: 100%;
-  background: var(--paper);
+  background: transparent;
 }
 
 .principle-media {
@@ -298,7 +298,12 @@
   justify-content: center;
   padding-block: 48px 88px;
   padding-inline: 32px var(--page-gutter);
-  background: var(--paper);
+  overflow: clip;
+  background: linear-gradient(
+    to left,
+    color-mix(in srgb, var(--paper) 92%, transparent) 64%,
+    color-mix(in srgb, var(--paper) 72%, transparent)
+  );
   border-start-start-radius: var(--radius);
   position: relative;
   z-index: 1;
@@ -313,6 +318,11 @@
   padding-inline: var(--page-gutter) 32px;
   border-start-start-radius: 0;
   border-start-end-radius: var(--radius);
+  background: linear-gradient(
+    to right,
+    color-mix(in srgb, var(--paper) 92%, transparent) 64%,
+    color-mix(in srgb, var(--paper) 72%, transparent)
+  );
 }
 
 .principle-copy .eyebrow,
@@ -337,7 +347,7 @@
 .principle-copy .lede {
   font-size: 18px;
   line-height: 1.6;
-  color: var(--ink-soft);
+  color: var(--ink);
   margin: 0;
   max-width: 38ch;
 }
@@ -403,26 +413,32 @@
 }
 
 @media (max-width: 800px) {
-  .principle {
-    display: flex;
-    flex-direction: column;
+  .principle,
+  .principles-track .principle:nth-child(even) {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(38%, 1fr) minmax(0, auto);
   }
 
   .principle-media {
-    flex: 1.15 1 0;
+    grid-column: 1;
+    grid-row: 1 / -1;
     min-height: 0;
   }
 
-  .principle-copy {
-    flex: 0.85 1 0;
+  .principle-copy,
+  .principles-track .principle:nth-child(even) .principle-copy {
+    grid-column: 1;
+    grid-row: 2;
     padding-block: 24px 88px;
     padding-inline: var(--page-gutter);
-    border-start-start-radius: 0;
-  }
-
-  .principles-track .principle:nth-child(even) .principle-copy {
-    padding-inline: var(--page-gutter);
-    border-start-end-radius: 0;
+    border-start-start-radius: var(--radius);
+    border-start-end-radius: var(--radius);
+    background: linear-gradient(
+      to top,
+      color-mix(in srgb, var(--paper) 92%, transparent) 64%,
+      color-mix(in srgb, var(--paper) 72%, transparent)
+    );
   }
 
   .principle-copy h2 {
