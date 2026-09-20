@@ -108,6 +108,47 @@ input:focus {
   outline-offset: 1px;
 }
 
+.password-field {
+  position: relative;
+  display: block;
+}
+
+.password-field input {
+  width: 100%;
+  padding-inline-end: 48px;
+}
+
+.reveal {
+  position: absolute;
+  inset-inline-end: 0;
+  inset-block-start: 50%;
+  translate: 0 -50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--ink-soft);
+}
+
+.reveal:hover,
+.reveal:focus-visible {
+  color: var(--ink);
+}
+
+.reveal:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: -2px;
+}
+
+.reveal fl-icon {
+  width: 18px;
+  height: 18px;
+}
+
 .turnstile-wrap {
   display: flex;
   flex-direction: column;

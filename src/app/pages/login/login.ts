@@ -50,6 +50,7 @@ export class LoginPage implements OnInit {
   readonly siteKey = signal('');
   readonly turnstileMode = signal<'dev' | 'production'>('dev');
   readonly turnstileToken = signal<string | null>(null);
+  readonly showPassword = signal(false);
 
   readonly form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
@@ -77,6 +78,10 @@ export class LoginPage implements OnInit {
 
   onTurnstile(token: string | null) {
     this.turnstileToken.set(token);
+  }
+
+  togglePassword() {
+    this.showPassword.update((open) => !open);
   }
 
   blocked() {

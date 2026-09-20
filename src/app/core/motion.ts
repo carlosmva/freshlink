@@ -98,7 +98,8 @@ export function playLandingEnter(root: HTMLElement) {
   }
 }
 
-const principleCopy = '.principle-copy .eyebrow, .principle-copy h2, .principle-copy .lede';
+const principleCopy =
+  '.principle-copy .eyebrow, .principle-copy h2, .principle-copy .lede, .principle-copy .team li, .principle-copy .event';
 
 /** Timed enter for one horizontal feature panel. Plays once per slide. */
 export function playPrincipleSlide(slide: HTMLElement) {
@@ -109,6 +110,8 @@ export function playPrincipleSlide(slide: HTMLElement) {
   const eyebrow = slide.querySelector('.principle-copy .eyebrow');
   const title = slide.querySelector('.principle-copy h2');
   const body = slide.querySelector('.principle-copy .lede');
+  const people = slide.querySelectorAll('.principle-copy .team li');
+  const event = slide.querySelector('.principle-copy .event');
 
   if (reducedMotion()) {
     show(slide.querySelectorAll(principleCopy));
@@ -131,6 +134,12 @@ export function playPrincipleSlide(slide: HTMLElement) {
   }
   if (body) {
     animate(body, { opacity: [0, 1], y: [22, 0] }, { duration: 0.55, delay: 0.46 });
+  }
+  if (people.length) {
+    animate(people, { opacity: [0, 1], y: [18, 0] }, { duration: 0.5, delay: stagger(0.08, { startDelay: 0.42 }) });
+  }
+  if (event) {
+    animate(event, { opacity: [0, 1], y: [12, 0] }, { duration: 0.45, delay: 0.72 });
   }
 }
 

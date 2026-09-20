@@ -196,6 +196,7 @@ function bindPrinciplesHorizontal(root: HTMLElement, lenis: Lenis, reducedMotion
   const slides = Array.from(root.querySelectorAll<HTMLElement>('.principle'));
   const dots = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-principle-index]'));
   const scrollbar = root.querySelector('.brand-scrollbar');
+  const stage = root.querySelector<HTMLElement>('[data-brand-stage]');
   if (!section || !pin || !track || slides.length < 2) {
     return () => undefined;
   }
@@ -238,6 +239,10 @@ function bindPrinciplesHorizontal(root: HTMLElement, lenis: Lenis, reducedMotion
     }
 
     const index = Math.min(count - 1, Math.max(0, Math.round(progress * (count - 1))));
+    stage?.classList.toggle(
+      'is-over-team',
+      Boolean(visible && slides[index]?.classList.contains('is-team')),
+    );
     if (visible && index !== active) {
       active = index;
       playPrincipleSlide(slides[index]);

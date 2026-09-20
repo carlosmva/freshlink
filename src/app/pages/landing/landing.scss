@@ -39,6 +39,9 @@
   pointer-events: none;
   background: var(--paper);
   border-bottom: 1px solid color-mix(in srgb, var(--line) calc(var(--morph) * 100%), transparent);
+  transition:
+    background 0.45s ease,
+    border-color 0.45s ease;
 }
 
 .logo-full {
@@ -89,6 +92,15 @@
 
 .brand-stage.is-compact .nav-compact {
   pointer-events: auto;
+}
+
+.brand-stage.is-over-team {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--paper) 22%, transparent) 0%,
+    transparent 100%
+  );
+  border-bottom-color: transparent;
 }
 
 .hero,
@@ -267,7 +279,7 @@
 }
 
 .principles {
-  --slides: 4;
+  --slides: 5;
   height: calc(var(--slides) * 115vh);
   position: relative;
   z-index: 1;
@@ -380,7 +392,9 @@
 
 .principle-copy .eyebrow,
 .principle-copy h2,
-.principle-copy .lede {
+.principle-copy .lede,
+.principle-copy .team li,
+.principle-copy .event {
   opacity: 0;
 }
 
@@ -403,6 +417,107 @@
   color: var(--ink);
   margin: 0;
   max-width: 38ch;
+}
+
+.principle.is-team {
+  grid-template-columns: 1fr;
+}
+
+.principle.is-team .principle-media img {
+  opacity: 0.92;
+}
+
+.principle.is-team .principle-copy {
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-block: calc(var(--nav-h) + 28px) calc(120px + env(safe-area-inset-bottom, 0px));
+  padding-inline: var(--page-gutter);
+  border-radius: 0;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--paper) 42%, transparent) 0%,
+    color-mix(in srgb, var(--paper) 18%, transparent) 100%
+  );
+}
+
+.principle.is-team h2 {
+  max-width: none;
+}
+
+.team {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 48px;
+  width: min(100%, 920px);
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.team li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.headshot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(160px, 16vw, 184px);
+  height: clamp(160px, 16vw, 184px);
+  border-radius: 50%;
+  border: 2px dashed color-mix(in srgb, var(--green-deep) 45%, var(--paper));
+  background: color-mix(in srgb, var(--paper) 88%, white);
+  color: var(--green-deep);
+  font-family: 'Satoshi', system-ui, sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  box-shadow: 0 8px 20px -12px rgb(15 34 55 / 35%);
+}
+
+img.headshot.is-photo {
+  display: block;
+  flex: none;
+  object-fit: cover;
+  object-position: 50% 18%;
+  border-style: solid;
+  border-color: color-mix(in srgb, var(--paper) 80%, white);
+  font-size: 0;
+}
+
+.team .name {
+  font-family: 'Satoshi', system-ui, sans-serif;
+  font-size: clamp(20px, 2vw, 24px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+.team .role {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.event {
+  position: absolute;
+  inset-inline: var(--page-gutter);
+  inset-block-end: calc(88px + env(safe-area-inset-bottom, 0px));
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
 }
 
 .principles-chrome {
@@ -572,6 +687,56 @@
     max-width: none;
   }
 
+  .principle.is-team,
+  .principles-track .principle.is-team {
+    grid-template-rows: minmax(0, 1fr);
+  }
+
+  .principle.is-team .principle-media {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .principle.is-team .principle-copy {
+    grid-column: 1;
+    grid-row: 1;
+    z-index: 1;
+    justify-content: center;
+    padding-block: calc(12px + var(--nav-h)) calc(12px + var(--gallery-chrome));
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--paper) 48%, transparent) 0%,
+      color-mix(in srgb, var(--paper) 22%, transparent) 100%
+    );
+  }
+
+  .team {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+    width: min(100%, 280px);
+    margin-top: 20px;
+  }
+
+  .headshot {
+    width: 64px;
+    height: 64px;
+    font-size: 16px;
+  }
+
+  .team .name {
+    font-size: 16px;
+  }
+
+  .team .role {
+    font-size: 13px;
+  }
+
+  .event {
+    position: static;
+    inset: auto;
+    margin-block-start: 32px;
+  }
+
   .principles-chrome {
     inset-inline: 0;
     inset-block-end: 0;
@@ -601,7 +766,8 @@
     transform: none;
   }
 
-  .brand-scrollbar {
+  .brand-scrollbar,
+  .brand-stage {
     transition: none;
   }
 
@@ -633,6 +799,8 @@
   .principle-copy .eyebrow,
   .principle-copy h2,
   .principle-copy .lede,
+  .principle-copy .team li,
+  .principle-copy .event,
   .principle-media img {
     opacity: 1;
     transform: none;
