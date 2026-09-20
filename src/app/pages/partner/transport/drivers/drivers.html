@@ -1,0 +1,47 @@
+<div class="main-head">
+  <div>
+    <h3>Drivers</h3>
+    <div class="sub">Shift status · assigned vans · on-time performance</div>
+  </div>
+</div>
+<div class="content">
+  @if (error()) {
+    <div class="error">{{ error() }}</div>
+  } @else if (!data()) {
+    <div class="loading">Loading drivers…</div>
+  } @else {
+    <div class="portal-kpis">
+      <div class="portal-kpi"><div class="l">On shift</div><div class="v">{{ data().summary.onShift }}</div><div class="d">active routes</div></div>
+      <div class="portal-kpi"><div class="l">Available</div><div class="v">{{ data().summary.available }}</div><div class="d">standby</div></div>
+      <div class="portal-kpi"><div class="l">Off shift</div><div class="v">{{ data().summary.offShift }}</div><div class="d">next window</div></div>
+      <div class="portal-kpi"><div class="l">Leave</div><div class="v">{{ data().summary.leave }}</div><div class="d">out today</div></div>
+    </div>
+
+    <div class="order-list">
+      @for (d of data().drivers; track d.id) {
+        <div class="order-row">
+          <div class="driver-avatar">{{ d.initials }}</div>
+          <div class="bd">
+            <b>{{ d.name }}</b>
+            <small>
+              {{ d.phone }}
+              @if (d.vehicle) {
+                · {{ d.vehicle }}
+              }
+              @if (d.route) {
+                · Route {{ d.route }} ({{ d.stopsDone }}/{{ d.stopsTotal }} stops)
+              }
+            </small>
+          </div>
+          <div class="driver-meta">
+            <span class="status-chip" [class]="statusClass(d.status)">{{ label(d.status) }}</span>
+            <span class="num">{{ d.onTimePct }}% on-time</span>
+            @if (d.route) {
+              <a class="btn-secondary" [routerLink]="['/partner/transport/routes']">View routes</a>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

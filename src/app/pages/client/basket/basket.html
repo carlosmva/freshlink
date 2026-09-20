@@ -1,0 +1,76 @@
+@if (error()) {
+  <div class="main-head">
+    <div>
+      <h3>Review basket</h3>
+      <div class="sub">Weekly order</div>
+    </div>
+  </div>
+  <div class="content"><div class="error">{{ error() }}</div></div>
+} @else if (!data()) {
+  <div class="main-head">
+    <div>
+      <h3>Review basket</h3>
+      <div class="sub">Weekly order</div>
+    </div>
+  </div>
+  <div class="content"><div class="loading">Loading basket…</div></div>
+} @else {
+  <div class="main-head">
+    <div>
+      <h3>Review basket</h3>
+      <div class="sub">Week of order · {{ data().items.length }} items</div>
+    </div>
+    <span class="pill amber">{{ pendingCount() }} substitutions</span>
+  </div>
+
+  <div class="content basket-body">
+    <div class="basket-scroll">
+      @if (pendingCount() > 0) {
+        <div class="sub-alert">
+          <span class="n">{{ pendingCount() }}</span>
+          <p>AI proposed substitutions to stay under budget. Approve or keep originals.</p>
+        </div>
+      }
+
+      <div class="card items">
+        @for (item of data().items; track item.id) {
+          <div class="item">
+            <div class="ico">{{ item.product?.emoji || '📦' }}</div>
+            <div class="body">
+              <div class="nm">{{ item.product?.name }}</div>
+              <div class="tags">
+                <span class="mini-tag">{{ item.source_tag }}</span>
+                @if (item.is_surplus) {
+                  <span class="mini-tag surplus">Surplus</span>
+                }
+              </div>
+            </div>
+            <div class="price">{{ item.line_total | currency }}</div>
+          </div>
+        }
+      </div>
+
+      @for (sub of data().substitutions; track sub.id) {
+        @if (sub.status === 'pending') {
+          <div class="subst-card">
+            <h6><fl-icon name="zap" /> Substitution needs approval</h6>
+            <p>{{ sub.reason }}</p>
+            <div class="subst-actions">
+              <button class="btn-sm solid" [disabled]="busy()" (click)="act('approve_substitution', sub.id)">Approve swap</button>
+              <button class="btn-sm outline" [disabled]="busy()" (click)="act('reject_substitution', sub.id)">Keep original</button>
+            </div>
+          </div>
+        }
+      }
+    </div>
+
+    <div class="summary">
+      <div class="row"><span>Food ({{ data().items.length }} items)</span><span>{{ data().order.food_total | currency }}</span></div>
+      <div class="row"><span>Delivery · shared route</span><span>{{ data().order.delivery_fee | currency }} <span class="save">−{{ data().order.delivery_savings | currency }}</span></span></div>
+      <div class="row total"><span>Total</span><span>{{ total() | currency }} · save {{ savings() | currency }}</span></div>
+      <button class="btn approve" [disabled]="busy() || data().order.status === 'approved'" (click)="act('approve_order')">
+        {{ data().order.status === 'approved' ? 'Order approved' : 'Approve weekly order' }}
+      </button>
+    </div>
+  </div>
+}

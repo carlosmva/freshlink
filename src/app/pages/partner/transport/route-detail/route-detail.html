@@ -1,0 +1,40 @@
+<div class="main-head">
+  <div>
+    <h3>Route {{ data()?.code || '…' }}</h3>
+    <div class="sub">Proof of delivery · temperature monitored</div>
+  </div>
+  <a class="btn-secondary" routerLink="/partner/transport/routes">Back</a>
+</div>
+<div class="content">
+  @if (error()) {
+    <div class="error">{{ error() }}</div>
+  } @else if (!data()) {
+    <div class="loading">Loading route…</div>
+  } @else {
+    <div class="temp-monitor">
+      <div>
+        <div class="t">{{ data().temp_c }}°C</div>
+        <small>COLD CHAIN LIVE</small>
+      </div>
+      <div style="margin-left:auto;font-size:11px;font-weight:700;color:var(--green);">● Monitoring</div>
+    </div>
+
+    <div class="timeline">
+      @for (stop of data().stops; track stop.id) {
+        <div class="tl-stop" [class]="stopClass(stop.status)">
+          <div class="tl-dot">{{ stop.stop_order }}</div>
+          <div class="tl-body">
+            <div class="t">
+              <span>{{ stop.label }}</span>
+              <span class="pill" [class.green]="stop.status === 'delivered'" [class.amber]="stop.status === 'en_route'">{{ stop.status }}</span>
+            </div>
+            <div class="s">{{ stop.detail }}</div>
+            @if (stop.status !== 'delivered') {
+              <button type="button" class="btn-primary" style="margin-top:8px" (click)="pod(stop.id)">Confirm POD</button>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

@@ -1,0 +1,51 @@
+<div class="main-head">
+  <div>
+    <h3>Fleet</h3>
+    <div class="sub">EV vans · temperature zones · utilization</div>
+  </div>
+</div>
+<div class="content">
+  @if (error()) {
+    <div class="error">{{ error() }}</div>
+  } @else if (!data()) {
+    <div class="loading">Loading fleet…</div>
+  } @else {
+    <div class="portal-kpis">
+      <div class="portal-kpi"><div class="l">Vehicles</div><div class="v">{{ data().summary.total }}</div><div class="d">100% electric</div></div>
+      <div class="portal-kpi"><div class="l">On route</div><div class="v">{{ data().summary.onRoute }}</div><div class="d">live dispatch</div></div>
+      <div class="portal-kpi"><div class="l">Available</div><div class="v">{{ data().summary.available }}</div><div class="d">ready to assign</div></div>
+      <div class="portal-kpi"><div class="l">Charging / service</div><div class="v">{{ data().summary.charging + data().summary.maintenance }}</div><div class="d">offline capacity</div></div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Van</th>
+            <th>Type</th>
+            <th>Temp zones</th>
+            <th>Battery</th>
+            <th>Util.</th>
+            <th>Assigned</th>
+            <th>Status</th>
+            <th>Odometer</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (v of data().vehicles; track v.id) {
+            <tr>
+              <td data-label="Van"><b>{{ v.code }}</b></td>
+              <td data-label="Type">{{ v.type }}</td>
+              <td data-label="Temp zones">{{ v.tempZones }}</td>
+              <td class="num" data-label="Battery">{{ v.batteryPct }}%</td>
+              <td class="num" data-label="Util.">{{ v.capacityPct }}%</td>
+              <td data-label="Assigned">{{ v.assignedRoute || '—' }}</td>
+              <td data-label="Status"><span class="status-chip" [class]="statusClass(v.status)">{{ label(v.status) }}</span></td>
+              <td class="num" data-label="Odometer">{{ v.mileage | number }} mi</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

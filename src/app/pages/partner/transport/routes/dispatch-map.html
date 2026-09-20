@@ -1,0 +1,32 @@
+<div
+  #mapEl
+  class="map-canvas"
+  role="img"
+  [attr.aria-label]="ariaLabel()"
+></div>
+<div class="map-legend">
+  <span><i class="dot-i pickup"></i>Pickup · Core Supply</span>
+  <span><i class="dot-i stop"></i>Facility stop</span>
+  @for (layer of layers(); track layer.id) {
+    <button
+      type="button"
+      class="map-legend-route"
+      [class.is-live]="selectedId() === layer.id"
+      (click)="select(layer.id)"
+    >
+      <svg width="22" height="6" aria-hidden="true">
+        <line
+          x1="0"
+          y1="3"
+          x2="22"
+          y2="3"
+          [attr.stroke]="layer.stroke"
+          stroke-width="3"
+          [attr.stroke-dasharray]="layer.dash"
+          stroke-linecap="round"
+        />
+      </svg>
+      {{ layer.code }}
+    </button>
+  }
+</div>

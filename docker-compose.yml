@@ -1,0 +1,23 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: freshlink-postgres
+    environment:
+      POSTGRES_USER: freshlink
+      POSTGRES_PASSWORD: freshlink
+      POSTGRES_DB: freshlink
+    ports:
+      - "5432:5432"
+    volumes:
+      - freshlink_pg:/var/lib/postgresql/data
+      - ./db/migrations/001_init.sql:/docker-entrypoint-initdb.d/01_init.sql
+      - ./db/migrations/002_auth_ops.sql:/docker-entrypoint-initdb.d/02_auth_ops.sql
+      - ./db/seed.sql:/docker-entrypoint-initdb.d/03_seed.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U freshlink -d freshlink"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  freshlink_pg:

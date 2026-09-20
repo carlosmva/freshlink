@@ -1,0 +1,238 @@
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.delivery-card {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.route-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #e3ebf3;
+  color: var(--navy);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.route-badge b {
+  font-size: 13px;
+}
+
+.delivery-info .t {
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'Satoshi', system-ui, sans-serif;
+}
+
+.delivery-info .s {
+  font-size: 11px;
+  color: var(--ink-soft);
+  margin-top: 2px;
+  line-height: 1.45;
+}
+
+.impact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.impact-kpi {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.impact-kpi .v {
+  font-family: 'Satoshi', system-ui, sans-serif;
+  font-weight: 900;
+  font-size: 19px;
+}
+
+.impact-kpi .l {
+  font-size: 10px;
+  color: var(--ink-faint);
+  font-weight: 600;
+  margin-top: 2px;
+  line-height: 1.35;
+}
+
+.card-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.card-title h5 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  padding: 4px 0 0;
+}
+
+.bar-col {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.bar-plot {
+  width: 100%;
+  height: 118px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.bar-grow {
+  width: 100%;
+  height: var(--stack-h, 24px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  clip-path: inset(0 -48px 0 -48px);
+  animation: chart-rise 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes chart-rise {
+  from {
+    height: 0;
+  }
+}
+
+.bars .b {
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 8px;
+  height: auto;
+  border-radius: 6px 6px 0 0;
+  background: var(--green);
+  opacity: 0.28;
+  animation: none;
+  transform: none;
+}
+
+.bars .b.on {
+  opacity: 1;
+}
+
+.bar-val {
+  font-size: 9px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.bar-col:last-child .bar-val {
+  color: var(--green-deep);
+}
+
+.bar-lbl {
+  font-size: 9px;
+  color: var(--ink-faint);
+  font-weight: 600;
+}
+
+.grant-card {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.grant-card .ic {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #e3ebf3;
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.grant-card .t {
+  font-size: 12.5px;
+  font-weight: 700;
+  font-family: 'Satoshi', system-ui, sans-serif;
+}
+
+.grant-card .s {
+  font-size: 11px;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+
+.grant-card .tx {
+  flex: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar-grow {
+    animation: none;
+    clip-path: none;
+    height: var(--stack-h, 24px);
+  }
+}
+
+@media (min-width: 801px) {
+  .impact-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .impact-kpi {
+    padding: 16px;
+  }
+
+  .impact-kpi .v {
+    font-size: 24px;
+  }
+
+  .impact-kpi .l {
+    font-size: 12px;
+  }
+
+  .chart-card {
+    padding: 18px 20px;
+  }
+
+  .grant-card {
+    padding: 16px 18px;
+  }
+}

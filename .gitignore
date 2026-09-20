@@ -1,0 +1,55 @@
+# Dependencies — Netlify runs npm install
+node_modules/
+
+# Build output — Netlify runs npm run build
+dist/
+tmp/
+out-tsc/
+bazel-out/
+
+# Env / secrets — keep .env.example only
+.env
+.env.*
+!.env.example
+
+# Local Netlify CLI state
+.netlify/
+
+# Angular / Vite local caches
+.angular/
+
+# Test / coverage
+coverage/
+libpeerconnection.log
+testem.log
+typings/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# Editor / OS
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.vscode/
+.history/
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# Local Cursor / agent files (not used by Netlify)
+.agents/
+.cursor/
+skills-lock.json
+
+# Netlify CLI lock generated locally
+deno.lock
+.neon

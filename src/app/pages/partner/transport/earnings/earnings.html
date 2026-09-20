@@ -1,0 +1,80 @@
+<div class="main-head">
+  <div>
+    <h3>Fleet & earnings</h3>
+    <div class="sub">{{ data()?.weekLabel || 'Weekly statement' }}</div>
+  </div>
+  <div class="route-actions">
+    <button type="button" class="btn-secondary">Download statement</button>
+    <button type="button" class="btn-primary">Payout settings</button>
+  </div>
+</div>
+<div class="content">
+  @if (error()) {
+    <div class="error">{{ error() }}</div>
+  } @else if (!data()) {
+    <div class="loading">Loading earnings…</div>
+  } @else {
+    <div class="portal-kpis">
+      <div class="portal-kpi"><div class="l">Weekly revenue</div><div class="v">{{ data().weeklyRevenue | currency:'USD':'symbol':'1.0-0' }}</div><div class="d">▲ 9% vs last week</div></div>
+      <div class="portal-kpi"><div class="l">Revenue per stop</div><div class="v">{{ data().revenuePerStop | currency }}</div><div class="d">▲ $0.60</div></div>
+      <div class="portal-kpi"><div class="l">On-time rate</div><div class="v">{{ data().onTimeRate }}%</div><div class="d">23 / 24 stops</div></div>
+      <div class="portal-kpi"><div class="l">CO₂ avoided</div><div class="v">{{ data().co2AvoidedLb }} lb</div><div class="d">this month, EV miles</div></div>
+    </div>
+
+    <div class="charts-row">
+      <div class="chart-card">
+        <h4>Earnings by route</h4>
+        <div class="csub">Consolidation fees + per-stop rates, this week</div>
+        <div class="table-wrap" style="border:none">
+          <table>
+            <thead>
+              <tr>
+                <th>Route</th>
+                <th>Day</th>
+                <th>Stops</th>
+                <th>Miles</th>
+                <th>Consolidation bonus</th>
+                <th>Fee</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (r of data().byRoute; track r.code) {
+                <tr>
+                  <td data-label="Route"><b>{{ r.code }}</b> {{ r.zone }}</td>
+                  <td data-label="Day">{{ r.day }}</td>
+                  <td data-label="Stops">{{ r.stops }}</td>
+                  <td class="num" data-label="Miles">{{ r.miles }}</td>
+                  <td class="num" data-label="Bonus" style="color:var(--green)">+{{ r.bonus | currency:'USD':'symbol':'1.0-0' }}</td>
+                  <td class="num" data-label="Fee">{{ r.fee | currency }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <h4>Why consolidation pays</h4>
+        <div class="ai-insight">
+          <div class="ic"><fl-icon name="sparkles" /></div>
+          <p><b>Consolidation bonus</b>{{ data().consolidation.insight }}</p>
+        </div>
+        <div class="detail-rows">
+          <div class="drow"><span>Separate-delivery baseline</span><b>{{ data().consolidation.baselineTrips }} trips · {{ data().consolidation.baselineMiles }} mi</b></div>
+          <div class="drow"><span>FreshLink consolidated</span><b style="color:var(--green)">{{ data().consolidation.consolidatedRoutes }} routes · {{ data().consolidation.consolidatedMiles }} mi</b></div>
+          <div class="drow"><span>Delivery fee per facility</span><b>− {{ data().consolidation.feeSavingsPerFacility | currency }} avg</b></div>
+          <div class="drow"><span>Fill-rate impact on facilities</span><b>{{ data().consolidation.fillRatePct }}% order fill</b></div>
+        </div>
+        <div class="forecast-card" style="margin-top:14px">
+          <h4>Community impact · September</h4>
+          <p>
+            GreenRoute routes delivered <b style="color:#fff">{{ data().foodDeliveredLb | number }} lb</b>
+            of nutritious food and avoided
+            <b style="color:#fff">{{ data().co2AvoidedLb }} lb CO₂</b>
+            versus conventional delivery — utilization kept in the {{ data().utilizationSweetSpot }} sweet spot.
+          </p>
+        </div>
+      </div>
+    </div>
+  }
+</div>

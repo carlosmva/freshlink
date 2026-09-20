@@ -1,0 +1,35 @@
+<div class="page">
+  <header class="topbar">
+    <a class="back" routerLink="/"><fl-icon name="arrow-left" /> All portals</a>
+    <div class="brand">
+      <img class="brand-logo" src="full-logo.svg" width="940" height="902" alt="FreshLink Detroit" />
+    </div>
+  </header>
+
+  <section class="card">
+    <div class="eyebrow">{{ copy.eyebrow }}</div>
+    <h1>{{ copy.title }}</h1>
+    <p>{{ copy.body }}</p>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <label>
+        Email
+        <input type="email" formControlName="email" autocomplete="username" [attr.placeholder]="copy.email" />
+      </label>
+      <label>
+        Password
+        <input type="password" formControlName="password" autocomplete="current-password" />
+      </label>
+
+      @if (error()) {
+        <p class="error" role="alert">{{ error() }}</p>
+      }
+
+      <button type="submit" class="submit" [disabled]="submitting()">
+        {{ submitting() ? 'Signing in…' : 'Sign in' }}
+      </button>
+    </form>
+
+    <!-- Cloudflare Turnstile will be added here later (turnstileToken on /api/auth/login). -->
+  </section>
+</div>

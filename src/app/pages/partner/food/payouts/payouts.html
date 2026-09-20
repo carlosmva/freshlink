@@ -1,0 +1,51 @@
+<div class="main-head">
+  <div>
+    <h3>Payouts</h3>
+    <div class="sub">{{ data()?.weekLabel || 'FreshLink settlements' }}</div>
+  </div>
+  <div class="route-actions">
+    <button type="button" class="btn-secondary">Download statement</button>
+    <button type="button" class="btn-primary">Payout settings</button>
+  </div>
+</div>
+<div class="content">
+  @if (error()) {
+    <div class="error">{{ error() }}</div>
+  } @else if (!data()) {
+    <div class="loading">Loading payouts…</div>
+  } @else {
+    <div class="portal-kpis">
+      <div class="portal-kpi"><div class="l">Available</div><div class="v">{{ data().availableBalance | currency:'USD':'symbol':'1.0-0' }}</div><div class="d">ready to transfer</div></div>
+      <div class="portal-kpi"><div class="l">Pending</div><div class="v">{{ data().pendingBalance | currency:'USD':'symbol':'1.0-0' }}</div><div class="d">{{ data().netTerms }}</div></div>
+      <div class="portal-kpi"><div class="l">Paid this month</div><div class="v">{{ data().paidThisMonth | currency:'USD':'symbol':'1.0-0' }}</div><div class="d">settled ACH</div></div>
+      <div class="portal-kpi"><div class="l">Next payout</div><div class="v" style="font-size:18px">{{ data().nextPayoutDate | date: 'MMM d' }}</div><div class="d">automatic</div></div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Order</th>
+            <th>Facility / lane</th>
+            <th>Week of</th>
+            <th>Method</th>
+            <th>Amount</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (line of data().lines; track line.id) {
+            <tr>
+              <td data-label="Order"><b>{{ line.orderRef }}</b></td>
+              <td data-label="Facility">{{ line.facility }}</td>
+              <td data-label="Week of">{{ line.weekOf | date: 'MMM d' }}</td>
+              <td data-label="Method">{{ line.method }}</td>
+              <td class="num" data-label="Amount">{{ line.amount | currency }}</td>
+              <td data-label="Status"><span class="status-chip" [class]="statusClass(line.status)">{{ line.status }}</span></td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

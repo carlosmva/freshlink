@@ -1,0 +1,32 @@
+<div class="main-head">
+  <div>
+    <h3>Deliveries</h3>
+    <div class="sub">Upcoming shared routes</div>
+  </div>
+</div>
+<div class="content">
+  @if (error()) {
+    <div class="error">{{ error() }}</div>
+  } @else {
+    @if (week()?.nextDelivery; as d) {
+      <div class="card next-card">
+        <div class="t">Next · Route {{ d.code }}</div>
+        <div class="s">{{ d.date | date: 'fullDate' }} · {{ d.window }}</div>
+      </div>
+    }
+    @for (route of routes(); track route.id) {
+      <div class="card">
+        <div class="row">
+          <strong>{{ route.code }}</strong>
+          <span class="pill green">{{ route.status }}</span>
+        </div>
+        <div class="s">{{ route.window_label }} · {{ route.stops?.length || 0 }} stops · EV</div>
+        <ul>
+          @for (stop of route.stops; track stop.id) {
+            <li>{{ stop.stop_order }}. {{ stop.label }} — {{ stop.status }}</li>
+          }
+        </ul>
+      </div>
+    }
+  }
+</div>

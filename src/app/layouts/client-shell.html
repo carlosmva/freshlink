@@ -1,0 +1,44 @@
+<div class="app" #app>
+  <header class="mobile-bar">
+    <div class="mobile-brand">
+      <img class="brand-mark" src="leaf-mark.svg" width="28" height="28" alt="" />
+      <div>
+        <b>Fresh<span>Link</span></b>
+        <small>{{ auth.user()?.orgName || 'Facility staff' }}</small>
+      </div>
+    </div>
+    <button type="button" class="exit" (click)="logout()"><fl-icon name="log-out" /> Log out</button>
+  </header>
+  <div class="portal">
+    <aside class="sidebar">
+      <div class="side-logo">
+        <img class="brand-mark" src="leaf-mark.svg" width="28" height="28" alt="" />
+        <b>Fresh<span>Link</span></b>
+      </div>
+      <div class="side-group">Facility staff</div>
+      @for (item of nav; track item.path) {
+        <a class="side-item" [routerLink]="item.path" routerLinkActive="active">
+          <span class="nav-ico" aria-hidden="true"><fl-icon [name]="item.icon" /></span>
+          <span class="nav-label">{{ item.label }}</span>
+          <span class="nav-short">{{ item.short }}</span>
+        </a>
+      }
+      <div class="side-foot">
+        <div class="who">
+          <div class="avatar">{{ auth.user()?.initials || 'FL' }}</div>
+          <div>
+            <div>{{ auth.user()?.orgName || 'Facility' }}</div>
+            <small>Facility portal</small>
+          </div>
+        </div>
+        <button type="button" class="side-logout" (click)="logout()">
+          <fl-icon name="log-out" />
+          Log out
+        </button>
+      </div>
+    </aside>
+    <main class="main" #scroll>
+      <router-outlet />
+    </main>
+  </div>
+</div>

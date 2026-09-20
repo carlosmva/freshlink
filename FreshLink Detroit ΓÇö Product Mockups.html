@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FreshLink Detroit — Product Mockups</title>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F3F1EA;
+    --surface:#FFFFFF;
+    --surface-2:#F8F7F2;
+    --ink:#1E2A24;
+    --ink-soft:#5C6862;
+    --ink-faint:#98A29C;
+    --line:#E2DFD6;
+    --green:#2F7D4E;
+    --green-deep:#1F5A38;
+    --green-tint:#E8F2EB;
+    --navy:#16324F;
+    --navy-deep:#0F2237;
+    --amber:#B4690E;
+    --amber-tint:#F7EDDC;
+    --red:#A13544;
+    --blue:#006494;
+    --radius:14px;
+    --shadow:0 18px 40px -18px rgba(22,50,79,.25);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    font-family:'General Sans',system-ui,sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{font-family:'Satoshi',system-ui,sans-serif;}
+
+  /* ---------- page scaffolding ---------- */
+  .page{max-width:1280px;margin:0 auto;padding:0 32px 96px;}
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:26px 0 30px;border-bottom:1px solid var(--line);margin-bottom:60px;
+  }
+  .brand{display:flex;align-items:center;gap:12px;}
+  .brand-name{font-family:'Satoshi';font-weight:900;font-size:20px;letter-spacing:-.02em;}
+  .brand-name span{color:var(--green);}
+  .topbar-tag{font-size:13px;color:var(--ink-soft);background:var(--surface);border:1px solid var(--line);padding:7px 14px;border-radius:99px;}
+
+  .hero{max-width:760px;margin-bottom:64px;}
+  .eyebrow{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--green);margin-bottom:14px;}
+  .hero h1{font-size:clamp(34px,4.5vw,52px);font-weight:900;letter-spacing:-.03em;line-height:1.05;margin-bottom:18px;}
+  .hero p{font-size:17px;line-height:1.6;color:var(--ink-soft);}
+
+  .persona-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:80px;}
+  .persona-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;display:flex;gap:14px;align-items:flex-start;}
+  .persona-dot{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;}
+  .persona-card h3{font-size:15px;font-weight:700;margin-bottom:4px;}
+  .persona-card p{font-size:13px;color:var(--ink-soft);line-height:1.5;}
+
+  section{margin-bottom:96px;}
+  .section-head{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;margin-bottom:8px;}
+  .section-head h2{font-size:30px;font-weight:900;letter-spacing:-.02em;}
+  .section-num{font-family:'Satoshi';font-size:13px;font-weight:700;color:var(--paper);background:var(--navy);border-radius:99px;padding:4px 12px;letter-spacing:.06em;}
+  .section-sub{color:var(--ink-soft);font-size:15px;line-height:1.6;max-width:680px;margin-bottom:36px;}
+
+  .stage{display:flex;gap:28px;justify-content:center;flex-wrap:wrap;}
+
+  .mock-block{display:flex;flex-direction:column;gap:16px;align-items:center;}
+  .mock-caption{max-width:380px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;}
+  .mock-caption h4{font-family:'Satoshi';font-size:14px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+  .mock-caption p{font-size:12.5px;line-height:1.55;color:var(--ink-soft);}
+  .mock-caption .ai-note{display:block;margin-top:8px;font-size:11.5px;color:var(--green-deep);background:var(--green-tint);border-radius:8px;padding:6px 9px;line-height:1.45;}
+
+  /* ---------- phone frame ---------- */
+  .phone{
+    width:380px;height:798px;border-radius:46px;background:#101815;
+    padding:9px;box-shadow:var(--shadow);flex-shrink:0;
+  }
+  .phone-screen{width:100%;height:100%;border-radius:38px;overflow:hidden;background:#F6F5F0;display:flex;flex-direction:column;position:relative;}
+  .statusbar{display:flex;justify-content:space-between;align-items:center;padding:14px 26px 6px;font-size:13px;font-weight:600;}
+  .statusbar .sicons{display:flex;gap:5px;align-items:center;}
+
+  .app-header{padding:12px 20px 14px;display:flex;align-items:center;justify-content:space-between;}
+  .app-header .who{display:flex;align-items:center;gap:10px;}
+  .app-header .who .fn{font-family:'Satoshi';font-weight:900;font-size:16px;letter-spacing:-.01em;}
+  .app-header .who .fn span{color:var(--green);}
+  .app-header .who small{display:block;font-size:11px;color:var(--ink-faint);font-weight:500;}
+  .avatar-sm{width:34px;height:34px;border-radius:10px;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;}
+
+  .screen-body{flex:1;overflow:hidden;padding:0 16px;display:flex;flex-direction:column;gap:12px;}
+  .bottom-nav{display:flex;justify-content:space-around;padding:10px 8px 22px;background:var(--surface);border-top:1px solid var(--line);}
+  .nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;font-weight:600;color:var(--ink-faint);width:64px;}
+  .nav-item.active{color:var(--green-deep);}
+  .nav-item svg{width:21px;height:21px;}
+
+  /* phone components */
+  .kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+  .kpi{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 10px;}
+  .kpi .v{font-family:'Satoshi';font-weight:900;font-size:17px;letter-spacing:-.02em;}
+  .kpi .l{font-size:10px;color:var(--ink-faint);font-weight:600;margin-top:2px;line-height:1.3;}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;}
+  .card-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .card-title h5{font-size:13px;font-weight:700;font-family:'Satoshi';}
+  .pill{font-size:10px;font-weight:700;padding:3px 8px;border-radius:99px;letter-spacing:.02em;}
+  .pill.green{background:var(--green-tint);color:var(--green-deep);}
+  .pill.amber{background:var(--amber-tint);color:var(--amber);}
+  .pill.navy{background:#E3EBF3;color:var(--navy);}
+  .pill.red{background:#F5E3E5;color:var(--red);}
+
+  .ai-hero{background:linear-gradient(135deg,var(--navy) 0%,#1C4266 100%);border-radius:16px;padding:16px;color:#fff;position:relative;overflow:hidden;}
+  .ai-hero::after{content:"";position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.06);}
+  .ai-hero .tag{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9FD3B4;margin-bottom:8px;}
+  .ai-hero h4{font-family:'Satoshi';font-size:16px;font-weight:700;line-height:1.3;margin-bottom:10px;letter-spacing:-.01em;}
+  .ai-hero .meta{display:flex;gap:14px;font-size:11.5px;color:#C9D7E3;margin-bottom:14px;}
+  .ai-hero .meta b{color:#fff;}
+  .btn{display:block;width:100%;text-align:center;background:var(--green);color:#fff;font-family:'Satoshi';font-weight:700;font-size:13.5px;border:none;border-radius:11px;padding:12px;cursor:pointer;}
+  .btn.ghost{background:rgba(255,255,255,.14);}
+  .btn.light{background:#fff;color:var(--navy);}
+
+  .delivery-card{display:flex;gap:12px;align-items:center;}
+  .route-badge{width:44px;height:44px;border-radius:12px;background:var(--green-tint);color:var(--green-deep);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:9px;font-weight:800;flex-shrink:0;}
+  .route-badge b{font-size:13px;}
+  .delivery-info{flex:1;}
+  .delivery-info .t{font-size:13px;font-weight:700;font-family:'Satoshi';}
+  .delivery-info .s{font-size:11px;color:var(--ink-soft);margin-top:2px;line-height:1.45;}
+
+  .chips{display:flex;gap:6px;flex-wrap:wrap;}
+  .chip{font-size:10px;font-weight:700;padding:4px 9px;border-radius:99px;border:1px solid var(--line);color:var(--ink-soft);background:var(--surface);}
+
+  /* basket screen */
+  .sub-alert{display:flex;gap:10px;background:var(--amber-tint);border:1px solid #E8D5B5;border-radius:12px;padding:11px 12px;align-items:center;}
+  .sub-alert .n{background:var(--amber);color:#fff;border-radius:99px;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;}
+  .sub-alert p{font-size:11.5px;line-height:1.4;color:#6B4A17;font-weight:600;}
+  .item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);}
+  .item:last-child{border-bottom:none;}
+  .item .ico{width:36px;height:36px;border-radius:10px;background:var(--surface-2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+  .item .body{flex:1;min-width:0;}
+  .item .nm{font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .item .tags{display:flex;gap:4px;margin-top:3px;align-items:center;}
+  .item .price{font-size:12px;font-weight:700;font-family:'Satoshi';white-space:nowrap;}
+  .mini-tag{font-size:9px;font-weight:700;padding:2px 6px;border-radius:5px;letter-spacing:.02em;}
+  .mini-tag.hub{background:#E3EBF3;color:var(--navy);}
+  .mini-tag.local{background:var(--green-tint);color:var(--green-deep);}
+  .mini-tag.surplus{background:var(--amber-tint);color:var(--amber);}
+  .mini-tag.grocer{background:#EFE9F7;color:#5B3E8C;}
+  .subst-card{background:var(--amber-tint);border:1px solid #E8D5B5;border-radius:12px;padding:12px;}
+  .subst-card h6{font-size:12px;font-weight:700;color:#6B4A17;margin-bottom:4px;display:flex;align-items:center;gap:6px;}
+  .subst-card p{font-size:11px;line-height:1.5;color:#7A5A22;}
+  .subst-actions{display:flex;gap:8px;margin-top:10px;}
+  .btn-sm{flex:1;text-align:center;border-radius:9px;padding:9px;font-size:12px;font-weight:700;font-family:'Satoshi';border:none;cursor:pointer;}
+  .btn-sm.solid{background:var(--green);color:#fff;}
+  .btn-sm.outline{background:transparent;border:1.5px solid var(--line);color:var(--ink-soft);}
+  .summary{background:var(--navy);border-radius:14px 14px 0 0;padding:14px 16px 16px;color:#fff;margin-top:auto;}
+  .summary .row{display:flex;justify-content:space-between;font-size:12px;color:#C9D7E3;padding:3px 0;}
+  .summary .row.total{font-size:14.5px;font-weight:800;color:#fff;border-top:1px solid rgba(255,255,255,.18);margin-top:6px;padding-top:8px;}
+  .summary .row .save{color:#9FD3B4;font-weight:700;}
+
+  /* impact screen */
+  .impact-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .impact-kpi{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;}
+  .impact-kpi .v{font-family:'Satoshi';font-weight:900;font-size:19px;letter-spacing:-.02em;}
+  .impact-kpi .v small{font-size:11px;font-weight:700;}
+  .impact-kpi .l{font-size:10px;color:var(--ink-faint);font-weight:600;margin-top:2px;line-height:1.35;}
+  .impact-kpi .d{font-size:10px;font-weight:700;margin-top:5px;}
+  .d.up{color:var(--green);}
+  .bars{display:flex;align-items:flex-end;gap:10px;height:74px;padding:0 4px;}
+  .bars .b{flex:1;border-radius:6px 6px 0 0;background:var(--green);opacity:.28;position:relative;}
+  .bars .b.on{opacity:1;}
+  .bars .b::after{content:attr(data-m);position:absolute;bottom:-17px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--ink-faint);font-weight:600;}
+  .grant-card{display:flex;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;}
+  .grant-card .ic{width:40px;height:40px;border-radius:10px;background:#E3EBF3;color:var(--navy);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+
+  /* ---------- browser frame ---------- */
+  .browser-block{display:flex;flex-direction:column;gap:16px;align-items:center;}
+  .browser{
+    width:940px;max-width:100%;border-radius:14px;overflow:hidden;
+    background:var(--surface);border:1px solid #CFCBC0;box-shadow:var(--shadow);flex-shrink:0;
+  }
+  .browser-top{height:42px;background:#EBE9E2;border-bottom:1px solid #DCD8CD;display:flex;align-items:center;padding:0 16px;gap:14px;}
+  .dots{display:flex;gap:6px;}
+  .dots i{width:11px;height:11px;border-radius:50%;display:block;}
+  .urlbar{flex:1;max-width:420px;background:#fff;border-radius:8px;height:26px;display:flex;align-items:center;padding:0 12px;font-size:11.5px;color:var(--ink-soft);gap:7px;}
+  .lock{width:10px;height:8px;border:1.5px solid var(--ink-faint);border-radius:2px;position:relative;}
+  .portal{display:flex;height:600px;background:#F6F5F0;font-size:12.5px;}
+
+  .sidebar{width:212px;background:var(--navy-deep);color:#B9C6D4;display:flex;flex-direction:column;flex-shrink:0;padding:18px 12px;}
+  .side-logo{display:flex;align-items:center;gap:9px;padding:2px 8px 18px;}
+  .side-logo b{font-family:'Satoshi';font-weight:900;font-size:14.5px;color:#fff;letter-spacing:-.01em;}
+  .side-logo b span{color:#7FC79A;}
+  .side-group{font-size:9.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#5E7080;padding:16px 10px 8px;}
+  .side-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:9px;font-size:12.5px;font-weight:500;margin-bottom:2px;cursor:pointer;}
+  .side-item svg{width:16px;height:16px;flex-shrink:0;opacity:.8;}
+  .side-item.active{background:rgba(255,255,255,.1);color:#fff;font-weight:600;}
+  .side-item.active svg{opacity:1;color:#7FC79A;}
+  .side-foot{margin-top:auto;display:flex;align-items:center;gap:9px;padding:10px;border-top:1px solid rgba(255,255,255,.08);font-size:11.5px;}
+  .side-foot .avatar-sm{background:#2A4A66;width:30px;height:30px;border-radius:8px;font-size:10px;}
+  .side-foot small{display:block;color:#5E7080;font-size:10px;}
+
+  .main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+  .main-head{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;background:#fff;border-bottom:1px solid var(--line);}
+  .main-head h3{font-family:'Satoshi';font-size:17px;font-weight:900;letter-spacing:-.01em;}
+  .main-head .sub{font-size:11.5px;color:var(--ink-faint);margin-top:2px;}
+  .head-actions{display:flex;gap:10px;align-items:center;}
+  .search{display:flex;align-items:center;gap:8px;background:var(--surface-2);border:1px solid var(--line);border-radius:9px;padding:8px 12px;font-size:12px;color:var(--ink-faint);width:200px;}
+  .btn-primary{background:var(--green);color:#fff;font-family:'Satoshi';font-weight:700;font-size:12.5px;border:none;border-radius:9px;padding:9px 16px;cursor:pointer;}
+  .btn-secondary{background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:600;font-size:12.5px;border-radius:9px;padding:9px 16px;cursor:pointer;}
+  .content{flex:1;overflow:hidden;padding:18px 24px;display:flex;flex-direction:column;gap:14px;}
+
+  .banner{display:flex;align-items:center;gap:14px;background:linear-gradient(120deg,#FFF8EC,#FDF1DC);border:1px solid #EAD7B2;border-radius:12px;padding:13px 16px;}
+  .banner .ic{width:38px;height:38px;border-radius:10px;background:var(--amber);color:#fff;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+  .banner .tx{flex:1;}
+  .banner b{font-size:12.5px;display:block;margin-bottom:2px;}
+  .banner p{font-size:11.5px;color:#7A5A22;line-height:1.4;}
+  .banner .btn-primary{background:var(--amber);flex-shrink:0;}
+
+  table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+  thead th{font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-faint);font-weight:700;text-align:left;padding:10px 14px;background:var(--surface-2);border-bottom:1px solid var(--line);}
+  tbody td{padding:11px 14px;border-bottom:1px solid #EFEDE5;font-size:12.5px;vertical-align:middle;}
+  tbody tr:last-child td{border-bottom:none;}
+  .prod{display:flex;align-items:center;gap:10px;}
+  .prod .ic{width:30px;height:30px;border-radius:8px;background:var(--surface-2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:14px;}
+  .prod b{font-size:12.5px;font-weight:600;display:block;}
+  .prod small{font-size:10.5px;color:var(--ink-faint);}
+  .status-chip{font-size:10px;font-weight:700;padding:4px 9px;border-radius:99px;white-space:nowrap;}
+  .status-chip.ok{background:var(--green-tint);color:var(--green-deep);}
+  .status-chip.warn{background:var(--amber-tint);color:var(--amber);}
+  .status-chip.low{background:#F5E3E5;color:var(--red);}
+  .status-chip.info{background:#E3EBF3;color:var(--navy);}
+  .num{font-family:'Satoshi';font-weight:700;font-variant-numeric:tabular-nums;}
+
+  .two-col{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;flex:1;overflow:hidden;}
+  .col-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:11px;overflow:hidden;}
+  .col-card h4{font-family:'Satoshi';font-size:13.5px;font-weight:700;display:flex;justify-content:space-between;align-items:center;}
+  .order-row{display:flex;align-items:center;gap:12px;padding:11px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2);}
+  .order-row.sel{border:1.5px solid var(--green);background:var(--green-tint);}
+  .order-row .ic{width:34px;height:34px;border-radius:9px;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+  .order-row .bd{flex:1;min-width:0;}
+  .order-row .bd b{font-size:12px;font-weight:700;display:block;}
+  .order-row .bd small{font-size:10.5px;color:var(--ink-soft);display:block;margin-top:1px;}
+  .order-row .amt{font-size:12.5px;font-weight:700;font-family:'Satoshi';}
+  .detail-rows{display:flex;flex-direction:column;gap:8px;}
+  .drow{display:flex;justify-content:space-between;gap:12px;font-size:12px;padding:8px 0;border-bottom:1px dashed var(--line);}
+  .drow b{text-align:right;}
+  .drow span{color:var(--ink-soft);}
+  .drow b{font-weight:600;}
+  .ai-insight{background:var(--green-tint);border:1px solid #CBE3D3;border-radius:10px;padding:12px;display:flex;gap:10px;}
+  .ai-insight .ic{width:30px;height:30px;border-radius:8px;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;}
+  .ai-insight p{font-size:11.5px;line-height:1.5;color:var(--green-deep);}
+  .ai-insight b{display:block;margin-bottom:2px;}
+
+  .portal-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  .portal-kpi{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;}
+  .portal-kpi .l{font-size:10.5px;font-weight:600;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.05em;}
+  .portal-kpi .v{font-family:'Satoshi';font-size:22px;font-weight:900;letter-spacing:-.02em;margin:4px 0 2px;}
+  .portal-kpi .d{font-size:11px;font-weight:600;}
+  .portal-kpi .d.up{color:var(--green);}
+  .charts-row{display:grid;grid-template-columns:1.1fr .9fr;gap:14px;flex:1;}
+  .chart-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;}
+  .chart-card h4{font-family:'Satoshi';font-size:13px;font-weight:700;margin-bottom:2px;}
+  .chart-card .csub{font-size:10.5px;color:var(--ink-faint);margin-bottom:10px;}
+  .hbar{display:flex;align-items:center;gap:10px;margin-top:8px;}
+  .hbar .lbl{width:64px;font-size:11px;font-weight:600;color:var(--ink-soft);text-align:right;}
+  .hbar .track{flex:1;height:14px;background:var(--surface-2);border-radius:7px;overflow:hidden;}
+  .hbar .fill{height:100%;border-radius:7px;background:var(--green);}
+  .hbar .val{width:44px;font-size:11px;font-weight:700;font-variant-numeric:tabular-nums;}
+  .spark{display:flex;align-items:flex-end;gap:5px;flex:1;padding:6px 2px 0;}
+  .spark i{flex:1;background:#BFDCC8;border-radius:4px 4px 0 0;display:block;}
+  .spark i:last-child{background:var(--green);}
+  .forecast-card{background:linear-gradient(135deg,var(--navy),#1C4266);border-radius:12px;color:#fff;padding:16px;flex:1;display:flex;flex-direction:column;}
+  .forecast-card h4{font-family:'Satoshi';font-size:13.5px;font-weight:700;margin-bottom:6px;display:flex;gap:8px;align-items:center;}
+  .forecast-card p{font-size:11.5px;line-height:1.55;color:#C9D7E3;}
+  .forecast-card .big{font-family:'Satoshi';font-size:24px;font-weight:900;margin:8px 0 2px;color:#9FD3B4;}
+
+  /* map svg */
+  .map-wrap{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;position:relative;overflow:hidden;}
+  .map-legend{display:flex;gap:14px;font-size:10.5px;color:var(--ink-soft);margin-top:8px;flex-wrap:wrap;}
+  .map-legend span{display:flex;align-items:center;gap:5px;}
+  .dot-i{width:9px;height:9px;border-radius:50%;display:inline-block;}
+
+  .route-table-actions{display:flex;gap:8px;}
+  .btn-accept{background:var(--green);color:#fff;border:none;border-radius:8px;padding:7px 12px;font-size:11px;font-weight:700;font-family:'Satoshi';cursor:pointer;}
+  .btn-view{background:#fff;color:var(--navy);border:1px solid var(--line);border-radius:8px;padding:7px 12px;font-size:11px;font-weight:700;font-family:'Satoshi';cursor:pointer;}
+
+  /* timeline (route detail) */
+  .timeline{display:flex;flex-direction:column;gap:0;flex:1;overflow:hidden;}
+  .tl-stop{display:flex;gap:12px;position:relative;padding-bottom:14px;}
+  .tl-stop::before{content:"";position:absolute;left:15px;top:34px;bottom:0;width:2px;background:var(--line);}
+  .tl-stop:last-child::before{display:none;}
+  .tl-stop.done::before{background:var(--green);}
+  .tl-dot{width:32px;height:32px;border-radius:50%;background:var(--surface);border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;z-index:1;}
+  .tl-stop.done .tl-dot{background:var(--green);border-color:var(--green);color:#fff;}
+  .tl-stop.now .tl-dot{border-color:var(--green);box-shadow:0 0 0 4px var(--green-tint);}
+  .tl-body{flex:1;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;}
+  .tl-stop.now .tl-body{border:1.5px solid var(--green);background:var(--green-tint);}
+  .tl-body .t{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;font-weight:700;font-family:'Satoshi';}
+  .tl-body .s{font-size:11px;color:var(--ink-soft);margin-top:3px;line-height:1.45;}
+  .temp-monitor{display:flex;align-items:center;gap:12px;background:#0F2237;border-radius:12px;color:#fff;padding:13px 15px;}
+  .temp-monitor .t{font-family:'Satoshi';font-size:21px;font-weight:900;}
+  .temp-monitor small{display:block;font-size:10px;color:#8FA5B8;font-weight:600;letter-spacing:.04em;}
+  .temp-live{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;color:#9FD3B4;}
+  .blink{width:7px;height:7px;border-radius:50%;background:#6DAA45;animation:blink 1.4s infinite;}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+
+  footer{border-top:1px solid var(--line);padding-top:28px;margin-top:20px;color:var(--ink-faint);font-size:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+
+  @media (max-width:1100px){
+    .persona-strip{grid-template-columns:1fr;}
+    .portal-kpis{grid-template-columns:repeat(2,1fr);}
+    .two-col,.charts-row{grid-template-columns:1fr;}
+    .sidebar{width:64px;}
+    .sidebar .side-item span,.side-group,.side-foot div,.side-logo b{display:none;}
+    .side-logo{justify-content:center;padding-bottom:14px;}
+    .side-item{justify-content:center;}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ======================= TOP BAR ======================= -->
+  <div class="topbar">
+    <div class="brand">
+      <svg width="34" height="34" viewBox="0 0 32 32" fill="none" aria-label="FreshLink logo">
+        <path d="M16 2.5C10.2 2.5 5.8 7.2 5.8 12.8C5.8 20.8 16 29.5 16 29.5C16 29.5 26.2 20.8 26.2 12.8C26.2 7.2 21.8 2.5 16 2.5Z" stroke="#16324F" stroke-width="2.4" fill="#E8F2EB"/>
+        <path d="M16 9.5C12.6 11.2 12.2 16.4 16 18.9C19.8 16.4 19.4 11.2 16 9.5Z" fill="#2F7D4E"/>
+        <path d="M16 11V17.5" stroke="#E8F2EB" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+      <div class="brand-name">Fresh<span>Link</span> Detroit</div>
+    </div>
+    <div class="topbar-tag">Product mockups · Buildathon Detroit 2026 · Pilot scenario data</div>
+  </div>
+
+  <div class="hero">
+    <div class="eyebrow">Product Concept</div>
+    <h1>One platform, three sides.<br>AI-coordinated food access.</h1>
+    <p>FreshLink connects community facilities with local food suppliers and delivery partners. These nine screens show the full workflow: facilities plan and approve AI-recommended bulk orders, suppliers list inventory and accept recurring institutional demand, and transportation partners run consolidated routes. All data shown is illustrative pilot-scenario data.</p>
+  </div>
+
+  <div class="persona-strip">
+    <div class="persona-card">
+      <div class="persona-dot" style="background:#E3EBF3;">🏠</div>
+      <div><h3>Client — Facility staff</h3><p>Shelter, group home, or senior facility buyer. Plans weekly meals, reviews the AI-recommended basket, approves substitutions, tracks delivery and impact. Mobile app.</p></div>
+    </div>
+    <div class="persona-card">
+      <div class="persona-dot" style="background:#E8F2EB;">🌾</div>
+      <div><h3>Partner — Food source</h3><p>Food hub, farm, grocer, or surplus partner. Publishes inventory and pricing, receives recurring consolidated orders, forecasts demand. Web portal.</p></div>
+    </div>
+    <div class="persona-card">
+      <div class="persona-dot" style="background:#F7EDDC;">🚐</div>
+      <div><h3>Partner — Transportation</h3><p>Logistics or EV-fleet operator. Receives consolidated multi-stop routes with temperature requirements, confirms proof of delivery, tracks earnings. Web portal.</p></div>
+    </div>
+  </div>
+
+  <!-- ======================= 1. CLIENT APP ======================= -->
+  <section>
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <h2>Client app — facility staff</h2>
+    </div>
+    <p class="section-sub">Hope Harbor Shelter, 75 residents, $2,400 weekly food budget. The app replaces phone calls and spreadsheets with one reviewed, AI-recommended weekly order. Staff stay in control: every substitution and every order is human-approved.</p>
+
+    <div class="stage">
+
+      <!-- C1: dashboard -->
+      <div class="mock-block">
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="statusbar"><span>9:41</span>
+              <span class="sicons">
+                <svg width="17" height="11" viewBox="0 0 17 11" fill="#1E2A24"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="5" width="3" height="6" rx="1"/><rect x="9" y="2.5" width="3" height="8.5" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg>
+                <svg width="22" height="11" viewBox="0 0 22 11" fill="none"><rect x="0.5" y="0.5" width="18" height="10" rx="2.5" stroke="#1E2A24"/><rect x="2" y="2" width="12" height="7" rx="1.2" fill="#1E2A24"/><path d="M20.5 3.5v4c1-.2 1.5-1 1.5-2s-.5-1.8-1.5-2z" fill="#1E2A24"/></svg>
+              </span>
+            </div>
+            <div class="app-header">
+              <div class="who">
+                <svg width="30" height="30" viewBox="0 0 32 32" fill="none"><path d="M16 2.5C10.2 2.5 5.8 7.2 5.8 12.8C5.8 20.8 16 29.5 16 29.5C16 29.5 26.2 20.8 26.2 12.8C26.2 7.2 21.8 2.5 16 2.5Z" stroke="#16324F" stroke-width="2.4" fill="#E8F2EB"/><path d="M16 9.5C12.6 11.2 12.2 16.4 16 18.9C19.8 16.4 19.4 11.2 16 9.5Z" fill="#2F7D4E"/></svg>
+                <div><span class="fn">Fresh<span>Link</span></span><small>Hope Harbor Shelter</small></div>
+              </div>
+              <div class="avatar-sm">DM</div>
+            </div>
+            <div class="screen-body">
+              <div>
+                <div style="font-family:'Satoshi';font-size:19px;font-weight:900;letter-spacing:-.02em;">This week</div>
+                <div style="font-size:11.5px;color:var(--ink-faint);font-weight:500;">Week of Sep 22 · Tuesday delivery</div>
+              </div>
+              <div class="ai-hero">
+                <span class="tag">✦ AI recommendation ready</span>
+                <h4>Your weekly order is built — 42 items from 3 suppliers</h4>
+                <div class="meta"><span><b>$2,051</b> est. total</span><span><b>$312</b> below baseline</span><span><b>18%</b> savings</span></div>
+                <button class="btn light">Review basket →</button>
+              </div>
+              <div class="kpi-row">
+                <div class="kpi"><div class="v">$349</div><div class="l">Budget left this week</div></div>
+                <div class="kpi"><div class="v">75</div><div class="l">Residents to feed</div></div>
+                <div class="kpi"><div class="v">525</div><div class="l">Meals planned</div></div>
+              </div>
+              <div class="card delivery-card">
+                <div class="route-badge"><b>D-12</b>ROUTE</div>
+                <div class="delivery-info">
+                  <div class="t">Next delivery · Tue, Sep 23</div>
+                  <div class="s">9–11 AM window · EV van · shared route with 2 nearby facilities · delivery fee $65 (−$40 consolidated)</div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-title"><h5>Nutrition needs</h5><span class="pill navy">Dietitian-approved templates</span></div>
+                <div class="chips">
+                  <span class="chip">Low-sodium</span><span class="chip">Diabetes-conscious</span><span class="chip">Easy-chew</span><span class="chip">Culturally responsive</span>
+                </div>
+              </div>
+            </div>
+            <div class="bottom-nav">
+              <div class="nav-item active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5L12 3l9 7.5V21h-6v-6h-6v6H3z"/></svg>Home</div>
+              <div class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 7h12l1.5 13h-15L6 7z"/><path d="M9 10V6a3 3 0 016 0v4"/></svg>Basket</div>
+              <div class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14 0 18-3-4-3-14.5 0-18z"/></svg>Deliveries</div>
+              <div class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-8M21 20H3"/></svg>Impact</div>
+            </div>
+          </div>
+        </div>
+        <div class="mock-caption">
+          <h4>C1 · This week — home dashboard</h4>
+          <p>Budget, residents, and meals at a glance, with the AI-recommended weekly order front and center. One tap into the basket review.</p>
+          <span class="ai-note">✦ AI: forecasts next week's order from resident count, meal plan, past orders, and seasonality — staff never rebuild the cart from scratch.</span>
+        </div>
+      </div>
+
+      <!-- C2: basket review -->
+      <div class="mock-block">
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="statusbar"><span>9:41</span>
+              <span class="sicons">
+                <svg width="17" height="11" viewBox="0 0 17 11" fill="#1E2A24"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="5" width="3" height="6" rx="1"/><rect x="9" y="2.5" width="3" height="8.5" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg>
+                <svg width="22" height="11" viewBox="0 0 22 11" fill="none"><rect x="0.5" y="0.5" width="18" height="10" rx="2.5" stroke="#1E2A24"/><rect x="2" y="2" width="12" height="7" rx="1.2" fill="#1E2A24"/><path d="M20.5 3.5v4c1-.2 1.5-1 1.5-2s-.5-1.8-1.5-2z" fill="#1E2A24"/></svg>
+              </span>
+            </div>
+            <div class="app-header">
+              <div class="who"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16324F" stroke-width="2.4"><path d="M15 6l-6 6 6 6"/></svg><div><span class="fn" style="font-size:15px;">Review basket</span><small>Week of Sep 22 · 42 items</small></div></div>
+              <span class="pill amber">2 substitutions</span>
+            </div>
+            <div class="screen-body">
+              <div class="sub-alert"><span class="n">2</span><p>AI proposed 2 substitutions and 3 surplus items to stay under budget.</p></div>
+              <div class="card" style="padding:4px 14px;">
+                <div class="item"><div class="ico">🍚</div><div class="body"><div class="nm">Brown rice · 25 lb</div><div class="tags"><span class="mini-tag hub">Core Supply Co-op</span></div></div><div class="price">$21.40</div></div>
+                <div class="item"><div class="ico">🍗</div><div class="body"><div class="nm">Chicken breast, frozen · 40 lb</div><div class="tags"><span class="mini-tag hub">Core Supply Co-op</span></div></div><div class="price">$86.20</div></div>
+                <div class="item"><div class="ico">🥬</div><div class="body"><div class="nm">Spinach, frozen Michigan-grown</div><div class="tags"><span class="mini-tag local">Local</span><span class="mini-tag surplus" style="background:#FDF3E0;color:#8A6210;">sub for fresh greens</span></div></div><div class="price">$12.80</div></div>
+                <div class="item"><div class="ico">🍎</div><div class="body"><div class="nm">Apples, Gala · 3 crates</div><div class="tags"><span class="mini-tag surplus">Surplus rescue</span></div></div><div class="price">$18.00</div></div>
+                <div class="item"><div class="ico">🥛</div><div class="body"><div class="nm">Low-sodium vegetable broth · 6 gal</div><div class="tags"><span class="mini-tag grocer">Grocery partner</span></div></div><div class="price">$29.40</div></div>
+                <div class="item"><div class="ico">🥚</div><div class="body"><div class="nm">Eggs · 15 dozen</div><div class="tags"><span class="mini-tag local">Local farm</span></div></div><div class="price">$41.25</div></div>
+              </div>
+              <div class="subst-card">
+                <h6>⚡ Substitution needs approval</h6>
+                <p>Fresh greens unavailable this week. Suggested: frozen Michigan-grown spinach — same nutrition profile, fits freezer capacity, saves $9.60.</p>
+                <div class="subst-actions"><button class="btn-sm solid">Approve swap</button><button class="btn-sm outline">Keep original</button></div>
+              </div>
+              <div class="summary">
+                <div class="row"><span>Food (42 items · 3 suppliers)</span><span>$1,986.00</span></div>
+                <div class="row"><span>Delivery · Route D-12 (shared)</span><span>$65.00 <span class="save">−$40</span></span></div>
+                <div class="row total"><span>Total</span><span>$2,051.20 · save $312 (18%)</span></div>
+              </div>
+            </div>
+            <div class="bottom-nav">
+              <div class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5L12 3l9 7.5V21h-6v-6h-6v6H3z"/></svg>Home</div>
+              <div class="nav-item active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 7h12l1.5 13h-15L6 7z"/><path d="M9 10V6a3 3 0 016 0v4"/></svg>Basket</div>
+              <div class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14 0 18-3-4-3-14.5 0-18z"/></svg>Deliveries</div>
+              <div class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-8M21 20H3"/></svg>Impact</div>
+            </div>
+          </div>
+        </div>
+        <div class="mock-caption">
+          <h4>C2 · AI basket — review & approve</h4>
+          <p>One proposed order across three supply lanes — contracted core, local seasonal, and verified surplus. Substitutions are explicit and reversible.</p>
+          <span class="ai-note">✦ AI: matches the basket to supplier availability, price, minimums, storage limits, and dietitian templates — then proposes safe swaps when items fall through.</span>
+        </div>
+      </div>
+
+      <!-- C3: impact -->
+      <div class="mock-block">
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="statusbar"><span>9:41</span>
+              <span class="sicons">
+                <svg width="17" height="11" viewBox="0 0 17 11" fill="#1E2A24"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4.5" y="5" width="3" height="6" rx="1"/><rect x="9" y="2.5" width="3" height="8.5" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg>
+                <svg width="22" height="11" viewBox="0 0 22 11" fill="none"><rect x="0.5" y="0.5" width="18" height="10" rx="2.5" stroke="#1E2A24"/><rect x="2" y="2" width="12" height="7" rx="1.2" fill="#1E2A24"/><path d="M20.5 3.5v4c1-.2 1.5-1 1.5-2s-.5-1.8-1.5-2z" fill="#1E2A24"/></svg>
+              </span>
+            </div>
+            <div class="app-header">
+              <div class="who"><div><span class="fn" style="font-size:15px;">Impact</span><small>September · Hope Harbor Shelter</small></div></div>
+              <span class="pill green">Grant-ready</span>
+            </div>
+            <div class="screen-body">
+              <div class="card delivery-card">
+                <div class="route-badge" style="background:#E3EBF3;color:var(--navy);"><b>96%</b>ON TIME</div>
+                <div class="delivery-info">
+                  <div class="t">23 of 24 deliveries on time</div>
+                  <div class="s">Order fill rate 94% · all routes shared with nearby facilities</div>
+                </div>
+              </div>
+              <div class="impact-grid">
+                <div class="impact-kpi"><div class="v">2,310</div><div class="l">Meals supported this month</div><div class="d up">▲ 12% vs Aug</div></div>
+                <div class="impact-kpi"><div class="v">$1,248</div><div class="l">Saved vs baseline purchasing</div><div class="d up">▲ $310</div></div>
+                <div class="impact-kpi"><div class="v">61<small>%</small></div><div class="l">Local / Michigan-grown spend</div></div>
+                <div class="impact-kpi"><div class="v">480<small> lb</small></div><div class="l">Surplus food rescued</div><div class="d up">▲ 90 lb</div></div>
+              </div>
+              <div class="card">
+                <div class="card-title"><h5>Monthly savings vs baseline</h5><span class="pill green">2026</span></div>
+                <div style="height:86px;padding-top:14px;">
+                  <div class="bars">
+                    <div class="b" style="height:32%;" data-m="Apr"></div>
+                    <div class="b" style="height:45%;" data-m="May"></div>
+                    <div class="b" style="height:52%;" data-m="Jun"></div>
+                    <div class="b" style="height:61%;" data-m="Jul"></div>
+                    <div class="b" style="height:78%;" data-m="Aug"></div>
+                    <div class="b on" style="height:100%;" data-m="Sep"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="grant-card">
+                <div class="ic">📄</div>
+                <div style="flex:1;">
+                  <div style="font-size:12.5px;font-weight:700;font-family:'Satoshi';">Q3 impact report ready</div>
+                  <div style="font-size:11px;color:var(--ink-soft);margin-top:2px;">Auto-compiled for funders and grant reporting</div>
+                </div>
+                <button class="btn-sm solid" style="flex:none;padding:8px 12px;">Export</button>
+              </div>
+            </div>
+            <div class="bottom-nav">
+              <div class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5L12 3l9 7.5V21h-6v-6h-6v6H3z"/></svg>Home</div>
+              <div class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 7h12l1.5 13h-15L6 7z"/><path d="M9 10V6a3 3 0 016 0v4"/></svg>Basket</div>
+              <div class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14 0 18-3-4-3-14.5 0-18z"/></svg>Deliveries</div>
+              <div class="nav-item active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-8M21 20H3"/></svg>Impact</div>
+            </div>
+          </div>
+        </div>
+        <div class="mock-caption">
+          <h4>C3 · Impact dashboard</h4>
+          <p>Reliability and community impact in funder-ready form: meals supported, dollars saved, local spend, surplus rescued, and one-tap quarterly reports.</p>
+          <span class="ai-note">✦ AI: auto-compiles order history, savings, and sourcing data into grant-ready reporting — no staff time spent assembling evidence.</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================= 2. SUPPLIER PORTAL ======================= -->
+  <section>
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <h2>Partner portal — food source</h2>
+    </div>
+    <p class="section-sub">Core Supply Co-op, a Detroit-area food hub. Suppliers publish inventory once and receive recurring, predictable institutional orders — including a surplus lane for near-best-before items that would otherwise become waste.</p>
+
+    <div class="stage" style="flex-direction:column;align-items:center;">
+
+      <!-- S1: inventory -->
+      <div class="browser-block">
+        <div class="browser">
+          <div class="browser-top">
+            <div class="dots"><i style="background:#E0655F;"></i><i style="background:#E8C04C;"></i><i style="background:#7BB661;"></i></div>
+            <div class="urlbar"><span class="lock"></span> partner.freshlinkdetroit.org / inventory</div>
+          </div>
+          <div class="portal">
+            <div class="sidebar">
+              <div class="side-logo">
+                <svg width="24" height="24" viewBox="0 0 32 32" fill="none"><path d="M16 2.5C10.2 2.5 5.8 7.2 5.8 12.8C5.8 20.8 16 29.5 16 29.5C16 29.5 26.2 20.8 26.2 12.8C26.2 7.2 21.8 2.5 16 2.5Z" stroke="#7FC79A" stroke-width="2.4" fill="#16324F"/><path d="M16 9.5C12.6 11.2 12.2 16.4 16 18.9C19.8 16.4 19.4 11.2 16 9.5Z" fill="#7FC79A"/></svg>
+                <b>Fresh<span>Link</span></b>
+              </div>
+              <div class="side-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg><span>Dashboard</span></div>
+              <div class="side-item active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h10"/></svg><span>Inventory</span></div>
+              <div class="side-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 7h12l1.5 13h-15L6 7z"/><path d="M9 10V6a3 3 0 016 0v4"/></svg><span>Orders</span></div>
+              <div class="side-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8"/><path d="M21 7v6h-6"/></svg><span>Demand forecast</span></div>
+              <div class="side-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M15.5 9.5c-.8-1-2-1.5-3.5-1.5s-3 .7-3 2 1.4 1.8 3 2.2 3 .8 3 2-1.5 1.8-3 1.8-2.8-.6-3.5-1.6"/></svg><span>Payouts</span></div>
+              <div class="side-foot"><div class="avatar-sm">CS</div><div>Core Supply Co-op<br><small>Food hub partner</small></div></div>
+            </div>
+            <div class="main">
+              <div class="main-head">
+                <div><h3>Inventory</h3><div class="sub">6 active listings · updated 12 min ago</div></div>
+                <div class="head-actions">
+                  <div class="search">🔍 Search products…</div>
+                  <button class="btn-primary">+ List an item</button>
+                </div>
+              </div>
+              <div class="content">
+                <div class="banner">
+                  <div class="ic">⚡</div>
+                  <div class="tx"><b>3 items nearing best-before — publish to the Surplus Marketplace</b><p>Facilities within your delivery zone are pre-matched to these items. Typical time-to-sell: under 36 hours.</p></div>
+                  <button class="btn-primary">Publish 3 items</button>
+                </div>
+                <table>
+                  <thead><tr><th>Product</th><th>On hand</th><th>Wholesale price</th><th>Lead time</th><th>Buyer demand</th><th>Status</th></tr></thead>
+                  <tbody>
+                    <tr><td><div class="prod"><div class="ic">🥬</div><div><b>Baby greens, mixed</b><small>Produce · Michigan farms</small></div></div></td><td class="num">210 lb</td><td class="num">$2.40 /lb</td><td>2 days</td><td class="num">4 facilities</td><td><span class="status-chip warn">Surplus · 5 days left</span></td></tr>
+                    <tr><td><div class="prod"><div class="ic">🥛</div><div><b>Whole milk, gallon</b><small>Dairy · regional</small></div></div></td><td class="num">480 gal</td><td class="num">$2.85 /gal</td><td>1 day</td><td class="num">7 facilities</td><td><span class="status-chip ok">In stock</span></td></tr>
+                    <tr><td><div class="prod"><div class="ic">🍗</div><div><b>Chicken breast, frozen</b><small>Protein · USDA facility</small></div></div></td><td class="num">620 lb</td><td class="num">$2.16 /lb</td><td>3 days</td><td class="num">5 facilities</td><td><span class="status-chip ok">In stock</span></td></tr>
+                    <tr><td><div class="prod"><div class="ic">🍠</div><div><b>Sweet potatoes</b><small>Produce · Michigan farms</small></div></div></td><td class="num">340 lb</td><td class="num">$1.10 /lb</td><td>2 days</td><td class="num">3 facilities</td><td><span class="status-chip ok">In season</span></td></tr>
+                    <tr><td><div class="prod"><div class="ic">🍎</div><div><b>Apples, Gala</b><small>Produce · stored crop</small></div></div></td><td class="num">95 crates</td><td class="num">$6.00 /crate</td><td>1 day</td><td class="num">6 facilities</td><td><span class="status-chip warn">Surplus · 9 days left</span></td></tr>
+                    <tr><td><div class="prod"><div class="ic">🌾</div><div><b>Rolled oats, 50 lb</b><small>Pantry · dry storage</small></div></div></td><td class="num">18 bags</td><td class="num">$28.50 /bag</td><td>4 days</td><td class="num">2 facilities</td><td><span class="status-chip low">Low stock</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mock-caption" style="max-width:640px;">
+          <h4>S1 · Inventory & surplus lane</h4>
+          <p>One catalog serves both contracted wholesale and a surplus marketplace for short-dated stock. Buyer-demand counts show which listings facilities are already watching.</p>
+          <span class="ai-note">✦ AI: pre-matches surplus items to facilities whose menus, storage capacity, and delivery windows fit — before the food expires.</span>
+        </div>
+      </div>
+
+      <!-- S2: orders -->
+      <div class="browser-block">
+        <div class="browser">
+          <div class="browser-top">
+            <div class="dots"><i style="background:#E0655F;"></i><i style="background:#E8C04C;"></i><i style="background:#7BB661;"></i></div>
+            <div class="urlbar"><span class="lock"></span> partner.freshlinkdetroit.org / orders</div>
+          </div>
+          <div class="portal">
+            <div class="sidebar">
+              <div class="side-logo">
+                <svg width="24" height="24" viewBox="0 0 32 32" fill="none"><path d="M16 2.5C10.2 2.5 5.8 7.2 5.8 12.8C5.8 20.8 16 29.5 16 29.5C16 29.5 26.2 20.8 26.2 12.8C26.2 7.2 21.8 2.5 16 2.5Z" stroke="#7FC79A" stroke-width="2.4" fill="#16324F"/><path d="M16 9.5C12.6 11.2 12.2 16.4 16 18.9C19.8 16.4 19.4 11.2 16 9.5Z" fill="#7FC79A"/></svg>
+                <b>Fresh<span>Link</span></b>
+              </div>
+              <div class="side-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg><span>Dashboard</span></div>
+              <div class="side-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h10"/></svg><span>Inventory</span></div>
+              <div class="side-item active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 7h12l1.5 13h-15L6 7z"/><path d="M9 10V6a3 3 0 016 0v4"/></svg><span>Orders</span></div>
+              <div class="side-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8"/><path d="M21 7v6h-6"/></svg><span>Demand forecast</span></div>
+              <div class="side-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M15.5 9.5c-.8-1-2-1.5-3.5-1.5s-3 .7-3 2 1.4 1.8 3 2.2 3 .8 3 2-1.5 1.8-3 1.8-2.8-.6-3.5-1.6"/></svg><span>Payouts</span></div>
+              <div class="side-foot"><div class="avatar-sm">CS</div><div>Core Supply Co-op<br><small>Food hub partner</small></div></div>
+            </div>
+            <div class="main">
+              <div class="main-head">
+                <div><h3>Institutional orders</h3><div class="sub">3 new · 11 confirmed this week · cutoff for Route D-12: Monday 6 PM</div></div>
+                <div class="head-actions">
+                  <span class="status-chip info" style="padding:8px 14px;">Tue delivery day</span>
+                  <button class="btn-primary">Accept all recurring</button>
+                </div>
+              </div>
+              <div class="content">
+                <div class="two-col">
+                  <div class="col-card">
+                    <h4>New orders <span class="status-chip warn">3 awaiting response</span></h4>
+                    <div class="order-row sel">
+                      <div class="ic">🏠</div>
+                      <div class="bd"><b>Hope Harbor Shelter · FL-1042</b><small>Recurring weekly · due Tue, Sep 23 · Route D-12</small></div>
+                      <div class="amt">$612.40</div>
+                    </div>
+                    <div class="order-row">
+                      <div class="ic">👵</div>
+                      <div class="bd"><b>Grace House Group Home · FL-1043</b><small>One-time · due Tue, Sep 23 · Route D-12</small></div>
+                      <div class="amt">$214.75</div>
+                    </div>
+                    <div class="order-row">
+                      <div class="ic">🛏️</div>
+                      <div class="bd"><b>Sunrise Senior Living · FL-1044</b><small>Recurring biweekly · due Wed, Sep 24 · Route D-13</small></div>
+                      <div class="amt">$848.10</div>
+                    </div>
+                    <div class="ai-insight">
+                      <div class="ic">✦</div>
+                      <p><b>Demand insight</b>3 facilities within 5 miles ordered dairy this week. Offer a volume price on whole milk to win all three carts.</p>
+                    </div>
+                  </div>
+                  <div class="col-card">
+                    <h4>Order FL-1042 <span class="status-chip ok">Within cutoff</span></h4>
+                    <div class="detail-rows">
+                      <div class="drow"><span>Facility</span><b>Hope Harbor Shelter · 75 res.</b></div>
+                      <div class="drow"><span>Delivery window</span><b>Tue, Sep 23 · 9–11 AM</b></div>
+                      <div class="drow"><span>Route</span><b>D-12 · shared, 3 stops</b></div>
+                      <div class="drow"><span>Temperature</span><b>Refrigerated · 34–40°F</b></div>
+                      <div class="drow"><span>Payment</span><b>Net-7 via FreshLink</b></div>
+                    </div>
+                    <div class="drow" style="border:none;padding-top:2px;"><span>Items</span><b>12 of your listings</b></div>
+                    <div style="background:var(--surface-2);border:1px solid var(--line);border-radius:9px;padding:10px 12px;font-size:11.5px;line-height:1.7;color:var(--ink-soft);">
+                      Chicken breast, frozen · 40 lb<br>Whole milk · 20 gal<br>Baby greens · 14 lb<br> Rolled oats · 2 bags …
+                    </div>
+                    <div style="display:flex;gap:8px;margin-top:auto;">
+                      <button class="btn-accept" style="flex:1;">Accept order</button>
+                      <button class="btn-view" style="flex:1;">Request change</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mock-caption" style="max-width:640px;">
+          <h4>S2 · Institutional orders</h4>
+          <p>Recurring facility demand arrives pre-confirmed for a shared delivery route, with payment terms and temperature requirements stated up front — no phone tag, no scattered invoices.</p>
+          <span class="ai-note">✦ AI: surfaces bulk-pricing opportunities when nearby facilities order the same categories in the same week.</span>
+        </div>
+      </div>
+
+      <!-- S3: forecast -->
+      <div class="browser-block">
+        <div class="browser">
+          <div class="browser-top">
+            <div class="dots"><i style="background:#E0655F;"></i><i style="background:#E8C04C;"></i><i style="background:#7BB661;"></i></div>
+            <div class="urlbar"><span class="lock"></span> partner.freshlinkdetroit.org / demand-forecast</div>
+          </div>
+          <div class="portal">
+            <div class="sidebar">
+              <div class="side-logo">
+                <svg width="24" height="24" viewBox="0 0 32 32" fill="none"><path d="M16 2.5C10.2 2.5 5.8 7.2 5.8 12.8C5.8 20.8 16 29.5 16 29.5C16 29.5 26.2 20.8 26.2 12.8C26.2 7.2 21.8 2.5 16 2.5Z" stroke="#7FC79A" stroke-width="2.4" fill="#16324F"/><path d="M16 9.5C12.6 11.2 12.2 16.4 16 18.9C19.8 16.4 19.4 11.2 16 9.5Z" fill="#7FC79A"/></svg>
+                <b>Fresh<span>Link</span></b>
+              </div>
+              <div class="side-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg><span>Dashboard</span></div>
+              <div class="side-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h10"/></svg><span>Inventory</span></div>
+              <div class="side-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 7h12l1.5 13h-15L6 7z"/><path d="M9 10V6a3 3 0 016 0v4"/></svg><span>Orders</span></div>
+              <div class="side-item active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8"/><path d="M21 7v6h-6"/></svg><span>Demand forecast</span></div>
+              <div class="side-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M15.5 9.5c-.8-1-2-1.5-3.5-1.5s-3 .7-3 2 1.4 1.8 3 2.2 3 .8 3 2-1.5 1.8-3 1.8-2.8-.6-3.5-1.6"/></svg><span>Payouts</span></div>
+              <div class="side-foot"><div class="avatar-sm">CS</div><div>Core Supply Co-op<br><small>Food hub partner</small></div></div>
+            </div>
+            <div class="main">
+              <div class="main-head">
+                <div><h3>Demand & analytics</h3><div class="sub">Rolling 4 weeks · Core Supply Co-op</div></div>
+                <div class="head-actions"><button class="btn-secondary">Export CSV</button><button class="btn-primary">Plan next week</button></div>
+              </div>
+              <div class="content">
+                <div class="portal-kpis">
+                  <div class="portal-kpi"><div class="l">Recurring revenue</div><div class="v">$8,420</div><div class="d up">▲ 12% vs last month</div></div>
+                  <div class="portal-kpi"><div class="l">Repeat facilities</div><div class="v">14</div><div class="d up">▲ 3 new this month</div></div>
+                  <div class="portal-kpi"><div class="l">Avg order value</div><div class="v">$486</div><div class="d up">▲ 6%</div></div>
+                  <div class="portal-kpi"><div class="l">Surplus recovered</div><div class="v">2.1 t</div><div class="d up">waste diverted</div></div>
+                </div>
+                <div class="charts-row">
+                  <div class="chart-card">
+                    <h4>Demand by category</h4>
+                    <div class="csub">Institutional volume, last 4 weeks</div>
+                    <div class="hbar"><div class="lbl">Produce</div><div class="track"><div class="fill" style="width:86%;"></div></div><div class="val">1,860 lb</div></div>
+                    <div class="hbar"><div class="lbl">Dairy</div><div class="track"><div class="fill" style="width:64%;background:#4C9968;"></div></div><div class="val">1,240 gal</div></div>
+                    <div class="hbar"><div class="lbl">Protein</div><div class="track"><div class="fill" style="width:58%;background:#6BA97F;"></div></div><div class="val">1,090 lb</div></div>
+                    <div class="hbar"><div class="lbl">Pantry</div><div class="track"><div class="fill" style="width:34%;background:#93C2A2;"></div></div><div class="val">640 lb</div></div>
+                    <div class="ai-insight" style="margin-top:auto;">
+                      <div class="ic">✦</div>
+                      <p><b>Forecast · week of Sep 29</b>Facility demand for produce is trending +42 lb. Pull harvest and storage plans forward — Michigan apples and sweet potatoes will carry most of it.</p>
+                    </div>
+                  </div>
+                  <div class="chart-card">
+                    <h4>Weekly fulfilled volume</h4>
+                    <div class="csub">Orders shipped to facilities, last 8 weeks</div>
+                    <div class="spark">
+                      <i style="height:34%;"></i><i style="height:42%;"></i><i style="height:38%;"></i><i style="height:52%;"></i><i style="height:58%;"></i><i style="height:64%;"></i><i style="height:78%;"></i><i style="height:100%;"></i>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--ink-faint);font-weight:600;padding:6px 2px 0;"><span>Aug 3</span><span>Sep 21</span></div>
+                    <div class="forecast-card" style="margin-top:12px;">
+                      <h4>✦ Surplus marketplace</h4>
+                      <p>Items published to the surplus lane sold in a median of</p>
+                      <div class="big">31 hours</div>
+                      <p>vs typical 5–7 days through conventional channels — recovering value instead of writing off short-dated stock.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mock-caption" style="max-width:640px;">
+          <h4>S3 · Demand forecast & analytics</h4>
+          <p>Recurring institutional demand becomes visible weeks ahead — volume by category, repeat facilities, and recovered surplus — so purchasing and harvest planning can act on it.</p>
+          <span class="ai-note">✦ AI: forecasts next week's category-level demand from confirmed recurring orders and seasonal patterns, turning facility subscriptions into a production planning signal.</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================= 3. TRANSPORTATION PORTAL ======================= -->
+  <section>
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <h2>Partner portal — transportation</h2>
+    </div>
+    <p class="section-sub">GreenRoute Logistics, a contracted EV-fleet partner. FreshLink sends pre-consolidated routes — one pickup, several nearby facility stops, temperature requirements attached — so the partner runs density, not errands.</p>
+
+    <div class="stage" style="flex-direction:column;align-items:center;">
+
+      <!-- T1: route board -->
+      <div class="browser-block">
+        <div class="browser">
+          <div class="browser-top">
+            <div class="dots"><i style="background:#E0655F;"></i><i style="background:#E8C04C;"></i><i style="background:#7BB661;"></i></div>
+            <div class="urlbar"><span class="lock"></span> logistics.freshlinkdetroit.org / routes</div>
+          </div>
+          <div class="portal">
+            <div class="sidebar">
+              <div class="side-logo">
+                <svg width="24" height="24" viewBox="0 0 32 32" fill="none"><path d="M16 2.5C10.2 2.5 5.8 7.2 5.8 12.8C5.8 20.8 16 29.5 16 29.5C16 29.5 26.2 20.8 26.2 12.8C26.2 7.2 21.8 2.5 16 2.5Z" stroke="#7FC79A" stroke-width="2.4" fill="#16324F"/><path d="M16 9.5C12.6 11.2 12.2 16.4 16 18.9C19.8 16.4 19.4 11.2 16 9.5Z" fill="#7FC79A"/></svg>
+                <b>Fresh<span>Link</span></b>
+              </div>
+              <div class="side-item active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Routes</span></div>
+              <div class="side-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 16h11V6H3zM14 9h4l3 3v4h-7z"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></svg><span>Fleet</span></div>
+              <div class="side-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c1.5-4 12.5-4 14 0"/></svg><span>Drivers</span></div>
+              <div class="side-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M15.5 9.5c-.8-1-2-1.5-3.5-1.5s-3 .7-3 2 1.4 1.8 3 2.2 3 .8 3 2-1.5 1.8-3 1.8-2.8-.6-3.5-1.6"/></svg><span>Earnings</span></div>
+              <div class="side-foot"><div class="avatar-sm">GR</div><div>GreenRoute Logistics<br><small>EV fleet partner</small></div></div>
+            </div>
+            <div class="main">
+              <div class="main-head">
+                <div><h3>Today's consolidated routes</h3><div class="sub">Tuesday, Sep 23 · 3 routes · 9 facility stops</div></div>
+                <div class="head-actions"><button class="btn-secondary">Driver view</button><button class="btn-primary">Dispatch all</button></div>
+              </div>
+              <div class="content">
+                <div class="portal-kpis">
+                  <div class="portal-kpi"><div class="l">Routes today</div><div class="v">3</div><div class="d up">9 stops total</div></div>
+                  <div class="portal-kpi"><div class="l">Capacity use</div><div class="v">82%</div><div class="d up">optimal band 75–90%</div></div>
+                  <div class="portal-kpi"><div class="l">Miles saved</div><div class="v">118</div><div class="d up">vs separate deliveries</div></div>
+                  <div class="portal-kpi"><div class="l">EV share</div><div class="v">100%</div><div class="d up">all routes electric</div></div>
+                </div>
+                <div class="two-col">
+                  <div class="col-card">
+                    <h4>Route board <span class="status-chip info">cutoff 6 PM Mon</span></h4>
+                    <table style="border-radius:10px;">
+                      <thead><tr><th>Route</th><th>Zone</th><th>Stops</th><th>Van</th><th>Temp zones</th><th>Util.</th><th></th></tr></thead>
+                      <tbody>
+                        <tr><td><b>D-11</b></td><td>Midtown</td><td>3</td><td>EV-04</td><td>Ambient</td><td class="num">74%</td><td><div class="route-table-actions"><button class="btn-view">View</button><button class="btn-accept">Dispatch</button></div></td></tr>
+                        <tr style="background:var(--green-tint);"><td><b>D-12</b></td><td>Eastside</td><td>3</td><td>EV-07</td><td>Refrig + ambient</td><td class="num">88%</td><td><div class="route-table-actions"><button class="btn-view">View</button><button class="btn-accept">Dispatch</button></div></td></tr>
+                        <tr><td><b>D-13</b></td><td>Southwest</td><td>3</td><td>EV-02</td><td>Refrig</td><td class="num">83%</td><td><div class="route-table-actions"><button class="btn-view">View</button><button class="btn-accept">Dispatch</button></div></td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="map-wrap">
+                    <svg viewBox="0 0 360 250" width="100%" style="display:block;border-radius:8px;">
+                      <rect width="360" height="250" fill="#EFF3EE"/>
+                      <g stroke="#DDE4DB" stroke-width="3"><path d="M0 60H360"/><path d="M0 130H360"/><path d="M0 200H360"/><path d="M60 0V250"/><path d="M140 0V250"/><path d="M230 0V250"/><path d="M310 0V250"/></g>
+                      <path d="M40 40 C 120 40, 130 95, 205 100 C 260 104, 275 150, 320 205" stroke="#2F7D4E" stroke-width="4" fill="none" stroke-linecap="round" stroke-dasharray="1 9"/>
+                      <g>
+                        <rect x="24" y="24" width="34" height="34" rx="9" fill="#16324F"/>
+                        <text x="41" y="46" text-anchor="middle" fill="#fff" font-size="13" font-weight="800" font-family="Satoshi">P</text>
+                      </g>
+                      <circle cx="200" cy="100" r="11" fill="#fff" stroke="#2F7D4E" stroke-width="3"/>
+                      <circle cx="260" cy="130" r="11" fill="#fff" stroke="#2F7D4E" stroke-width="3"/>
+                      <circle cx="320" cy="205" r="11" fill="#fff" stroke="#2F7D4E" stroke-width="3"/>
+                      <g font-size="10" font-weight="700" fill="#43524A" font-family="General Sans">
+                        <text x="216" y="88">Hope Harbor</text>
+                        <text x="276" y="122">Grace House</text>
+                        <text x="290" y="228">Sunrise Senior</text>
+                      </g>
+                      <g><rect x="14" y="196" width="12" height="12" rx="3" fill="#16324F"/><text x="32" y="206" font-size="10" fill="#43524A" font-family="General Sans" font-weight="600">Pickup · Core Supply</text></g>
+                    </svg>
+                    <div class="map-legend">
+                      <span><i class="dot-i" style="background:var(--navy);"></i>Pickup</span>
+                      <span><i class="dot-i" style="background:#fff;border:2px solid var(--green);"></i>Facility stop</span>
+                      <span><svg width="26" height="6"><line x1="0" y1="3" x2="26" y2="3" stroke="#2F7D4E" stroke-width="3" stroke-dasharray="1 7" stroke-linecap="round"/></svg>Route D-12</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mock-caption" style="max-width:640px;">
+          <h4>T1 · Dispatch — route board</h4>
+          <p>Routes arrive pre-consolidated: one supplier pickup feeding several nearby facilities, with capacity utilization and temperature zones shown before dispatch.</p>
+          <span class="ai-note">✦ AI: groups orders by geography, vehicle capacity, delivery windows, and cold-chain requirements — the partner dispatches density, not fragmented trips.</span>
+        </div>
+      </div>
+
+      <!-- T2: route detail -->
+      <div class="browser-block">
+        <div class="browser">
+          <div class="browser-top">
+            <div class="dots"><i style="background:#E0655F;"></i><i style="background:#E8C04C;"></i><i style="background:#7BB661;"></i></div>
+            <div class="urlbar"><span class="lock"></span> logistics.freshlinkdetroit.org / routes / d-12</div>
+          </div>
+          <div class="portal">
+            <div class="sidebar">
+              <div class="side-logo">
+                <svg width="24" height="24" viewBox="0 0 32 32" fill="none"><path d="M16 2.5C10.2 2.5 5.8 7.2 5.8 12.8C5.8 20.8 16 29.5 16 29.5C16 29.5 26.2 20.8 26.2 12.8C26.2 7.2 21.8 2.5 16 2.5Z" stroke="#7FC79A" stroke-width="2.4" fill="#16324F"/><path d="M16 9.5C12.6 11.2 12.2 16.4 16 18.9C19.8 16.4 19.4 11.2 16 9.5Z" fill="#7FC79A"/></svg>
+                <b>Fresh<span>Link</span></b>
+              </div>
+              <div class="side-item active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Routes</span></div>
+              <div class="side-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 16h11V6H3zM14 9h4l3 3v4h-7z"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></svg><span>Fleet</span></div>
+              <div class="side-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c1.5-4 12.5-4 14 0"/></svg><span>Drivers</span></div>
+              <div class="side-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M15.5 9.5c-.8-1-2-1.5-3.5-1.5s-3 .7-3 2 1.4 1.8 3 2.2 3 .8 3 2-1.5 1.8-3 1.8-2.8-.6-3.5-1.6"/></svg><span>Earnings</span></div>
+              <div class="side-foot"><div class="avatar-sm">GR</div><div>GreenRoute Logistics<br><small>EV fleet partner</small></div></div>
+            </div>
+            <div class="main">
+              <div class="main-head">
+                <div><h3>Route D-12 · Eastside</h3><div class="sub">EV Van 07 · refrigerated + ambient · driver Marcus T.</div></div>
+                <div class="head-actions"><span class="status-chip ok">● Live · stop 2 of 4</span><button class="btn-primary">Contact driver</button></div>
+              </div>
+              <div class="content">
+                <div class="two-col">
+                  <div class="col-card">
+                    <h4>Stop sequence <span style="font-weight:500;color:var(--ink-faint);font-size:11px;">18.4 mi total</span></h4>
+                    <div class="timeline">
+                      <div class="tl-stop done">
+                        <div class="tl-dot">✓</div>
+                        <div class="tl-body">
+                          <div class="t"><span>Pickup · Core Supply Co-op</span><span style="color:var(--green);font-size:11px;">7:34 AM ✓</span></div>
+                          <div class="s">14 crates · refrigerated 34–40°F + ambient · sealed and scanned</div>
+                        </div>
+                      </div>
+                      <div class="tl-stop now">
+                        <div class="tl-dot">🏠</div>
+                        <div class="tl-body">
+                          <div class="t"><span>Hope Harbor Shelter</span><span style="font-size:11px;">ETA 9:10 AM</span></div>
+                          <div class="s">$612 order · 75 residents · refrigerated drop · receiving dock side entrance · proof: signature + photo + temp log</div>
+                        </div>
+                      </div>
+                      <div class="tl-stop">
+                        <div class="tl-dot">👵</div>
+                        <div class="tl-body">
+                          <div class="t"><span>Grace House Group Home</span><span style="font-size:11px;color:var(--ink-faint);">9:45 AM</span></div>
+                          <div class="s">$215 order · ambient only · front desk sign-off</div>
+                        </div>
+                      </div>
+                      <div class="tl-stop">
+                        <div class="tl-dot">🛏️</div>
+                        <div class="tl-body">
+                          <div class="t"><span>Sunrise Senior Living</span><span style="font-size:11px;color:var(--ink-faint);">10:20 AM</span></div>
+                          <div class="s">$848 order · refrigerated · kitchen receiving · dietary order — handle seal verification</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-card">
+                    <h4>Cold chain</h4>
+                    <div class="temp-monitor">
+                      <div><div class="t">38°F</div><small>REFRIGERATED BAY</small></div>
+                      <div class="temp-live"><span class="blink"></span>LIVE</div>
+                    </div>
+                    <div class="detail-rows">
+                      <div class="drow"><span>Required range</span><b>34–40°F</b></div>
+                      <div class="drow"><span>Excursions today</span><b style="color:var(--green);">None</b></div>
+                      <div class="drow"><span>Log interval</span><b>Every 2 min</b></div>
+                      <div class="drow"><span>Seal number</span><b>CS-0914-77</b></div>
+                    </div>
+                    <div class="ai-insight" style="margin-top:auto;">
+                      <div class="ic">✦</div>
+                      <p><b>Route health</b>All remaining stops are within window. If traffic on Gratiot adds 10+ min, Sunrise can shift to 10:35 AM without breaking its receiving cutoff.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mock-caption" style="max-width:640px;">
+          <h4>T2 · Route detail — live delivery</h4>
+          <p>Every stop carries its order, temperature requirement, and proof-of-delivery rules. Live cold-chain monitoring gives facilities and suppliers an auditable trail.</p>
+          <span class="ai-note">✦ AI: monitors live conditions and warns before a delivery window breaks — protecting on-time rate and food safety without dispatcher babysitting.</span>
+        </div>
+      </div>
+
+      <!-- T3: earnings -->
+      <div class="browser-block">
+        <div class="browser">
+          <div class="browser-top">
+            <div class="dots"><i style="background:#E0655F;"></i><i style="background:#E8C04C;"></i><i style="background:#7BB661;"></i></div>
+            <div class="urlbar"><span class="lock"></span> logistics.freshlinkdetroit.org / earnings</div>
+          </div>
+          <div class="portal">
+            <div class="sidebar">
+              <div class="side-logo">
+                <svg width="24" height="24" viewBox="0 0 32 32" fill="none"><path d="M16 2.5C10.2 2.5 5.8 7.2 5.8 12.8C5.8 20.8 16 29.5 16 29.5C16 29.5 26.2 20.8 26.2 12.8C26.2 7.2 21.8 2.5 16 2.5Z" stroke="#7FC79A" stroke-width="2.4" fill="#16324F"/><path d="M16 9.5C12.6 11.2 12.2 16.4 16 18.9C19.8 16.4 19.4 11.2 16 9.5Z" fill="#7FC79A"/></svg>
+                <b>Fresh<span>Link</span></b>
+              </div>
+              <div class="side-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Routes</span></div>
+              <div class="side-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 16h11V6H3zM14 9h4l3 3v4h-7z"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></svg><span>Fleet</span></div>
+              <div class="side-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c1.5-4 12.5-4 14 0"/></svg><span>Drivers</span></div>
+              <div class="side-item active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M15.5 9.5c-.8-1-2-1.5-3.5-1.5s-3 .7-3 2 1.4 1.8 3 2.2 3 .8 3 2-1.5 1.8-3 1.8-2.8-.6-3.5-1.6"/></svg><span>Earnings</span></div>
+              <div class="side-foot"><div class="avatar-sm">GR</div><div>GreenRoute Logistics<br><small>EV fleet partner</small></div></div>
+            </div>
+            <div class="main">
+              <div class="main-head">
+                <div><h3>Fleet & earnings</h3><div class="sub">Week of Sep 15–21 · GreenRoute Logistics</div></div>
+                <div class="head-actions"><button class="btn-secondary">Download statement</button><button class="btn-primary">Payout settings</button></div>
+              </div>
+              <div class="content">
+                <div class="portal-kpis">
+                  <div class="portal-kpi"><div class="l">Weekly revenue</div><div class="v">$1,984</div><div class="d up">▲ 9% vs last week</div></div>
+                  <div class="portal-kpi"><div class="l">Revenue per stop</div><div class="v">$8.40</div><div class="d up">▲ $0.60</div></div>
+                  <div class="portal-kpi"><div class="l">On-time rate</div><div class="v">96%</div><div class="d up">23 / 24 stops</div></div>
+                  <div class="portal-kpi"><div class="l">CO₂ avoided</div><div class="v">214 lb</div><div class="d up">this month, EV miles</div></div>
+                </div>
+                <div class="charts-row">
+                  <div class="chart-card">
+                    <h4>Earnings by route</h4>
+                    <div class="csub">Consolidation fees + per-stop rates, this week</div>
+                    <table style="border-radius:10px;">
+                      <thead><tr><th>Route</th><th>Day</th><th>Stops</th><th>Miles</th><th>Consolidation bonus</th><th>Fee</th></tr></thead>
+                      <tbody>
+                        <tr><td><b>D-11</b> Midtown</td><td>Tue</td><td>3</td><td class="num">14.2</td><td class="num" style="color:var(--green);">+$21</td><td class="num">$182.40</td></tr>
+                        <tr><td><b>D-12</b> Eastside</td><td>Tue</td><td>3</td><td class="num">18.4</td><td class="num" style="color:var(--green);">+$38</td><td class="num">$226.10</td></tr>
+                        <tr><td><b>D-13</b> Southwest</td><td>Wed</td><td>3</td><td class="num">16.1</td><td class="num" style="color:var(--green);">+$26</td><td class="num">$204.75</td></tr>
+                        <tr><td><b>D-14</b> Northwest</td><td>Thu</td><td>3</td><td class="num">19.8</td><td class="num" style="color:var(--green);">+$30</td><td class="num">$218.90</td></tr>
+                        <tr><td><b>D-15</b> Corktown</td><td>Fri</td><td>3</td><td class="num">12.6</td><td class="num" style="color:var(--green);">+$19</td><td class="num">$171.25</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="col-card">
+                    <h4>Why consolidation pays</h4>
+                    <div class="ai-insight">
+                      <div class="ic">✦</div>
+                      <p><b>Consolidation bonus</b>Merging 3 single facility deliveries into Route D-12 earned <b style="display:inline;">+$38</b> this week while driving 26 fewer miles than separate trips.</p>
+                    </div>
+                    <div class="detail-rows">
+                      <div class="drow"><span>Separate-delivery baseline</span><b>9 trips · 46.3 mi</b></div>
+                      <div class="drow"><span>FreshLink consolidated</span><b style="color:var(--green);">3 routes · 18.4 mi</b></div>
+                      <div class="drow"><span>Delivery fee per facility</span><b>− $13.30 avg</b></div>
+                      <div class="drow"><span>Fill-rate impact on facilities</span><b>94% order fill</b></div>
+                    </div>
+                    <div class="forecast-card" style="margin-top:auto;">
+                      <h4>🌱 Community impact · September</h4>
+                      <p>GreenRoute routes delivered <b style="color:#fff;">18,600 lb</b> of nutritious food to Detroit facilities and avoided <b style="color:#fff;">214 lb CO₂</b> versus conventional delivery — reportable to city sustainability programs.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mock-caption" style="max-width:640px;">
+          <h4>T3 · Fleet & earnings</h4>
+          <p>Consolidation is priced transparently: per-stop fees plus bonuses for merged trips, next to the utilization and emissions numbers fleet partners and city programs care about.</p>
+          <span class="ai-note">✦ AI: keeps routes in the 75–90% utilization sweet spot, so every dispatched mile carries paying freight in both directions of the efficiency story.</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <span>FreshLink Detroit · product mockups for Buildathon Detroit 2026</span>
+    <span>All figures are illustrative pilot-scenario data (demo assumptions), not validated results.</span>
+  </footer>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://perplexity.localhost","http://localhost:1420","http://127.0.0.1:1420","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="position:relative;left:-${scrollX}px;top:-${scrollY}px">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

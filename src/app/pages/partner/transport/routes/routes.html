@@ -1,0 +1,63 @@
+<div class="main-head">
+  <div>
+    <h3>Routes today</h3>
+    <div class="sub">Consolidated multi-stop EV deliveries</div>
+  </div>
+</div>
+<div class="content">
+  @if (error()) {
+    <div class="error">{{ error() }}</div>
+  } @else {
+    <div class="portal-kpis">
+      <div class="portal-kpi"><div class="l">Routes today</div><div class="v">{{ routes().length }}</div><div class="d">{{ totalStops() }} stops total</div></div>
+      <div class="portal-kpi"><div class="l">Capacity use</div><div class="v">{{ avgCapacity() }}%</div><div class="d">optimal band 75–90%</div></div>
+      <div class="portal-kpi"><div class="l">Miles saved</div><div class="v">{{ milesSaved() }}</div><div class="d">vs separate deliveries</div></div>
+      <div class="portal-kpi"><div class="l">EV share</div><div class="v">100%</div><div class="d">all routes electric</div></div>
+    </div>
+
+    <div class="routes-board">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Route</th>
+              <th>Window</th>
+              <th>Stops</th>
+              <th>Capacity</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (r of routes(); track r.id) {
+              <tr
+                [class.is-selected]="selectedId() === r.id"
+                (click)="selectRoute(r.id)"
+              >
+                <td data-label="Route"><b>{{ r.code }}</b> · {{ r.delivery_date | date: 'MMM d' }}</td>
+                <td data-label="Window">{{ r.window_label }}</td>
+                <td data-label="Stops">{{ r.stops?.length || 0 }}</td>
+                <td data-label="Capacity">{{ r.capacity_pct }}%</td>
+                <td data-label="Status"><span class="status-chip" [class]="r.status === 'accepted' || r.status === 'in_progress' ? 'ok' : 'info'">{{ r.status }}</span></td>
+                <td class="route-actions">
+                  @if (r.status === 'offered') {
+                    <button type="button" class="btn-primary" (click)="accept(r.id); $event.stopPropagation()">Accept</button>
+                  }
+                  <a class="btn-secondary" [routerLink]="['/partner/transport/routes', r.id]" (click)="$event.stopPropagation()">View</a>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <div class="map-wrap">
+        <app-dispatch-map
+          [routes]="routes()"
+          [selectedId]="selectedId()"
+          (routeSelect)="selectRoute($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

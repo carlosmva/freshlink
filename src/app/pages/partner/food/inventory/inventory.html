@@ -1,0 +1,161 @@
+<div class="main-head">
+  <div>
+    <h3>Inventory</h3>
+    <div class="sub">{{ filtered().length }} of {{ rows().length }} listings · surplus marketplace ready</div>
+  </div>
+  <div class="route-actions">
+    <label class="search-field">
+      <span class="sr-only">Search products</span>
+      <fl-icon class="search-ico" name="search" />
+      <input
+        type="search"
+        class="search-input"
+        placeholder="Search products…"
+        [value]="query()"
+        (input)="query.set($any($event.target).value)"
+      />
+    </label>
+    <button type="button" class="btn-primary" (click)="openList()"><fl-icon name="plus" /> List an item</button>
+  </div>
+</div>
+<div class="content">
+  @if (error()) {
+    <div class="error">{{ error() }}</div>
+  }
+
+  @if (surplusCount() > 0 && !query()) {
+    <div class="banner">
+      <div class="ic"><fl-icon name="zap" /></div>
+      <div class="tx">
+        <b>{{ surplusCount() }} items nearing best-before — publish to the Surplus Marketplace</b>
+        <p>Facilities within your delivery zone are pre-matched. Typical time-to-sell: under 36 hours.</p>
+      </div>
+      <button type="button" class="btn-primary">Publish {{ surplusCount() }} items</button>
+    </div>
+  }
+
+  @if (!filtered().length) {
+    <div class="empty-card">
+      @if (query()) {
+        <b>No listings match “{{ query() }}”</b>
+        <p>Try another name, or list a new item.</p>
+        <button type="button" class="btn-secondary" (click)="query.set('')">Clear search</button>
+      } @else {
+        <b>No listings yet</b>
+        <p>Add a product to start receiving institutional orders.</p>
+        <button type="button" class="btn-primary" (click)="openList()"><fl-icon name="plus" /> List an item</button>
+      }
+    </div>
+  } @else {
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>On hand</th>
+            <th>Wholesale price</th>
+            <th>Partner</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of filtered(); track row.id) {
+            <tr>
+              <td data-label="Product">
+                <div class="prod">
+                  <span class="ic">{{ row.product?.emoji }}</span>
+                  <div>
+                    <b>{{ row.product?.name }}</b>
+                    <small>{{ row.product?.unit }}</small>
+                  </div>
+                </div>
+              </td>
+              <td class="num" data-label="On hand">{{ row.quantity }}</td>
+              <td class="num" data-label="Wholesale">{{ row.unit_price | currency }}</td>
+              <td data-label="Partner">{{ row.partner?.name }}</td>
+              <td data-label="Status"><span class="status-chip" [class]="row.status">{{ statusLabel(row.status) }}</span></td>
+              <td class="actions">
+                <button type="button" class="btn-secondary" (click)="bump(row, -5)">−5</button>
+                <button type="button" class="btn-primary" (click)="bump(row, 5)">+5</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
+
+@if (listing()) {
+  <div class="sheet-backdrop" (click)="closeList()"></div>
+  <form class="sheet" (submit)="$event.preventDefault(); submitList()">
+    <div class="sheet-head">
+      <h3>List an item</h3>
+      <button type="button" class="btn-secondary" (click)="closeList()">Cancel</button>
+    </div>
+    <p class="csub">Publishes to the Core Supply Co-op catalog. Facilities can pull it into next week’s basket.</p>
+
+    <label class="field">
+      <span>Product name</span>
+      <input
+        type="text"
+        required
+        placeholder="e.g. Rolled oats · 25 lb"
+        [value]="draft().name"
+        (input)="setDraft('name', $any($event.target).value)"
+      />
+    </label>
+
+    <div class="field-row">
+      <label class="field">
+        <span>Unit</span>
+        <select [value]="draft().unit" (change)="setDraft('unit', $any($event.target).value)">
+          <option value="bag">Bag</option>
+          <option value="case">Case</option>
+          <option value="pack">Pack</option>
+          <option value="flat">Flat</option>
+          <option value="crates">Crates</option>
+        </select>
+      </label>
+      <label class="field">
+        <span>On hand</span>
+        <input
+          type="number"
+          min="0"
+          step="1"
+          [value]="draft().quantity"
+          (input)="setDraft('quantity', $any($event.target).valueAsNumber || 0)"
+        />
+      </label>
+      <label class="field">
+        <span>Wholesale $</span>
+        <input
+          type="number"
+          min="0"
+          step="0.01"
+          [value]="draft().unit_price"
+          (input)="setDraft('unit_price', $any($event.target).valueAsNumber || 0)"
+        />
+      </label>
+    </div>
+
+    <div class="field">
+      <span>Icon</span>
+      <div class="emoji-row">
+        @for (e of emojis; track e) {
+          <button
+            type="button"
+            class="emoji-btn"
+            [class.on]="draft().emoji === e"
+            (click)="setDraft('emoji', e)"
+          >{{ e }}</button>
+        }
+      </div>
+    </div>
+
+    <button type="submit" class="btn-primary sheet-submit" [disabled]="saving()">
+      {{ saving() ? 'Listing…' : 'Publish listing' }}
+    </button>
+  </form>
+}

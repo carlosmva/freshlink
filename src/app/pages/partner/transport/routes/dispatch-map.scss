@@ -1,0 +1,66 @@
+:host {
+  display: block;
+}
+
+.map-canvas {
+  width: 100%;
+  height: 360px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #e7efe4;
+}
+
+.map-legend {
+  display: flex;
+  gap: 14px;
+  font-size: 10.5px;
+  color: var(--ink-soft);
+  margin-top: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.map-legend span,
+.map-legend-route {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.map-legend-route {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.map-legend-route.is-live {
+  color: var(--navy);
+  font-weight: 700;
+}
+
+.dot-i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.dot-i.pickup {
+  background: var(--navy);
+}
+
+.dot-i.stop {
+  background: #fff;
+  border: 2px solid var(--green);
+  box-sizing: border-box;
+}
+
+@media (max-width: 800px) {
+  .map-canvas {
+    height: 260px;
+  }
+}

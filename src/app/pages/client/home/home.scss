@@ -1,0 +1,225 @@
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: var(--navy);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.ai-hero {
+  background: linear-gradient(135deg, var(--navy) 0%, #1c4266 100%);
+  border-radius: 16px;
+  padding: 16px;
+  color: #fff;
+}
+
+.ai-hero .tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 8px;
+}
+
+.ai-hero .tag fl-icon {
+  font-size: 12px;
+}
+
+.ai-hero h4 {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0 0 10px;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-size: 11.5px;
+  color: #c9d7e3;
+  margin-bottom: 14px;
+}
+
+.meta b {
+  color: #fff;
+}
+
+.ai-hero .btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
+.kpi-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.kpi {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.kpi .v {
+  font-family: 'Satoshi', system-ui, sans-serif;
+  font-weight: 900;
+  font-size: 17px;
+}
+
+.kpi .l {
+  font-size: 10px;
+  color: var(--ink-faint);
+  font-weight: 600;
+  margin-top: 2px;
+  line-height: 1.3;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.delivery-card {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.route-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--green-tint);
+  color: var(--green-deep);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.route-badge b {
+  font-size: 13px;
+}
+
+.delivery-info .t {
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'Satoshi', system-ui, sans-serif;
+}
+
+.delivery-info .s {
+  font-size: 11px;
+  color: var(--ink-soft);
+  margin-top: 2px;
+  line-height: 1.45;
+}
+
+.card-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  gap: 8px;
+}
+
+.card-title h5 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 9px;
+  border-radius: 99px;
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+  background: var(--surface);
+}
+
+@media (min-width: 801px) {
+  .content {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(18rem, 1fr);
+    align-items: start;
+    align-content: start;
+  }
+
+  .ai-hero {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    padding: 22px 24px;
+    min-height: 100%;
+  }
+
+  .ai-hero h4 {
+    font-size: 22px;
+    max-width: 36rem;
+  }
+
+  .ai-hero .btn {
+    display: inline-flex;
+    width: auto;
+    padding-inline: 18px;
+  }
+
+  .delivery-card {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+  }
+
+  .nutrition-card {
+    grid-column: 2;
+    grid-row: 2;
+    min-width: 0;
+  }
+
+  .kpi-row {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    gap: 16px;
+  }
+
+  .loading,
+  .error {
+    grid-column: 1 / -1;
+  }
+
+  .kpi {
+    padding: 16px;
+  }
+
+  .kpi .v {
+    font-size: 22px;
+  }
+
+  .kpi .l {
+    font-size: 12px;
+  }
+}

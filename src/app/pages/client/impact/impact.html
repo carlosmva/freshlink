@@ -1,0 +1,60 @@
+<div class="main-head">
+  <div>
+    <h3>Impact</h3>
+    <div class="sub">{{ data()?.month_label || 'This month' }} · Hope Harbor Shelter</div>
+  </div>
+  <span class="pill green">Grant-ready</span>
+</div>
+
+<div class="content">
+  @if (error()) {
+    <div class="error">{{ error() }}</div>
+  } @else if (!data()) {
+    <div class="loading">Loading impact…</div>
+  } @else {
+    <div class="card delivery-card">
+      <div class="route-badge"><b>{{ data().on_time_pct | number:'1.0-0' }}%</b>ON TIME</div>
+      <div class="delivery-info">
+        <div class="t">{{ data().deliveries_on_time }} of {{ data().deliveries_total }} deliveries on time</div>
+        <div class="s">Order fill rate {{ data().fill_rate_pct }}% · all routes shared with nearby facilities</div>
+      </div>
+    </div>
+
+    <div class="impact-grid">
+      <div class="impact-kpi"><div class="v">{{ data().meals_supported | number }}</div><div class="l">Meals supported this month</div></div>
+      <div class="impact-kpi"><div class="v">{{ data().dollars_saved | currency:'USD':'symbol':'1.0-0' }}</div><div class="l">Saved vs baseline purchasing</div></div>
+      <div class="impact-kpi"><div class="v">{{ data().local_spend_pct }}%</div><div class="l">Local / Michigan-grown spend</div></div>
+      <div class="impact-kpi"><div class="v">{{ data().surplus_lb }} lb</div><div class="l">Surplus food rescued</div></div>
+    </div>
+
+    <div class="card chart-card">
+      <div class="card-title"><h5>Monthly savings vs baseline</h5><span class="pill green">2026</span></div>
+      <div class="bars" role="img" aria-label="Monthly savings versus baseline for 2026">
+        @for (bar of savingsBars(); track bar.m) {
+          <div class="bar-col">
+            <div class="bar-plot">
+              <div class="bar-grow" [style.--stack-h]="bar.height + 16 + 'px'">
+                <span class="bar-val">{{ bar.amount | currency:'USD':'symbol':'1.0-0' }}</span>
+                <div
+                  class="b"
+                  [class.on]="bar.current"
+                  [attr.aria-label]="bar.m + ' savings ' + (bar.amount | currency:'USD':'symbol':'1.0-0')"
+                ></div>
+              </div>
+            </div>
+            <span class="bar-lbl">{{ bar.m }}</span>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="grant-card">
+      <div class="ic"><fl-icon name="file-text" /></div>
+      <div class="tx">
+        <div class="t">Q3 impact report ready</div>
+        <div class="s">Auto-compiled for funders and grant reporting</div>
+      </div>
+      <button class="btn-sm solid" type="button">Export</button>
+    </div>
+  }
+</div>

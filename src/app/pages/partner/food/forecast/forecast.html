@@ -1,0 +1,65 @@
+<div class="main-head">
+  <div>
+    <h3>Demand & analytics</h3>
+    <div class="sub">Rolling 4 weeks · Core Supply Co-op</div>
+  </div>
+  <div class="route-actions">
+    <button type="button" class="btn-secondary">Export CSV</button>
+    <button type="button" class="btn-primary">Plan next week</button>
+  </div>
+</div>
+<div class="content">
+  @if (error()) {
+    <div class="error">{{ error() }}</div>
+  } @else if (!data()) {
+    <div class="loading">Loading forecast…</div>
+  } @else {
+    <div class="portal-kpis">
+      <div class="portal-kpi"><div class="l">Recurring revenue</div><div class="v">{{ data().recurringRevenue | currency:'USD':'symbol':'1.0-0' }}</div><div class="d">▲ 12% vs last month</div></div>
+      <div class="portal-kpi"><div class="l">Repeat facilities</div><div class="v">{{ data().repeatFacilities }}</div><div class="d">▲ 3 new this month</div></div>
+      <div class="portal-kpi"><div class="l">Avg order value</div><div class="v">{{ data().avgOrderValue | currency:'USD':'symbol':'1.0-0' }}</div><div class="d">▲ 6%</div></div>
+      <div class="portal-kpi"><div class="l">Surplus recovered</div><div class="v">{{ data().surplusRecoveredTons | number:'1.1-1' }} t</div><div class="d">waste diverted</div></div>
+    </div>
+
+    <div class="charts-row">
+      <div class="chart-card">
+        <h4>Demand by category</h4>
+        <div class="csub">Institutional volume, last 4 weeks</div>
+        <div class="hbar-list">
+          @for (c of data().demandByCategory; track c.label) {
+            <div class="hbar">
+              <div class="lbl">{{ c.label }}</div>
+              <div class="track"><div class="fill" [style.width.%]="c.pct"></div></div>
+              <div class="val">{{ c.volume || (c.pct + '%') }}</div>
+            </div>
+          }
+        </div>
+        <div class="ai-insight forecast-note">
+          <div class="ic"><fl-icon name="sparkles" /></div>
+          <p><b>Forecast · week of Sep 29</b>{{ data().aiInsight }}</p>
+        </div>
+      </div>
+      <div class="chart-card">
+        <h4>Weekly fulfilled volume</h4>
+        <div class="csub">Orders shipped to facilities, last 8 weeks · index vs peak week</div>
+        <div class="spark" aria-label="Weekly fulfilled volume">
+          @for (w of weeks(); track w.label) {
+            <div class="spark-col">
+              <div class="spark-plot">
+                <span class="spark-val">{{ w.v }}</span>
+                <i [style.height]="barHeight(w.v)"></i>
+              </div>
+              <span class="spark-lbl">{{ w.label }}</span>
+            </div>
+          }
+        </div>
+        <div class="forecast-card" style="margin-top:12px">
+          <h4><fl-icon name="sprout" /> Surplus marketplace</h4>
+          <p>Items published to the surplus lane sold in a median of</p>
+          <div class="big">{{ data().surplusMedianHours }} hours</div>
+          <p>vs typical 5–7 days through conventional channels — recovering value instead of writing off short-dated stock.</p>
+        </div>
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,61 @@
+<div class="main-head">
+  <div>
+    <h3>Dashboard</h3>
+    <div class="sub">{{ data()?.partnerName || 'Food hub partner' }} · today’s institutional pipeline</div>
+  </div>
+  <div class="route-actions">
+    <a class="btn-secondary" routerLink="/partner/food/inventory">Manage inventory</a>
+    <a class="btn-primary" routerLink="/partner/food/orders">Review orders</a>
+  </div>
+</div>
+<div class="content">
+  @if (error()) {
+    <div class="error">{{ error() }}</div>
+  } @else if (!data()) {
+    <div class="loading">Loading dashboard…</div>
+  } @else {
+    <div class="portal-kpis">
+      <div class="portal-kpi"><div class="l">Open orders</div><div class="v">{{ data().kpis.openOrders }}</div><div class="d">awaiting / in flight</div></div>
+      <div class="portal-kpi"><div class="l">Active listings</div><div class="v">{{ data().kpis.listings }}</div><div class="d">catalog live</div></div>
+      <div class="portal-kpi"><div class="l">Recurring revenue</div><div class="v">{{ data().kpis.recurringRevenue | currency:'USD':'symbol':'1.0-0' }}</div><div class="d">▲ 12% vs last month</div></div>
+      <div class="portal-kpi"><div class="l">Surplus alerts</div><div class="v">{{ data().kpis.surplusItems }}</div><div class="d">publish to marketplace</div></div>
+    </div>
+
+    <div class="charts-row">
+      <div class="chart-card">
+        <h4>Pending institutional orders</h4>
+        <div class="order-list" style="margin-top:10px">
+          @for (o of data().pendingOrders; track o.id) {
+            <a class="order-row" routerLink="/partner/food/orders">
+              <div class="bd">
+                <b>{{ o.facility?.name }}</b>
+                <small>{{ o.status }} · {{ o.itemCount }} items</small>
+              </div>
+              <div class="num">{{ o.total | currency }}</div>
+            </a>
+          }
+        </div>
+      </div>
+      <div class="chart-card">
+        <h4>Surplus lane</h4>
+        <div class="ai-insight">
+          <div class="ic"><fl-icon name="sparkles" /></div>
+          <p><b>Demand insight</b>{{ data().aiInsight }}</p>
+        </div>
+        <div class="order-list">
+          @for (s of data().surplusAlerts; track s.id) {
+            <div class="order-row">
+              <div class="ic">{{ s.emoji }}</div>
+              <div class="bd">
+                <b>{{ s.name }}</b>
+                <small>On hand {{ s.quantity }} · {{ s.status }}</small>
+              </div>
+              <span class="status-chip" [class]="s.status">{{ s.status }}</span>
+            </div>
+          }
+        </div>
+        <a class="btn-primary" style="margin-top:12px;display:inline-flex" routerLink="/partner/food/inventory">Publish surplus →</a>
+      </div>
+    </div>
+  }
+</div>

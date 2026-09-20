@@ -1,0 +1,61 @@
+<div class="main-head">
+  <div>
+    <h3>This week</h3>
+    <div class="sub">
+      {{ data()?.facility?.name || 'Facility staff' }}
+      @if (data(); as d) {
+        · week of {{ d.weekOf | date: 'MMM d' }} · Tuesday delivery
+      }
+    </div>
+  </div>
+  @if (data(); as d) {
+    <div class="avatar">{{ d.facility.contact_initials }}</div>
+  }
+</div>
+
+<div class="content">
+  @if (error()) {
+    <div class="error">{{ error() }}</div>
+  } @else if (!data()) {
+    <div class="loading">Loading this week…</div>
+  } @else {
+    <div class="ai-hero">
+      <span class="tag"><fl-icon name="sparkles" /> AI recommendation ready · {{ ai()?.source || '…' }}</span>
+      <h4>{{ ai()?.summary || ('Your weekly order is built — ' + data().order.itemCount + ' items from ' + data().order.supplierCount + ' suppliers') }}</h4>
+      <div class="meta">
+        <span><b>{{ data().order.estTotal | currency }}</b> est. total</span>
+        <span><b>{{ data().order.belowBaseline | currency }}</b> below baseline</span>
+        <span><b>{{ data().order.savingsPct }}%</b> savings</span>
+      </div>
+      <a class="btn light" routerLink="/client/basket">Review basket →</a>
+    </div>
+
+    <div class="kpi-row">
+      <div class="kpi"><div class="v">{{ data().budgetLeft | currency:'USD':'symbol':'1.0-0' }}</div><div class="l">Budget left this week</div></div>
+      <div class="kpi"><div class="v">{{ data().facility.resident_count }}</div><div class="l">Residents to feed</div></div>
+      <div class="kpi"><div class="v">{{ data().mealsPlanned }}</div><div class="l">Meals planned</div></div>
+    </div>
+
+    @if (data().nextDelivery; as d) {
+      <div class="card delivery-card">
+        <div class="route-badge"><b>{{ d.code }}</b>ROUTE</div>
+        <div class="delivery-info">
+          <div class="t">Next delivery · {{ d.date | date: 'EEE, MMM d' }}</div>
+          <div class="s">{{ d.window }} window · EV van · shared route with {{ d.sharedStops }} nearby facilities · delivery fee {{ d.fee | currency }} (−{{ d.savings | currency }} consolidated)</div>
+        </div>
+      </div>
+    }
+
+    <div class="card nutrition-card">
+      <div class="card-title">
+        <h5>Nutrition needs</h5>
+        <span class="pill navy">Dietitian-approved templates</span>
+      </div>
+      <div class="chips">
+        @for (tag of data().facility.diet_tags; track tag) {
+          <span class="chip">{{ tag }}</span>
+        }
+      </div>
+    </div>
+  }
+</div>

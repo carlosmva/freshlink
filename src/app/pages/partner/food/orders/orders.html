@@ -1,0 +1,115 @@
+<div class="main-head">
+  <div>
+    <h3>Institutional orders</h3>
+    <div class="sub">{{ openCount() }} open · cutoff for Route D-12: Monday 6 PM</div>
+  </div>
+  <div class="route-actions">
+    <span class="status-chip info" style="padding:8px 14px">Tue delivery day</span>
+    <button type="button" class="btn-primary">Accept all recurring</button>
+  </div>
+</div>
+<div class="content">
+  @if (error()) {
+    <div class="error">{{ error() }}</div>
+  } @else {
+    <div class="charts-row orders-split">
+      <div class="chart-card">
+        <h4>New orders <span class="status-chip warn">{{ pendingCount() }} awaiting response</span></h4>
+        <div class="order-list" style="margin-top:10px">
+          @for (o of orders(); track o.id) {
+            <button type="button" class="order-row" [class.sel]="selected()?.id === o.id" (click)="select(o)">
+              <div class="ic"><fl-icon name="building" /></div>
+              <div class="bd">
+                <b>{{ o.facility?.name }} · {{ o.orderRef }}</b>
+                <small>{{ o.cadence }} · due {{ o.window }} · Route {{ o.route }}</small>
+              </div>
+              <div class="amt">{{ o.total | currency }}</div>
+            </button>
+          }
+        </div>
+        <div class="ai-insight" style="margin-top:12px">
+          <div class="ic"><fl-icon name="sparkles" /></div>
+          <p><b>Demand insight</b>3 facilities within 5 miles ordered dairy this week. Offer a volume price on whole milk to win all three carts.</p>
+        </div>
+      </div>
+
+      @if (selected(); as o) {
+        <div class="chart-card">
+          <h4>
+            Order {{ o.orderRef }}
+            <span class="status-chip" [class]="statusChip(o.status)">{{ statusLabel(o.status) }}</span>
+          </h4>
+          <div class="detail-rows">
+            <div class="drow"><span>Facility</span><b>{{ o.facility?.name }}</b></div>
+            <div class="drow"><span>Delivery window</span><b>{{ o.window }}</b></div>
+            <div class="drow"><span>Route</span><b>{{ o.route }} · shared</b></div>
+            <div class="drow"><span>Temperature</span><b>{{ o.temperature }}</b></div>
+            <div class="drow"><span>Payment</span><b>{{ o.payment }}</b></div>
+            <div class="drow"><span>Items</span><b>{{ o.listingCount }} of your listings</b></div>
+          </div>
+          <div class="item-preview">{{ o.itemPreview }}</div>
+          @if (o.changeRequest; as change) {
+            <div class="ai-insight" style="margin-top:12px">
+              <div class="ic"><fl-icon name="clipboard-list" /></div>
+              <p><b>Change sent to {{ o.facility?.name }}</b>{{ change.reason }}{{ change.note ? ' — ' + change.note : '' }}</p>
+            </div>
+          }
+          <div class="route-actions" style="margin-top:auto;padding-top:12px">
+            <button
+              type="button"
+              class="btn-primary"
+              style="flex:1"
+              (click)="accept(o)"
+              [disabled]="isClosed(o)"
+            >
+              {{ o.status === 'approved' ? 'Accepted' : 'Accept order' }}
+            </button>
+            <button
+              type="button"
+              class="btn-secondary"
+              style="flex:1"
+              (click)="openChange(o)"
+              [disabled]="isClosed(o)"
+            >
+              {{ o.status === 'changes_requested' ? 'Change requested' : 'Request change' }}
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>
+
+@if (changing()) {
+  <div class="sheet-backdrop" (click)="closeChange()"></div>
+  <form class="sheet" (submit)="$event.preventDefault(); submitChange()">
+    <div class="sheet-head">
+      <h3>Request a change</h3>
+      <button type="button" class="btn-secondary" (click)="closeChange()">Cancel</button>
+    </div>
+    <p class="csub">
+      Sends a note to {{ selected()?.facility?.name }} for {{ selected()?.orderRef }}. They can adjust the basket before cutoff.
+    </p>
+
+    <label class="field">
+      <span>What’s wrong</span>
+      <select [value]="draft().reason" (change)="setDraft('reason', $any($event.target).value)">
+        @for (r of reasons; track r) {
+          <option [value]="r">{{ r }}</option>
+        }
+      </select>
+    </label>
+
+    <label class="field">
+      <span>Note to the facility</span>
+      <textarea
+        rows="4"
+        [value]="draft().note"
+        (input)="setDraft('note', $any($event.target).value)"
+        placeholder="e.g. Can only fill 28 of 40 lb chicken this week — sub frozen thighs or drop the line."
+      ></textarea>
+    </label>
+
+    <button type="submit" class="btn-primary sheet-submit">Send change request</button>
+  </form>
+}
