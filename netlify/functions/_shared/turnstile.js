@@ -8,11 +8,9 @@ function envVal(name) {
     .replace(/^['"]|['"]$/g, '');
 }
 
+/** Dummy keys only for `netlify dev`. CONTEXT/NETLIFY are build-time and often missing in Functions. */
 function isLocalDev() {
-  if (process.env.NETLIFY_DEV === 'true') return true;
-  if (process.env.CONTEXT === 'dev') return true;
-  if (!process.env.NETLIFY && process.env.CONTEXT !== 'production') return true;
-  return false;
+  return envVal('NETLIFY_DEV') === 'true';
 }
 
 function siteKey() {
