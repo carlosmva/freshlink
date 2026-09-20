@@ -1,0 +1,78 @@
+:host {
+  --nav-h: calc(56px + env(safe-area-inset-top, 0px));
+  --page-gutter: max(
+    24px,
+    env(safe-area-inset-inline-start, 0px),
+    env(safe-area-inset-inline-end, 0px),
+    calc((100vw - 1100px) / 2)
+  );
+}
+
+:host.bar {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: var(--nav-h);
+  padding-block: env(safe-area-inset-top, 0px) 0;
+  padding-inline: var(--page-gutter);
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+}
+
+:host.mark {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+}
+
+.logo-leaf {
+  display: block;
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.nav-wordmark {
+  font-family: 'Satoshi', system-ui, sans-serif;
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--green-deep);
+}
+
+.nav-wordmark span {
+  color: var(--green);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.actions:empty {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  :host {
+    --page-gutter: max(
+      16px,
+      env(safe-area-inset-inline-start, 0px),
+      env(safe-area-inset-inline-end, 0px)
+    );
+  }
+}

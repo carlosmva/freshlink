@@ -3,6 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService, Persona } from '../../core/auth.service';
 import { FlIcon } from '../../shared/icon/icon';
+import { FlSiteNav } from '../../shared/site-nav/site-nav';
 import { FlTurnstile } from '../../shared/turnstile/turnstile';
 
 const COPY: Record<
@@ -31,7 +32,7 @@ const COPY: Record<
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, RouterLink, FlIcon, FlTurnstile],
+  imports: [ReactiveFormsModule, RouterLink, FlIcon, FlSiteNav, FlTurnstile],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })

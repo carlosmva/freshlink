@@ -1,16 +1,18 @@
-<div class="page">
-  <header class="topbar">
-    <div class="brand">
-      <img
-        class="brand-logo"
-        src="full-logo.svg"
-        width="940"
-        height="902"
-        alt="FreshLink Detroit"
-      />
-    </div>
-  </header>
+<div class="brand-stage" data-brand-stage>
+  <fl-site-nav class="nav-compact" variant="mark" [href]="'#intro'" aria-hidden="true" tabindex="-1" />
+  <img
+    class="logo-full brand-logo"
+    src="full-logo.svg"
+    width="940"
+    height="902"
+    alt="FreshLink Detroit"
+  />
+  <a class="btn get-started" href="#intro">Get started</a>
+</div>
 
+<section class="welcome" aria-label="Welcome"></section>
+
+<div class="page" id="intro">
   <section class="hero">
     <div class="eyebrow">Detroit food-access network</div>
     <h1>One platform, three sides. AI-coordinated food access.</h1>
@@ -191,3 +193,18 @@
     </div>
   </div>
 </section>
+
+<div
+  class="brand-scrollbar"
+  role="scrollbar"
+  aria-orientation="vertical"
+  aria-controls="landing-root"
+  aria-valuemin="0"
+  aria-valuemax="100"
+  aria-valuenow="0"
+  aria-label="Page scroll"
+>
+  <button type="button" class="brand-scrollbar-thumb" aria-label="Drag to scroll">
+    <img src="leaf-mark.svg" width="24" height="24" alt="" draggable="false" />
+  </button>
+</div>

@@ -1,0 +1,14 @@
+@if (href()) {
+  <a class="brand" [href]="href()" aria-label="FreshLink">
+    <img class="logo-leaf" src="leaf-mark.svg" width="28" height="28" alt="" />
+    <b class="nav-wordmark">Fresh<span>Link</span></b>
+  </a>
+} @else {
+  <a class="brand" routerLink="/" aria-label="FreshLink">
+    <img class="logo-leaf" src="leaf-mark.svg" width="28" height="28" alt="" />
+    <b class="nav-wordmark">Fresh<span>Link</span></b>
+  </a>
+}
+<div class="actions">
+  <ng-content />
+</div>

@@ -1,24 +1,14 @@
-.page {
-  max-width: 520px;
-  margin-inline: auto;
-  padding-block: 0 calc(48px + env(safe-area-inset-bottom, 0px));
-  padding-inline: max(24px, env(safe-area-inset-inline-start, 0px), env(safe-area-inset-inline-end, 0px));
-}
-
-.topbar {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  padding-block: calc(28px + env(safe-area-inset-top)) 8px;
-  margin-bottom: 24px;
+:host {
+  --nav-h: calc(56px + env(safe-area-inset-top, 0px));
+  display: block;
+  min-height: 100dvh;
 }
 
 .back {
-  align-self: flex-start;
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  min-height: 44px;
   font-size: 14px;
   font-weight: 600;
   color: var(--ink-soft);
@@ -29,48 +19,70 @@
   height: 16px;
 }
 
-.brand-logo {
-  display: block;
-  width: min(280px, 70vw);
-  height: auto;
+.page {
+  box-sizing: border-box;
+  min-height: calc(100dvh - var(--nav-h));
+  display: grid;
+  align-items: safe center;
+  justify-items: center;
+  padding-block: 20px calc(24px + env(safe-area-inset-bottom, 0px));
+  padding-inline: max(
+    16px,
+    env(safe-area-inset-inline-start, 0px),
+    env(safe-area-inset-inline-end, 0px)
+  );
 }
 
 .card {
+  width: min(100%, 420px);
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: 28px 24px 32px;
+  padding: 24px 24px 20px;
   box-shadow: var(--shadow);
-  overflow-x: clip;
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
 }
 
 .eyebrow {
+  margin: 0;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--green);
-  margin-bottom: 12px;
 }
 
 h1 {
-  font-size: clamp(26px, 4vw, 34px);
+  font-size: clamp(20px, 3.6vw, 26px);
   font-weight: 900;
   letter-spacing: -0.03em;
-  line-height: 1.1;
-  margin: 0 0 12px;
+  line-height: 1.2;
+  margin: 0;
 }
 
-.card > p {
+.lede {
+  margin: 0;
   color: var(--ink-soft);
-  line-height: 1.55;
-  margin: 0 0 24px;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 form {
   display: flex;
   flex-direction: column;
   gap: 16px;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 label {
@@ -129,7 +141,6 @@ fl-turnstile {
 }
 
 .submit {
-  margin-top: 8px;
   border: 0;
   border-radius: 12px;
   padding: 14px 16px;
@@ -145,11 +156,7 @@ fl-turnstile {
 }
 
 @media (max-width: 480px) {
-  .page {
-    padding-inline: max(16px, env(safe-area-inset-inline-start, 0px), env(safe-area-inset-inline-end, 0px));
-  }
-
   .card {
-    padding: 24px 16px 28px;
+    padding: 20px 16px 16px;
   }
 }

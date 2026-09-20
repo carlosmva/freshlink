@@ -22,44 +22,79 @@ function show(els: Element | NodeListOf<Element> | null) {
   }
 }
 
-/** Landing: brand/hero settle, then CTAs, then story. Principle sections reveal on scroll. */
+function releaseMotionStyles(el: Element | null) {
+  if (!el) return;
+  const node = el as HTMLElement;
+  node.getAnimations?.().forEach((animation) => animation.cancel());
+  node.style.removeProperty('opacity');
+  node.style.removeProperty('transform');
+  node.style.removeProperty('translate');
+  node.style.removeProperty('scale');
+  node.style.removeProperty('filter');
+}
+
+/** Landing: logo welcomes, then hero, CTAs, and story. Principle sections reveal on scroll. */
 export function playLandingEnter(root: HTMLElement) {
+  const stage = root.querySelector('.brand-stage');
+  const logo = root.querySelector('.logo-full');
+  const start = root.querySelector('.get-started');
   const hero = root.querySelector('.hero');
   const story = root.querySelector('.story');
   const explore = root.querySelector('.explore-label');
   const cards = root.querySelectorAll('.persona-card');
-  const topbar = root.querySelector('.topbar');
+  const finishEnter = () => {
+    requestAnimationFrame(() => {
+      releaseMotionStyles(logo);
+      stage?.classList.add('is-entered');
+    });
+  };
+
   if (reducedMotion()) {
-    show(topbar);
     show(hero);
     show(explore);
     show(cards);
     show(story);
+    stage?.classList.add('is-entered');
     return;
   }
 
-  if (topbar) {
-    animate(topbar, { opacity: [0, 1], y: [-8, 0] }, { ...softSpring, duration: 0.45 });
+  if (logo) {
+    animate(
+      logo,
+      { opacity: [0, 1], y: [36, 0], scale: [0.86, 1] },
+      { type: 'spring', stiffness: 200, damping: 18, mass: 0.9, onComplete: finishEnter },
+    );
+  } else {
+    finishEnter();
+  }
+  if (start) {
+    animate(start, { opacity: [0, 1], y: [16, 0] }, {
+      duration: 0.45,
+      delay: 0.28,
+      onComplete: () => {
+        requestAnimationFrame(() => releaseMotionStyles(start));
+      },
+    });
   }
   if (hero) {
     animate(
       hero,
       { opacity: [0, 1], y: [18, 0], filter: ['blur(6px)', 'blur(0px)'] },
-      { ...softSpring, delay: 0.08 },
+      { ...softSpring, delay: 0.36 },
     );
   }
   if (explore) {
-    animate(explore, { opacity: [0, 1] }, { duration: 0.3, delay: 0.16 });
+    animate(explore, { opacity: [0, 1] }, { duration: 0.3, delay: 0.44 });
   }
   if (cards.length) {
     animate(
       cards,
       { opacity: [0, 1], y: [28, 0], scale: [0.96, 1] },
-      { ...softSpring, delay: stagger(0.09, { startDelay: 0.18 }) },
+      { ...softSpring, delay: stagger(0.09, { startDelay: 0.48 }) },
     );
   }
   if (story) {
-    animate(story, { opacity: [0, 1], y: [16, 0] }, { ...softSpring, delay: 0.42 });
+    animate(story, { opacity: [0, 1], y: [16, 0] }, { ...softSpring, delay: 0.7 });
   }
 }
 

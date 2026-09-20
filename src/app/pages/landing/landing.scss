@@ -6,43 +6,96 @@
     env(safe-area-inset-inline-end, 0px),
     calc((100vw - var(--page-max)) / 2)
   );
+  --nav-h: calc(56px + env(safe-area-inset-top, 0px));
+  --morph: 0;
   display: block;
 }
 
 .page {
   padding-inline: var(--page-gutter);
-  padding-block: 0 32px;
+  padding-block: calc(var(--nav-h) + 12px) 32px;
 }
 
-.topbar,
+.welcome {
+  height: 100vh;
+  height: 100dvh;
+  pointer-events: none;
+}
+
+.brand-stage {
+  position: fixed;
+  inset-inline: 0;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  height: calc(100dvh - (100dvh - var(--nav-h)) * var(--morph));
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-inline: var(--page-gutter);
+  overflow: clip;
+  pointer-events: none;
+  background: var(--paper);
+  border-bottom: 1px solid color-mix(in srgb, var(--line) calc(var(--morph) * 100%), transparent);
+}
+
+.logo-full {
+  display: block;
+  width: min(420px, 78vw);
+  max-height: min(58dvh, 520px);
+  height: auto;
+  background: transparent;
+  object-fit: contain;
+  transform-origin: 50% 58%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.nav-compact {
+  position: absolute;
+  inset-inline-start: var(--page-gutter);
+  top: calc(env(safe-area-inset-top, 0px) + 12px);
+  z-index: 2;
+  opacity: clamp(0, calc((var(--morph) - 0.58) / 0.32), 1);
+  pointer-events: none;
+}
+
+.get-started {
+  position: relative;
+  z-index: 1;
+  min-height: 44px;
+  padding: 14px 28px;
+  font-size: 15px;
+  opacity: 0;
+  pointer-events: auto;
+}
+
+.brand-stage.is-entered .logo-full {
+  opacity: clamp(0, calc(1 - var(--morph) * 1.25), 1);
+  transform: scale(calc(1 - var(--morph) * 0.28));
+}
+
+.brand-stage.is-entered .get-started {
+  opacity: clamp(0, calc(1 - var(--morph) * 1.7), 1);
+}
+
+.brand-stage.is-compact .logo-full,
+.brand-stage.is-compact .get-started {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.brand-stage.is-compact .nav-compact {
+  pointer-events: auto;
+}
+
 .hero,
 .story,
 .explore-label,
 .persona-card {
   opacity: 0;
-}
-
-.topbar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  padding-block: calc(28px + env(safe-area-inset-top)) 8px;
-  margin-bottom: 16px;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.brand-logo {
-  display: block;
-  width: min(420px, 86vw);
-  height: auto;
-  background: transparent;
-  object-fit: contain;
 }
 
 .hero {
@@ -412,7 +465,75 @@
   color: #fff;
 }
 
+.brand-scrollbar {
+  position: fixed;
+  inset-block: max(16px, env(safe-area-inset-top, 0px))
+    max(16px, env(safe-area-inset-bottom, 0px));
+  inset-inline-end: max(8px, env(safe-area-inset-inline-end, 0px));
+  z-index: 45;
+  width: 24px;
+  display: flex;
+  justify-content: center;
+  touch-action: none;
+  user-select: none;
+  cursor: pointer;
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 0.35s ease,
+    visibility 0.35s ease,
+    inset-inline-end 0.35s ease;
+}
+
+.brand-scrollbar::before {
+  content: '';
+  position: absolute;
+  inset-block: 4px;
+  width: 2px;
+  border-radius: 99px;
+  background: linear-gradient(180deg, var(--green) 0%, var(--green-deep) 100%);
+  opacity: 0.35;
+}
+
+.brand-scrollbar-thumb {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  appearance: none;
+  background: transparent;
+  cursor: grab;
+  will-change: transform;
+}
+
+.brand-scrollbar-thumb img {
+  display: block;
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.brand-scrollbar-thumb.is-dragging {
+  cursor: grabbing;
+}
+
+.brand-scrollbar.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  inset-inline-end: -28px;
+}
+
 @media (max-width: 800px) {
+  .brand-scrollbar {
+    display: none;
+  }
+
   .principles {
     --gallery-chrome: calc(96px + env(safe-area-inset-bottom, 0px));
   }
@@ -440,7 +561,7 @@
     grid-row: 1;
     justify-content: flex-start;
     z-index: 0;
-    padding-block: calc(16px + env(safe-area-inset-top, 0px)) 12px;
+    padding-block: calc(12px + var(--nav-h)) 12px;
     padding-inline: var(--page-gutter);
     border-start-start-radius: 0;
     border-start-end-radius: 0;
@@ -474,6 +595,16 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .logo-full,
+  .get-started {
+    opacity: 1;
+    transform: none;
+  }
+
+  .brand-scrollbar {
+    transition: none;
+  }
+
   .principles {
     height: auto;
   }

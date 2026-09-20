@@ -1,25 +1,29 @@
-<div class="page">
-  <header class="topbar">
-    <a class="back" routerLink="/"><fl-icon name="arrow-left" /> All portals</a>
-    <div class="brand">
-      <img class="brand-logo" src="full-logo.svg" width="940" height="902" alt="FreshLink Detroit" />
-    </div>
-  </header>
+<fl-site-nav>
+  <a class="back" routerLink="/">
+    <fl-icon name="arrow-left" />
+    All portals
+  </a>
+</fl-site-nav>
 
+<main class="page">
   <section class="card">
-    <div class="eyebrow">{{ copy.eyebrow }}</div>
-    <h1>{{ copy.title }}</h1>
-    <p>{{ copy.body }}</p>
+    <header class="intro">
+      <p class="eyebrow">{{ copy.eyebrow }}</p>
+      <h1>{{ copy.title }}</h1>
+      <p class="lede">{{ copy.body }}</p>
+    </header>
 
     <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
-      <label>
-        Email
-        <input type="email" formControlName="email" autocomplete="username" [attr.placeholder]="copy.email" />
-      </label>
-      <label>
-        Password
-        <input type="password" formControlName="password" autocomplete="current-password" />
-      </label>
+      <div class="fields">
+        <label>
+          Email
+          <input type="email" formControlName="email" autocomplete="username" [attr.placeholder]="copy.email" />
+        </label>
+        <label>
+          Password
+          <input type="password" formControlName="password" autocomplete="current-password" />
+        </label>
+      </div>
 
       @if (siteKey()) {
         <div class="turnstile-wrap">
@@ -39,4 +43,4 @@
       </button>
     </form>
   </section>
-</div>
+</main>

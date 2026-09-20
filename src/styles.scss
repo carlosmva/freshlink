@@ -41,6 +41,17 @@ html.lenis {
   overflow-x: clip;
 }
 
+html.has-brand-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html.has-brand-scrollbar::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
 body {
   font-family: 'General Sans', system-ui, sans-serif;
   background: var(--paper);
@@ -226,6 +237,9 @@ button {
 
 @media (prefers-reduced-motion: reduce) {
   .topbar,
+  .brand-logo,
+  .logo-full,
+  .get-started,
   .hero,
   .story,
   .principle-copy,
