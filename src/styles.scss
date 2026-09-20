@@ -37,6 +37,10 @@ body {
   min-height: 100%;
 }
 
+html.lenis {
+  overflow-x: clip;
+}
+
 body {
   font-family: 'General Sans', system-ui, sans-serif;
   background: var(--paper);
@@ -224,7 +228,10 @@ button {
   .topbar,
   .hero,
   .story,
-  .principles,
+  .principle-copy,
+  .principle-copy .eyebrow,
+  .principle-copy h2,
+  .principle-copy .lede,
   .explore-label,
   .persona-card,
   .phone,
@@ -312,4 +319,11 @@ button {
   font-weight: 700;
   color: #43524a;
   text-shadow: 0 0 4px #fff, 0 0 8px #fff;
+}
+
+fl-turnstile {
+  display: block;
+  width: 300px;
+  max-width: 100%;
+  margin-inline: auto;
 }

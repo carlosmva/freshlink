@@ -22,11 +22,10 @@ function show(els: Element | NodeListOf<Element> | null) {
   }
 }
 
-/** Landing: brand/hero settle, then CTAs, then story and principles. */
+/** Landing: brand/hero settle, then CTAs, then story. Principle sections reveal on scroll. */
 export function playLandingEnter(root: HTMLElement) {
   const hero = root.querySelector('.hero');
   const story = root.querySelector('.story');
-  const principles = root.querySelector('.principles');
   const explore = root.querySelector('.explore-label');
   const cards = root.querySelectorAll('.persona-card');
   const topbar = root.querySelector('.topbar');
@@ -36,7 +35,6 @@ export function playLandingEnter(root: HTMLElement) {
     show(explore);
     show(cards);
     show(story);
-    show(principles);
     return;
   }
 
@@ -63,9 +61,47 @@ export function playLandingEnter(root: HTMLElement) {
   if (story) {
     animate(story, { opacity: [0, 1], y: [16, 0] }, { ...softSpring, delay: 0.42 });
   }
-  if (principles) {
-    animate(principles, { opacity: [0, 1], y: [14, 0] }, { ...softSpring, delay: 0.5 });
+}
+
+const principleCopy = '.principle-copy .eyebrow, .principle-copy h2, .principle-copy .lede';
+
+/** Timed enter for one horizontal feature panel. Plays once per slide. */
+export function playPrincipleSlide(slide: HTMLElement) {
+  if (slide.dataset['played'] === '1') return;
+  slide.dataset['played'] = '1';
+
+  const media = slide.querySelector('.principle-media img');
+  const eyebrow = slide.querySelector('.principle-copy .eyebrow');
+  const title = slide.querySelector('.principle-copy h2');
+  const body = slide.querySelector('.principle-copy .lede');
+
+  if (reducedMotion()) {
+    show(slide.querySelectorAll(principleCopy));
+    show(media);
+    return;
   }
+
+  if (media) {
+    animate(
+      media,
+      { scale: [1.12, 1], opacity: [0.45, 1] },
+      { duration: 1.2, ease: [0.16, 1, 0.3, 1] },
+    );
+  }
+  if (eyebrow) {
+    animate(eyebrow, { opacity: [0, 1], y: [16, 0] }, { duration: 0.42, delay: 0.14 });
+  }
+  if (title) {
+    animate(title, { opacity: [0, 1], y: [36, 0] }, { ...softSpring, delay: 0.28 });
+  }
+  if (body) {
+    animate(body, { opacity: [0, 1], y: [22, 0] }, { duration: 0.55, delay: 0.46 });
+  }
+}
+
+export function showPrincipleSlide(slide: HTMLElement) {
+  show(slide.querySelectorAll(principleCopy));
+  show(slide.querySelector('.principle-media img'));
 }
 
 function compactShell() {

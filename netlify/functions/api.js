@@ -1,6 +1,7 @@
 const { json, parseBody, query } = require('./_shared/db');
 const { login, findUserById, publicUser, requireAuth, requireRole } = require('./_shared/auth');
 const { completePrompt, extractJsonObject } = require('./_shared/ai');
+const { publicConfig, verifyTurnstile, clientIp } = require('./_shared/turnstile');
 
 function pathParts(event) {
   const raw =
@@ -481,7 +482,14 @@ exports.handler = async (event) => {
       return json(200, { ok: true, store: 'postgres' });
     }
 
+    if (path === '/config' && method === 'GET') {
+      return json(200, publicConfig());
+    }
+
     if (path === '/auth/login' && method === 'POST') {
+      const token = body.turnstileToken || body.turnstile_token;
+      const verified = await verifyTurnstile(token, clientIp(event));
+      if (!verified.ok) return json(400, { error: verified.error });
       const result = await login(body);
       if (result.error) return json(result.status, { error: result.error });
       return json(200, {

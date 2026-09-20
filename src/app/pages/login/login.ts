@@ -1,8 +1,9 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, viewChild } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService, Persona } from '../../core/auth.service';
 import { FlIcon } from '../../shared/icon/icon';
+import { FlTurnstile } from '../../shared/turnstile/turnstile';
 
 const COPY: Record<
   Persona,
@@ -30,20 +31,24 @@ const COPY: Record<
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, RouterLink, FlIcon],
+  imports: [ReactiveFormsModule, RouterLink, FlIcon, FlTurnstile],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
-export class LoginPage {
+export class LoginPage implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly auth = inject(AuthService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly widget = viewChild(FlTurnstile);
 
   readonly persona = (this.route.snapshot.data['persona'] || 'facility') as Persona;
   readonly copy = COPY[this.persona];
   readonly error = signal('');
   readonly submitting = signal(false);
+  readonly siteKey = signal('');
+  readonly turnstileMode = signal<'dev' | 'production'>('dev');
+  readonly turnstileToken = signal<string | null>(null);
 
   readonly form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
@@ -62,20 +67,41 @@ export class LoginPage {
     }
   }
 
+  ngOnInit() {
+    this.auth.config().subscribe((cfg) => {
+      this.siteKey.set(cfg.turnstileSiteKey);
+      this.turnstileMode.set(cfg.turnstileMode);
+    });
+  }
+
+  onTurnstile(token: string | null) {
+    this.turnstileToken.set(token);
+  }
+
+  blocked() {
+    return this.submitting() || Boolean(this.siteKey() && !this.turnstileToken());
+  }
+
   submit() {
     if (this.form.invalid || this.submitting()) {
       this.form.markAllAsTouched();
       return;
     }
+    if (this.siteKey() && !this.turnstileToken()) {
+      this.error.set('Please complete the verification check.');
+      return;
+    }
     this.submitting.set(true);
     this.error.set('');
     const { email, password } = this.form.getRawValue();
-    this.auth.login(email, password, this.persona).subscribe({
+    this.auth.login(email, password, this.persona, this.turnstileToken()).subscribe({
       next: (res) => {
         void this.router.navigateByUrl(res.redirect);
       },
       error: (err) => {
         this.submitting.set(false);
+        this.turnstileToken.set(null);
+        this.widget()?.reset();
         this.error.set(err?.error?.error || 'Could not sign in. Try again.');
       },
     });

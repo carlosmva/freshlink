@@ -21,15 +21,22 @@
         <input type="password" formControlName="password" autocomplete="current-password" />
       </label>
 
+      @if (siteKey()) {
+        <div class="turnstile-wrap">
+          <fl-turnstile [siteKey]="siteKey()" (token)="onTurnstile($event)" />
+          @if (turnstileMode() === 'dev') {
+            <p class="dev-note">Dev login uses Cloudflare’s dummy Turnstile widget. Production uses the live site keys.</p>
+          }
+        </div>
+      }
+
       @if (error()) {
         <p class="error" role="alert">{{ error() }}</p>
       }
 
-      <button type="submit" class="submit" [disabled]="submitting()">
+      <button type="submit" class="submit" [disabled]="blocked()">
         {{ submitting() ? 'Signing in…' : 'Sign in' }}
       </button>
     </form>
-
-    <!-- Cloudflare Turnstile will be added here later (turnstileToken on /api/auth/login). -->
   </section>
 </div>

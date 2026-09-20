@@ -39,13 +39,28 @@ export class AuthService {
     return Boolean(this.token && this.user());
   }
 
-  login(email: string, password: string, persona: Persona): Observable<{ user: AuthUser; redirect: string }> {
+  config(): Observable<{ turnstileSiteKey: string; turnstileMode: 'dev' | 'production' }> {
+    return this.http.get<{ turnstileSiteKey?: string; turnstileMode?: string }>('/api/config').pipe(
+      map((res): { turnstileSiteKey: string; turnstileMode: 'dev' | 'production' } => ({
+        turnstileSiteKey: res.turnstileSiteKey || '',
+        turnstileMode: res.turnstileMode === 'production' ? 'production' : 'dev',
+      })),
+      catchError(() => of({ turnstileSiteKey: '', turnstileMode: 'dev' as const })),
+    );
+  }
+
+  login(
+    email: string,
+    password: string,
+    persona: Persona,
+    turnstileToken: string | null,
+  ): Observable<{ user: AuthUser; redirect: string }> {
     return this.http
       .post<{ token: string; user: AuthUser; redirect: string }>('/api/auth/login', {
         email,
         password,
         persona,
-        turnstileToken: null,
+        turnstileToken,
       })
       .pipe(
         tap((res) => this.persist(res.token, res.user)),

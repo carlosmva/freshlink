@@ -95,7 +95,6 @@ function signToken(user) {
 }
 
 async function login({ email, password, persona }) {
-  // turnstileToken is accepted and ignored until Cloudflare Turnstile is wired.
   const user = await findUserByEmail(String(email || '').trim());
   const dummy = '$2b$10$ew8EOBhWJAtaeWforjtOc.jLCTuWhFcsG95OLj3anhequjbwoFXuS';
   const hash = user?.password_hash || dummy;

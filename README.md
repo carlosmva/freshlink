@@ -35,13 +35,12 @@ Never commit `.env`. Copy `.env.example`.
 | `JWT_SECRET` | local + Netlify | Auth tokens |
 | `API_TOKEN` + `CLOUDFLARE_URL` | **local only** | Cloudflare Workers AI for recommend-basket while developing |
 | `CLAUDE_ANTHROPIC_API_KEY` | **Netlify production** | Claude on the live site (optional `ANTHROPIC_MODEL_ID`, default `claude-haiku-4-5-20251001`) |
+| `TURNSTILE_SITE_KEY` + `TURNSTILE_SECRET_KEY` | **Netlify production** | Live Cloudflare Turnstile on login. Ignored during `netlify dev`, which uses Cloudflare’s dummy always-pass keys. |
 
 If Claude is set, it is used. Otherwise Cloudflare. Otherwise a heuristic fallback. Cursor is not the app AI backend.
 
 ## Deploy to Netlify
 
 1. Connect this repo and keep `netlify.toml` build settings (`npm run build`, publish `dist/freshlink/browser`, functions `netlify/functions`).
-2. Site env: `DATABASE_URL`, `JWT_SECRET`, `CLAUDE_ANTHROPIC_API_KEY`. Do **not** add Cloudflare `API_TOKEN` / `CLOUDFLARE_URL` on production.
-3. Attach custom domain `freshlink.tech`.
-
-Turnstile (Cloudflare) will be added to login later; the API already accepts an unused `turnstileToken`.
+2. Site env: `DATABASE_URL`, `JWT_SECRET`, `CLAUDE_ANTHROPIC_API_KEY`, `TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY`. Do **not** add Cloudflare `API_TOKEN` / `CLOUDFLARE_URL` on production.
+3. Attach custom domain `freshlink.tech`. Add `freshlink.tech` in the Turnstile widget hostname list. Local login does not need that list.
