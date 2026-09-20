@@ -41,6 +41,7 @@
   border-radius: var(--radius);
   padding: 28px 24px 32px;
   box-shadow: var(--shadow);
+  overflow-x: clip;
 }
 
 .eyebrow {
@@ -98,16 +99,17 @@ input:focus {
 .turnstile-wrap {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   width: 100%;
+  min-width: 0;
   gap: 8px;
 }
 
 fl-turnstile {
   display: block;
-  width: 300px;
+  width: 100%;
   max-width: 100%;
-  margin-inline: auto;
+  min-width: 0;
   min-height: 65px;
 }
 
@@ -117,7 +119,6 @@ fl-turnstile {
   font-weight: 500;
   color: var(--ink-faint);
   line-height: 1.4;
-  text-align: center;
 }
 
 .error {
@@ -141,4 +142,14 @@ fl-turnstile {
 .submit:disabled {
   opacity: 0.7;
   cursor: wait;
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding-inline: max(16px, env(safe-area-inset-inline-start, 0px), env(safe-area-inset-inline-end, 0px));
+  }
+
+  .card {
+    padding: 24px 16px 28px;
+  }
 }

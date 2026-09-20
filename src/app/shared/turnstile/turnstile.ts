@@ -58,21 +58,15 @@ function loadScript(): Promise<void> {
   styles: `
     fl-turnstile {
       display: block;
-      width: 300px;
+      width: 100%;
       max-width: 100%;
-      margin-inline: auto;
+      min-width: 0;
     }
     fl-turnstile .host {
-      width: 300px;
+      width: 100%;
       max-width: 100%;
-      margin-inline: auto;
+      min-width: 0;
       min-height: 65px;
-    }
-    fl-turnstile .host > div,
-    fl-turnstile .host > div > div {
-      width: 300px !important;
-      max-width: 100%;
-      margin-inline: auto !important;
     }
   `,
 })
@@ -128,7 +122,7 @@ export class FlTurnstile implements OnDestroy {
     this.widgetId = api.render(el, {
       sitekey: key,
       theme: 'light',
-      size: 'normal',
+      size: 'flexible',
       callback: (value) => this.token.emit(value),
       'error-callback': () => this.token.emit(null),
       'expired-callback': () => this.token.emit(null),
