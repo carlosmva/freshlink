@@ -115,14 +115,15 @@ export function playPrincipleSlide(slide: HTMLElement) {
 
   if (reducedMotion()) {
     show(slide.querySelectorAll(principleCopy));
-    show(media);
+    if (media && !media.classList.contains('is-bag-end')) show(media);
     return;
   }
 
   if (media) {
+    const bagEnd = media.classList.contains('is-bag-end');
     animate(
       media,
-      { scale: [1.12, 1], opacity: [0.45, 1] },
+      bagEnd ? { scale: [1.12, 1] } : { scale: [1.12, 1], opacity: [0.45, 1] },
       { duration: 1.2, ease: [0.16, 1, 0.3, 1] },
     );
   }
@@ -145,7 +146,8 @@ export function playPrincipleSlide(slide: HTMLElement) {
 
 export function showPrincipleSlide(slide: HTMLElement) {
   show(slide.querySelectorAll(principleCopy));
-  show(slide.querySelector('.principle-media img'));
+  const media = slide.querySelector('.principle-media img');
+  if (media && !media.classList.contains('is-bag-end')) show(media);
 }
 
 function compactShell() {
