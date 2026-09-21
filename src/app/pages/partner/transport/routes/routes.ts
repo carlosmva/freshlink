@@ -2,11 +2,13 @@ import { DatePipe } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ApiService } from '../../../../core/api.service';
+import { FlIcon } from '../../../../shared/icon/icon';
+import { FlThinkingOrb } from '../../../../shared/thinking-orb/thinking-orb';
 import { DispatchMap } from './dispatch-map';
 
 @Component({
   selector: 'app-transport-routes',
-  imports: [RouterLink, DatePipe, DispatchMap],
+  imports: [RouterLink, DatePipe, DispatchMap, FlIcon, FlThinkingOrb],
   templateUrl: './routes.html',
   styleUrl: '../../food/portal-pages.scss',
 })
@@ -15,6 +17,10 @@ export class TransportRoutes implements OnInit {
   readonly routes = signal<any[]>([]);
   readonly error = signal('');
   readonly selectedId = signal<string | null>(null);
+  readonly thinking = signal(false);
+  readonly applying = signal(false);
+  readonly plan = signal<any | null>(null);
+  readonly applied = signal(false);
 
   ngOnInit() {
     this.reload();
@@ -39,6 +45,41 @@ export class TransportRoutes implements OnInit {
     });
   }
 
+  optimize() {
+    this.thinking.set(true);
+    this.applied.set(false);
+    this.error.set('');
+    this.api.optimizeRoutes().subscribe({
+      next: (plan) => {
+        this.plan.set(plan);
+        this.thinking.set(false);
+      },
+      error: (e) => {
+        this.error.set(e.error?.error || e.message || 'Optimize failed');
+        this.thinking.set(false);
+      },
+    });
+  }
+
+  applyPlan() {
+    const plan = this.plan();
+    if (!plan?.routes?.length) return;
+    this.applying.set(true);
+    this.error.set('');
+    this.api.applyOptimize(plan).subscribe({
+      next: (res) => {
+        if (res?.routes) this.routes.set(res.routes);
+        else this.reload();
+        this.applying.set(false);
+        this.applied.set(true);
+      },
+      error: (e) => {
+        this.error.set(e.error?.error || e.message || 'Apply failed');
+        this.applying.set(false);
+      },
+    });
+  }
+
   selectRoute(id: string) {
     this.selectedId.set(id);
   }
@@ -55,5 +96,9 @@ export class TransportRoutes implements OnInit {
 
   milesSaved() {
     return Math.round(this.routes().reduce((n, r) => n + Number(r.miles_saved || 0), 0));
+  }
+
+  joinStops(labels: string[] | undefined) {
+    return (labels || []).join(' → ');
   }
 }

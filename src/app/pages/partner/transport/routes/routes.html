@@ -3,11 +3,63 @@
     <h3>Routes today</h3>
     <div class="sub">Consolidated multi-stop EV deliveries</div>
   </div>
+  <div class="route-actions">
+    <button
+      type="button"
+      class="btn-primary"
+      (click)="optimize()"
+      [disabled]="thinking() || applying()"
+    >
+      Optimize pending
+    </button>
+  </div>
 </div>
 <div class="content">
   @if (error()) {
     <div class="error">{{ error() }}</div>
-  } @else {
+  }
+  @if (thinking() || plan()) {
+    <div class="ai-insight opt-plan">
+      <div class="ic">
+        @if (thinking()) {
+          <fl-thinking-orb state="solving" [size]="20" theme="light" />
+        } @else {
+          <fl-icon name="sparkles" />
+        }
+      </div>
+      <div class="opt-body">
+        @if (thinking()) {
+          <p><b>Solving…</b>Reordering pending stops on offered routes from Core Supply.</p>
+        } @else if (plan()) {
+          <p><b>{{ plan().headline }}</b>{{ plan().summary }}</p>
+          @if (plan().routes?.length) {
+            <ul class="opt-changes">
+              @for (r of plan().routes; track r.id) {
+                <li>
+                  <b>{{ r.code }}</b>
+                  {{ joinStops(r.before) }} becomes {{ joinStops(r.after) }}
+                  (−{{ r.milesSaved }} mi)
+                </li>
+              }
+            </ul>
+            @if (!applied()) {
+              <button
+                type="button"
+                class="btn-primary"
+                (click)="applyPlan()"
+                [disabled]="applying()"
+              >
+                {{ applying() ? 'Applying…' : 'Apply plan' }}
+              </button>
+            } @else {
+              <p class="opt-applied">Applied. Accepted routes were left alone. Dispatch can still Accept.</p>
+            }
+          }
+        }
+      </div>
+    </div>
+  }
+  @if (!error() || routes().length) {
     <div class="portal-kpis">
       <div class="portal-kpi"><div class="l">Routes today</div><div class="v">{{ routes().length }}</div><div class="d">{{ totalStops() }} stops total</div></div>
       <div class="portal-kpi"><div class="l">Capacity use</div><div class="v">{{ avgCapacity() }}%</div><div class="d">optimal band 75–90%</div></div>

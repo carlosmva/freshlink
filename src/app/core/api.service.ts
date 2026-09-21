@@ -84,6 +84,16 @@ export class ApiService {
     return this.http.post(`${this.base}/ai/impact-report`, {}).pipe(holdAfterAi());
   }
 
+  optimizeRoutes(): Observable<any> {
+    return this.http.post(`${this.base}/ai/optimize-routes`, {}).pipe(holdAfterAi());
+  }
+
+  applyOptimize(plan: { routes: unknown[] }): Observable<any> {
+    return this.http.post(`${this.base}/partner/transport/routes/apply-optimize`, {
+      routes: plan.routes,
+    });
+  }
+
   resetDemo(): Observable<{ ok: boolean; summary: Record<string, number> }> {
     return this.http.post<{ ok: boolean; summary: Record<string, number> }>(
       `${this.base}/admin/reset`,

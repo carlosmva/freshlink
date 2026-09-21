@@ -538,6 +538,37 @@ tbody td {
   margin-bottom: 2px;
 }
 
+.ai-insight.opt-plan {
+  margin-bottom: 0;
+  align-items: flex-start;
+}
+
+.opt-body {
+  min-width: 0;
+  flex: 1;
+}
+
+.opt-changes {
+  margin: 8px 0 10px;
+  padding-left: 16px;
+  color: var(--green-deep);
+  font-size: 11.5px;
+  line-height: 1.5;
+}
+
+.opt-changes li + li {
+  margin-top: 4px;
+}
+
+.opt-changes b {
+  display: inline;
+  margin-right: 4px;
+}
+
+.opt-applied {
+  margin-top: 8px;
+}
+
 .detail-rows {
   display: flex;
   flex-direction: column;

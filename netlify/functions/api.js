@@ -3,6 +3,7 @@ const { login, findUserById, publicUser, requireAuth, requireRole, requireAdmin 
 const { resetDemo } = require('../../db/reset-demo.cjs');
 const { completePrompt, extractJsonObject } = require('./_shared/ai');
 const { publicConfig, verifyTurnstile, clientIp } = require('./_shared/turnstile');
+const { optimizeOfferedRoute, fallbackCopy } = require('./_shared/route-opt');
 
 function pathParts(event) {
   const raw =
@@ -479,6 +480,114 @@ async function patchRoute(partnerId, routeId, body) {
   return getRouteDetail(partnerId, routeId);
 }
 
+function round1(n) {
+  return Math.round(Number(n) * 10) / 10;
+}
+
+async function optimizeRoutes(partnerId) {
+  const routes = await getTransportRoutes(partnerId);
+  const changes = routes.map(optimizeOfferedRoute).filter(Boolean);
+  const copy = fallbackCopy(changes);
+  const totalMilesSaved = round1(changes.reduce((n, r) => n + Number(r.milesSaved || 0), 0));
+  const envelope = {
+    source: 'heuristic',
+    ...copy,
+    totalMilesSaved,
+    routes: changes,
+  };
+
+  const prompt = `You are FreshLink Detroit's dispatch assistant. Explain a last-mile stop reorder for GreenRoute. Return JSON only with keys: headline (string), summary (string, 2 sentences), highlights (string array, max 3). Rules: use only the provided miles and stop labels; do not invent a new stop order, merge routes, or change accepted / in-progress work; tone is concrete, no hype. Context: ${JSON.stringify(
+    {
+      pickup: 'Core Supply',
+      totalMilesSaved,
+      routes: changes.map((r) => ({
+        code: r.code,
+        window: r.window,
+        before: r.before,
+        after: r.after,
+        milesBefore: r.milesBefore,
+        milesAfter: r.milesAfter,
+        milesSaved: r.milesSaved,
+      })),
+    },
+  )}`;
+
+  try {
+    const result = await completePrompt(prompt, {
+      maxTokens: 500,
+      system:
+        "You are FreshLink Detroit's dispatch assistant. Reply with a JSON object only. Keep every number and stop name consistent with the provided plan.",
+    });
+    if (!result) return envelope;
+    const parsed = extractJsonObject(result.text);
+    return {
+      ...envelope,
+      source: result.source,
+      headline: parsed?.headline || envelope.headline,
+      summary: parsed?.summary || envelope.summary,
+      highlights: parsed?.highlights || envelope.highlights,
+    };
+  } catch (err) {
+    console.warn('[ai] optimize-routes failed', err.message);
+    return envelope;
+  }
+}
+
+async function applyOptimize(partnerId, body) {
+  const proposed = Array.isArray(body?.routes) ? body.routes : [];
+  if (!proposed.length) return { error: 'No plan to apply', status: 400 };
+
+  const client = await getPool().connect();
+  try {
+    await client.query('BEGIN');
+    for (const change of proposed) {
+      const owned = await client.query(
+        `SELECT id, status, code FROM routes WHERE id = $1 AND partner_id = $2`,
+        [change.id, partnerId],
+      );
+      const route = owned.rows[0];
+      if (!route) {
+        await client.query('ROLLBACK');
+        return { error: 'Route not found', status: 404 };
+      }
+      if (route.status !== 'offered') {
+        await client.query('ROLLBACK');
+        return { error: `${route.code} is no longer offered`, status: 409 };
+      }
+
+      const stops = await client.query(`SELECT id FROM route_stops WHERE route_id = $1`, [change.id]);
+      const existing = new Set(stops.rows.map((s) => String(s.id)));
+      const ids = (change.orderedStopIds || []).map(String);
+      if (!ids.length || ids.length !== existing.size || ids.some((id) => !existing.has(id))) {
+        await client.query('ROLLBACK');
+        return { error: `Stop list on ${route.code} no longer matches`, status: 409 };
+      }
+
+      for (let i = 0; i < ids.length; i += 1) {
+        await client.query(
+          `UPDATE route_stops SET stop_order = $1 WHERE id = $2 AND route_id = $3`,
+          [i + 1, ids[i], change.id],
+        );
+      }
+      const extra = Number(change.milesSaved || 0);
+      if (extra > 0) {
+        await client.query(`UPDATE routes SET miles_saved = miles_saved + $1 WHERE id = $2`, [
+          extra,
+          change.id,
+        ]);
+      }
+    }
+    await client.query('COMMIT');
+  } catch (err) {
+    await client.query('ROLLBACK');
+    throw err;
+  } finally {
+    client.release();
+  }
+
+  return { ok: true, routes: await getTransportRoutes(partnerId) };
+}
+
 async function getTransportEarnings(partnerId) {
   return (
     (await getPartnerPayload('partner_earnings', partnerId)) || {
@@ -707,6 +816,13 @@ exports.handler = async (event) => {
       return json(200, await getTransportRoutes(auth.partnerId));
     }
 
+    if (path === '/partner/transport/routes/apply-optimize' && method === 'POST') {
+      requireRole(auth, 'transport');
+      const applied = await applyOptimize(auth.partnerId, body);
+      if (applied.error) return json(applied.status, { error: applied.error });
+      return json(200, applied);
+    }
+
     let m = path.match(/^\/partner\/transport\/routes\/([^/]+)$/);
     if (m && method === 'GET') {
       requireRole(auth, 'transport');
@@ -742,6 +858,11 @@ exports.handler = async (event) => {
     if (path === '/ai/impact-report' && method === 'POST') {
       requireRole(auth, 'facility');
       return json(200, await compileImpactReport(auth.facilityId));
+    }
+
+    if (path === '/ai/optimize-routes' && method === 'POST') {
+      requireRole(auth, 'transport');
+      return json(200, await optimizeRoutes(auth.partnerId));
     }
 
     if (path === '/admin/reset' && method === 'POST') {
