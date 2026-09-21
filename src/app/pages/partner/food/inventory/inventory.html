@@ -22,6 +22,15 @@
   @if (error()) {
     <div class="error">{{ error() }}</div>
   }
+  @if (notice()) {
+    <div class="banner is-ok">
+      <div class="ic"><fl-icon name="sparkles" /></div>
+      <div class="tx">
+        <b>Published</b>
+        <p>{{ notice() }}</p>
+      </div>
+    </div>
+  }
 
   @if (surplusCount() > 0 && !query()) {
     <div class="banner">
@@ -30,7 +39,14 @@
         <b>{{ surplusCount() }} items nearing best-before — publish to the Surplus Marketplace</b>
         <p>Facilities within your delivery zone are pre-matched. Typical time-to-sell: under 36 hours.</p>
       </div>
-      <button type="button" class="btn-primary">Publish {{ surplusCount() }} items</button>
+      <button
+        type="button"
+        class="btn-primary"
+        (click)="publishSurplus()"
+        [disabled]="publishing()"
+      >
+        {{ publishing() ? 'Publishing…' : 'Publish ' + surplusCount() + ' items' }}
+      </button>
     </div>
   }
 

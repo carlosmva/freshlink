@@ -53,3 +53,10 @@ skills-lock.json
 # Netlify CLI lock generated locally
 deno.lock
 .neon
+
+# CapCut B-roll (local only — do not commit video)
+demo/capcut/*.mp4
+demo/capcut/*.webm
+demo/capcut/*.png
+demo/capcut/.tmp/
+demo/capcut/review-frames/

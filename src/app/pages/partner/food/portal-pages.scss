@@ -121,6 +121,11 @@ tbody td {
   color: var(--red);
 }
 
+.status-chip.surplus {
+  background: var(--green-tint);
+  color: var(--green-deep);
+}
+
 .status-chip.info {
   background: #e3ebf3;
   color: var(--navy);
@@ -674,6 +679,19 @@ tbody td {
   font-size: 11.5px;
   color: #7a5a22;
   line-height: 1.4;
+}
+
+.banner.is-ok {
+  background: linear-gradient(120deg, #f2f8ef, #e8f3e0);
+  border-color: #cbe3d3;
+}
+
+.banner.is-ok .ic {
+  background: var(--green-deep);
+}
+
+.banner.is-ok p {
+  color: var(--green-deep);
 }
 
 .search-fake,

@@ -312,6 +312,27 @@ async function patchInventory(partnerId, body) {
   return getFoodInventory(partnerId);
 }
 
+async function publishSurplus(partnerId) {
+  await query(
+    `UPDATE inventory SET status = 'surplus'
+     WHERE partner_id = $1 AND status IN ('warn', 'low')`,
+    [partnerId],
+  );
+  await query(
+    `UPDATE products p
+     SET tags = CASE
+       WHEN 'surplus' = ANY(p.tags) THEN p.tags
+       ELSE array_append(COALESCE(p.tags, ARRAY[]::text[]), 'surplus')
+     END
+     FROM inventory i
+     WHERE i.product_id = p.id
+       AND i.partner_id = $1
+       AND i.status = 'surplus'`,
+    [partnerId],
+  );
+  return getFoodInventory(partnerId);
+}
+
 async function createInventory(partnerId, body) {
   const name = String(body.name || '').trim();
   if (!name) return { error: 'Name is required' };
@@ -402,7 +423,9 @@ async function getFoodDashboard(partnerId) {
   const inventory = await getFoodInventory(partnerId);
   const forecast = await getFoodForecast(partnerId);
   const pending = orders.filter((o) => o.status === 'pending_review' || o.status === 'draft');
-  const surplus = inventory.filter((i) => i.status === 'warn' || i.status === 'low');
+  const surplus = inventory.filter(
+    (i) => i.status === 'warn' || i.status === 'low' || i.status === 'surplus',
+  );
   return {
     partnerName: partner.rows[0]?.name || 'Food partner',
     kpis: {
@@ -789,6 +812,10 @@ exports.handler = async (event) => {
       const created = await createInventory(auth.partnerId, body);
       if (created?.error) return json(400, created);
       return json(201, created);
+    }
+    if (path === '/partner/food/inventory/publish-surplus' && method === 'POST') {
+      requireRole(auth, 'food');
+      return json(200, await publishSurplus(auth.partnerId));
     }
 
     if (path === '/partner/food/orders' && method === 'GET') {

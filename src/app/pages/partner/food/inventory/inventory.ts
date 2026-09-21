@@ -24,6 +24,8 @@ export class FoodInventory implements OnInit {
   readonly error = signal('');
   readonly listing = signal(false);
   readonly saving = signal(false);
+  readonly publishing = signal(false);
+  readonly notice = signal('');
   readonly draft = signal({ ...EMPTY_DRAFT });
   readonly emojis = ['📦', '🍚', '🍗', '🥬', '🍎', '🥛', '🥚', '🍞', '🫘', '🫙'];
 
@@ -48,7 +50,8 @@ export class FoodInventory implements OnInit {
 
   bump(row: any, delta: number) {
     const quantity = Math.max(0, Number(row.quantity) + delta);
-    const status = quantity === 0 ? 'low' : quantity < 40 ? 'warn' : 'ok';
+    let status = quantity === 0 ? 'low' : quantity < 40 ? 'warn' : 'ok';
+    if (row.status === 'surplus' && quantity > 0) status = 'surplus';
     this.api.patchInventory({ id: row.id, quantity, status }).subscribe({
       next: (d) => this.rows.set(d),
     });
@@ -59,9 +62,31 @@ export class FoodInventory implements OnInit {
   }
 
   statusLabel(status: string) {
+    if (status === 'surplus') return 'On surplus lane';
     if (status === 'warn') return 'Surplus watch';
     if (status === 'low') return 'Low stock';
     return 'In stock';
+  }
+
+  publishSurplus() {
+    const n = this.surplusCount();
+    if (!n || this.publishing()) return;
+    this.publishing.set(true);
+    this.error.set('');
+    this.notice.set('');
+    this.api.publishSurplus().subscribe({
+      next: (d) => {
+        this.rows.set(d);
+        this.publishing.set(false);
+        this.notice.set(
+          `${n} listing${n === 1 ? '' : 's'} published to the Surplus Marketplace. Facilities in your zone can pull them into next week’s basket.`,
+        );
+      },
+      error: (e) => {
+        this.publishing.set(false);
+        this.error.set(e.error?.error || e.message || 'Could not publish surplus');
+      },
+    });
   }
 
   openList() {

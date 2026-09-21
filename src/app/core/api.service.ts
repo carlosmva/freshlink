@@ -36,6 +36,10 @@ export class ApiService {
     return this.http.post<any[]>(`${this.base}/partner/food/inventory`, body);
   }
 
+  publishSurplus(): Observable<any[]> {
+    return this.http.post<any[]>(`${this.base}/partner/food/inventory/publish-surplus`, {});
+  }
+
   getFoodOrders(): Observable<any[]> {
     return this.http.get<any[]>(`${this.base}/partner/food/orders`);
   }
