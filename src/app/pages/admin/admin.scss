@@ -1,0 +1,98 @@
+:host {
+  --nav-h: calc(56px + env(safe-area-inset-top, 0px));
+  display: block;
+  min-height: 100dvh;
+}
+
+.leave {
+  min-height: 44px;
+  padding: 0 12px;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.page {
+  box-sizing: border-box;
+  min-height: calc(100dvh - var(--nav-h));
+  display: grid;
+  align-items: safe center;
+  justify-items: center;
+  padding-block: 20px calc(24px + env(safe-area-inset-bottom, 0px));
+  padding-inline: max(
+    16px,
+    env(safe-area-inset-inline-start, 0px),
+    env(safe-area-inset-inline-end, 0px)
+  );
+}
+
+.card {
+  width: min(100%, 420px);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px 24px 20px;
+  box-shadow: var(--shadow);
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--green);
+}
+
+h1 {
+  margin: 0 0 8px;
+  font-size: clamp(20px, 3.6vw, 26px);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+}
+
+.lede,
+.ok,
+.error {
+  margin: 0 0 20px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.lede {
+  color: var(--ink-soft);
+}
+
+.ok {
+  color: var(--green-deep);
+  font-weight: 600;
+}
+
+.error {
+  color: var(--red);
+}
+
+.reset {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  border: 0;
+  border-radius: 11px;
+  background: var(--green-deep);
+  color: #fff;
+  font-family: 'Satoshi', system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.reset:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}

@@ -1,7 +1,9 @@
 import { CurrencyPipe } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
+import { armAiReady } from '../../../../core/ai-wait';
 import { ApiService } from '../../../../core/api.service';
 import { FlIcon } from '../../../../shared/icon/icon';
+import { FlThinkingOrb } from '../../../../shared/thinking-orb/thinking-orb';
 
 const EMPTY_DRAFT = {
   reason: 'Short on quantity this week',
@@ -10,7 +12,7 @@ const EMPTY_DRAFT = {
 
 @Component({
   selector: 'app-food-orders',
-  imports: [CurrencyPipe, FlIcon],
+  imports: [CurrencyPipe, FlIcon, FlThinkingOrb],
   templateUrl: './orders.html',
   styleUrl: '../portal-pages.scss',
 })
@@ -19,6 +21,7 @@ export class FoodOrders implements OnInit {
   readonly orders = signal<any[]>([]);
   readonly selected = signal<any | null>(null);
   readonly error = signal('');
+  readonly aiReady = signal(false);
   readonly changing = signal(false);
   readonly draft = signal({ ...EMPTY_DRAFT });
   readonly reasons = [
@@ -33,6 +36,7 @@ export class FoodOrders implements OnInit {
       next: (d) => {
         this.orders.set(d);
         this.selected.set(d[0] || null);
+        armAiReady(this.aiReady);
       },
       error: (e) => this.error.set(e.message || 'Failed'),
     });

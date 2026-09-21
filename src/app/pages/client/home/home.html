@@ -19,15 +19,20 @@
   } @else if (!data()) {
     <div class="loading">Loading this week…</div>
   } @else {
-    <div class="ai-hero">
-      <span class="tag"><fl-icon name="sparkles" /> AI recommendation ready · {{ ai()?.source || '…' }}</span>
-      <h4>{{ ai()?.summary || ('Your weekly order is built — ' + data().order.itemCount + ' items from ' + data().order.supplierCount + ' suppliers') }}</h4>
-      <div class="meta">
-        <span><b>{{ data().order.estTotal | currency }}</b> est. total</span>
-        <span><b>{{ data().order.belowBaseline | currency }}</b> below baseline</span>
-        <span><b>{{ data().order.savingsPct }}%</b> savings</span>
-      </div>
-      <a class="btn light" routerLink="/client/basket">Review basket →</a>
+    <div class="ai-hero" [class.is-thinking]="aiThinking()">
+      @if (aiThinking()) {
+        <fl-thinking-orb state="solving" [size]="64" theme="dark" />
+        <p class="thinking-copy">Solving this week’s basket…</p>
+      } @else {
+        <span class="tag"><fl-icon name="sparkles" /> AI recommendation ready · {{ ai()?.source || 'heuristic' }}</span>
+        <h4>{{ ai()?.summary || ('Your weekly order is built — ' + data().order.itemCount + ' items from ' + data().order.supplierCount + ' suppliers') }}</h4>
+        <div class="meta">
+          <span><b>{{ data().order.estTotal | currency }}</b> est. total</span>
+          <span><b>{{ data().order.belowBaseline | currency }}</b> below baseline</span>
+          <span><b>{{ data().order.savingsPct }}%</b> savings</span>
+        </div>
+        <a class="btn light" routerLink="/client/basket">Review basket →</a>
+      }
     </div>
 
     <div class="kpi-row">

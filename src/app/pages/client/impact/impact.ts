@@ -1,11 +1,12 @@
 import { CurrencyPipe, DecimalPipe } from '@angular/common';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { ApiService } from '../../../core/api.service';
 import { FlIcon } from '../../../shared/icon/icon';
 
 @Component({
   selector: 'app-client-impact',
-  imports: [CurrencyPipe, DecimalPipe, FlIcon],
+  imports: [CurrencyPipe, DecimalPipe, FlIcon, RouterLink],
   templateUrl: './impact.html',
   styleUrls: ['../facility-chrome.scss', './impact.scss'],
 })

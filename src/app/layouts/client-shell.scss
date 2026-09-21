@@ -308,3 +308,28 @@
     -webkit-overflow-scrolling: touch;
   }
 }
+
+@media print {
+  :host {
+    position: static;
+    height: auto;
+    max-height: none;
+    overflow: visible;
+    background: #fff;
+  }
+
+  .app,
+  .portal,
+  .main {
+    display: block;
+    height: auto;
+    overflow: visible;
+    background: #fff;
+  }
+
+  .mobile-bar,
+  .sidebar,
+  .no-print {
+    display: none !important;
+  }
+}

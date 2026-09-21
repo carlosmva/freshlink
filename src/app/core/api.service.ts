@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { holdAfterAi } from './ai-wait';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
@@ -76,6 +77,17 @@ export class ApiService {
   }
 
   recommendBasket(): Observable<any> {
-    return this.http.post(`${this.base}/ai/recommend-basket`, {});
+    return this.http.post(`${this.base}/ai/recommend-basket`, {}).pipe(holdAfterAi());
+  }
+
+  compileImpactReport(): Observable<any> {
+    return this.http.post(`${this.base}/ai/impact-report`, {}).pipe(holdAfterAi());
+  }
+
+  resetDemo(): Observable<{ ok: boolean; summary: Record<string, number> }> {
+    return this.http.post<{ ok: boolean; summary: Record<string, number> }>(
+      `${this.base}/admin/reset`,
+      {},
+    );
   }
 }

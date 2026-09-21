@@ -6,6 +6,7 @@ import { LoginPage } from './pages/login/login';
 import { ClientHome } from './pages/client/home/home';
 import { ClientBasket } from './pages/client/basket/basket';
 import { ClientImpact } from './pages/client/impact/impact';
+import { ClientImpactReport } from './pages/client/impact/report/report';
 import { ClientDeliveries } from './pages/client/deliveries/deliveries';
 import { FoodInventory } from './pages/partner/food/inventory/inventory';
 import { FoodOrders } from './pages/partner/food/orders/orders';
@@ -17,6 +18,7 @@ import { RouteDetail } from './pages/partner/transport/route-detail/route-detail
 import { TransportFleet } from './pages/partner/transport/fleet/fleet';
 import { TransportDrivers } from './pages/partner/transport/drivers/drivers';
 import { TransportEarnings } from './pages/partner/transport/earnings/earnings';
+import { AdminPage } from './pages/admin/admin';
 import { authGuard } from './core/auth.guard';
 
 export const routes: Routes = [
@@ -24,6 +26,14 @@ export const routes: Routes = [
   { path: 'client/login', component: LoginPage, data: { persona: 'facility' } },
   { path: 'partner/food/login', component: LoginPage, data: { persona: 'food' } },
   { path: 'partner/transport/login', component: LoginPage, data: { persona: 'transport' } },
+  { path: 'admin/login', component: LoginPage, data: { persona: 'admin' } },
+
+  {
+    path: 'admin',
+    component: AdminPage,
+    canActivate: [authGuard],
+    data: { role: 'admin' },
+  },
   {
     path: 'client',
     component: ClientShell,
@@ -34,6 +44,7 @@ export const routes: Routes = [
       { path: 'home', component: ClientHome },
       { path: 'basket', component: ClientBasket },
       { path: 'impact', component: ClientImpact },
+      { path: 'impact/report', component: ClientImpactReport },
       { path: 'deliveries', component: ClientDeliveries },
     ],
   },

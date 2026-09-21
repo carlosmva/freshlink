@@ -43,10 +43,12 @@ async function findUserByEmail(email) {
   const res = await query(
     `SELECT u.*,
        CASE
+         WHEN u.role = 'admin' THEN 'FreshLink'
          WHEN u.role = 'facility' THEN f.name
          ELSE p.name
        END AS org_name,
        CASE
+         WHEN u.role = 'admin' THEN 'admin'
          WHEN u.role = 'facility' THEN f.slug
          ELSE p.slug
        END AS org_slug
@@ -64,10 +66,12 @@ async function findUserById(id) {
   const res = await query(
     `SELECT u.*,
        CASE
+         WHEN u.role = 'admin' THEN 'FreshLink'
          WHEN u.role = 'facility' THEN f.name
          ELSE p.name
        END AS org_name,
        CASE
+         WHEN u.role = 'admin' THEN 'admin'
          WHEN u.role = 'facility' THEN f.slug
          ELSE p.slug
        END AS org_slug
@@ -141,11 +145,26 @@ function requireRole(auth, roles) {
   return auth;
 }
 
+const ADMIN_EMAIL = 'carlos@northeasternsoftware.com';
+
+async function requireAdmin(auth) {
+  requireRole(auth, 'admin');
+  const row = await findUserById(auth.id);
+  if (!row || String(row.email || '').toLowerCase() !== ADMIN_EMAIL) {
+    const err = new Error('Admin access is limited to the showcase operator');
+    err.statusCode = 403;
+    throw err;
+  }
+  return row;
+}
+
 module.exports = {
   login,
   findUserById,
   publicUser,
   requireAuth,
   requireRole,
+  requireAdmin,
+  ADMIN_EMAIL,
   signToken,
 };

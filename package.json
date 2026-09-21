@@ -34,6 +34,7 @@
     "motion": "^13.4.0",
     "pg": "^8.23.0",
     "rxjs": "~7.8.0",
+    "thinking-orbs": "^0.3.1",
     "tslib": "^2.3.0"
   },
   "devDependencies": {

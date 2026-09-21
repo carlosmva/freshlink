@@ -39,8 +39,18 @@
       <div class="chart-card">
         <h4>Surplus lane</h4>
         <div class="ai-insight">
-          <div class="ic"><fl-icon name="sparkles" /></div>
-          <p><b>Demand insight</b>{{ data().aiInsight }}</p>
+          <div class="ic">
+            @if (aiReady()) {
+              <fl-icon name="sparkles" />
+            } @else {
+              <fl-thinking-orb state="solving" [size]="20" theme="light" />
+            }
+          </div>
+          @if (aiReady()) {
+            <p><b>Demand insight</b>{{ data().aiInsight }}</p>
+          } @else {
+            <p><b>Solving…</b>Matching surplus to this week’s facility demand.</p>
+          }
         </div>
         <div class="order-list">
           @for (s of data().surplusAlerts; track s.id) {

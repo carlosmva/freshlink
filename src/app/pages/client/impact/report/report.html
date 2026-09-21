@@ -1,0 +1,161 @@
+<div class="main-head no-print">
+  <div>
+    <h3>Q3 impact report</h3>
+    <div class="sub">Auto-compiled for funders and grant reporting</div>
+  </div>
+  <div class="head-actions">
+    <a class="btn-sm outline" routerLink="/client/impact"><fl-icon name="arrow-left" /> Back</a>
+    <button class="btn-sm solid" type="button" [disabled]="thinking() || !report()" (click)="print()">
+      <fl-icon name="printer" /> Print
+    </button>
+  </div>
+</div>
+
+<div class="content report-content">
+  @if (error()) {
+    <div class="error">{{ error() }}</div>
+  } @else if (thinking()) {
+    <div class="solve-pane">
+      <fl-thinking-orb state="solving" [size]="64" theme="light" />
+      <p>Compiling this quarter’s grant packet…</p>
+      <span>Order history, savings, and sourcing — print-ready for funders</span>
+    </div>
+  } @else if (report(); as r) {
+    <article class="packet" aria-label="Q3 2026 impact report">
+      <header class="packet-cover">
+        <div class="brand">
+          <img src="leaf-mark.svg" width="36" height="36" alt="" />
+          <div>
+            <b>Fresh<span>Link</span></b>
+            <small>Detroit · Institutional marketplace</small>
+          </div>
+        </div>
+        <span class="pill green">Grant-ready · {{ r.source || 'heuristic' }}</span>
+      </header>
+
+      <p class="eyebrow">Quarterly impact packet</p>
+      <h1>{{ r.headline }}</h1>
+      <dl class="meta">
+        <div>
+          <dt>Facility</dt>
+          <dd>{{ r.facilityName }}</dd>
+        </div>
+        <div>
+          <dt>Period</dt>
+          <dd>{{ r.periodLabel }}</dd>
+        </div>
+        <div>
+          <dt>Prepared</dt>
+          <dd>{{ r.preparedOn }}</dd>
+        </div>
+        <div>
+          <dt>Residents</dt>
+          <dd>{{ r.residentCount }}</dd>
+        </div>
+      </dl>
+
+      <section class="block">
+        <h2>Executive summary</h2>
+        <p>{{ r.executiveSummary }}</p>
+      </section>
+
+      <section class="metrics" aria-label="Q3 outcomes">
+        <div class="metric">
+          <div class="v">{{ r.metrics.meals | number }}</div>
+          <div class="l">Meals supported</div>
+        </div>
+        <div class="metric">
+          <div class="v">{{ r.metrics.dollarsSaved | currency:'USD':'symbol':'1.0-0' }}</div>
+          <div class="l">Saved vs baseline</div>
+        </div>
+        <div class="metric">
+          <div class="v">{{ r.metrics.localSpendPct }}%</div>
+          <div class="l">Local / Michigan-grown</div>
+        </div>
+        <div class="metric">
+          <div class="v">{{ r.metrics.surplusLb | number }} lb</div>
+          <div class="l">Surplus food rescued</div>
+        </div>
+      </section>
+
+      @if (r.highlights?.length) {
+        <section class="block">
+          <h2>What funders can cite</h2>
+          <ol class="highlights">
+            @for (item of r.highlights; track item) {
+              <li>{{ item }}</li>
+            }
+          </ol>
+        </section>
+      }
+
+      <div class="split">
+        <section class="block">
+          <h2>CHIP alignment</h2>
+          @for (goal of r.chipGoals; track goal.title) {
+            <h3>{{ goal.title }}</h3>
+            <p>{{ goal.body }}</p>
+          }
+        </section>
+        <section class="block reliability">
+          <h2>Delivery reliability</h2>
+          <p class="reli-lead">
+            <b>{{ r.reliability.onTimePct | number:'1.0-0' }}%</b> on time
+          </p>
+          <p>
+            {{ r.reliability.onTime }} of {{ r.reliability.total }} deliveries arrived in window.
+            Order fill rate {{ r.reliability.fillRatePct }}%. Shared EV routes with nearby facilities.
+          </p>
+          @if (r.dietTags?.length) {
+            <p class="diets">Diet templates: {{ r.dietTags.join(', ') }}</p>
+          }
+        </section>
+      </div>
+
+      @if (r.monthly?.length) {
+        <section class="block">
+          <h2>Monthly savings vs baseline</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th>Purchasing savings</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (row of r.monthly; track row.month || row.m) {
+                <tr>
+                  <td>{{ row.month || row.m }} 2026</td>
+                  <td>{{ (row.dollarsSaved ?? row.amount) | currency:'USD':'symbol':'1.0-0' }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </section>
+      }
+
+      <section class="block">
+        <h2>How this packet was compiled</h2>
+        <p>{{ r.narrative }}</p>
+      </section>
+
+      @if (r.recommendations?.length) {
+        <section class="block">
+          <h2>Recommended next quarter</h2>
+          <ul>
+            @for (item of r.recommendations; track item) {
+              <li>{{ item }}</li>
+            }
+          </ul>
+        </section>
+      }
+
+      <p class="close">{{ r.funderClose }}</p>
+
+      <footer class="packet-foot">
+        <span>FreshLink Detroit · Q3 2026</span>
+        <span>Generated {{ r.preparedOn }} · Do not retype figures from screenshots</span>
+      </footer>
+    </article>
+  }
+</div>

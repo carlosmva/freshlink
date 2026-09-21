@@ -22,9 +22,11 @@ if (fs.existsSync(envPath)) {
     connectionString: url,
     ssl: url.includes('neon.tech') ? { rejectUnauthorized: false } : undefined,
   });
+  const { resetDemo } = require('../db/reset-demo.cjs');
   await client.connect();
-  await client.query(fs.readFileSync(path.join(root, 'db/seed.sql'), 'utf8'));
+  const summary = await resetDemo(client);
   const users = await client.query('SELECT email, role FROM users ORDER BY role');
+  console.log('Reset demo:', summary);
   console.log('Seeded users:', users.rows.map((r) => `${r.role}:${r.email}`).join(', '));
   await client.end();
 })().catch((err) => {

@@ -11,6 +11,9 @@ export const FACILITY_COORDS: Record<string, Omit<MapPoint, 'id'>> = {
   '11111111-1111-1111-1111-111111111111': { lat: 42.3519, lng: -83.0628, short: 'Hope Harbor' },
   '11111111-1111-1111-1111-111111111112': { lat: 42.3372, lng: -83.0194, short: 'Riverfront' },
   '11111111-1111-1111-1111-111111111113': { lat: 42.3778, lng: -82.9465, short: 'Eastside Group' },
+  '11111111-1111-1111-1111-111111111114': { lat: 42.3304, lng: -83.0668, short: 'Corktown' },
+  '11111111-1111-1111-1111-111111111115': { lat: 42.3482, lng: -83.0576, short: 'Midtown Recovery' },
+  '11111111-1111-1111-1111-111111111116': { lat: 42.3251, lng: -83.0918, short: 'Southwest Senior' },
 };
 
 export const ROUTE_PALETTE = [

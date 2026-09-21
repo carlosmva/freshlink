@@ -25,7 +25,12 @@
 
   <div class="content basket-body">
     <div class="basket-scroll">
-      @if (pendingCount() > 0) {
+      @if (!aiReady()) {
+        <div class="sub-alert is-solving">
+          <fl-thinking-orb state="solving" [size]="20" theme="light" />
+          <p>Solving substitutions…</p>
+        </div>
+      } @else if (pendingCount() > 0) {
         <div class="sub-alert">
           <span class="n">{{ pendingCount() }}</span>
           <p>AI proposed substitutions to stay under budget. Approve or keep originals.</p>

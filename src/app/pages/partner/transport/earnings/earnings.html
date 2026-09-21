@@ -56,8 +56,18 @@
       <div class="chart-card">
         <h4>Why consolidation pays</h4>
         <div class="ai-insight">
-          <div class="ic"><fl-icon name="sparkles" /></div>
-          <p><b>Consolidation bonus</b>{{ data().consolidation.insight }}</p>
+          <div class="ic">
+            @if (aiReady()) {
+              <fl-icon name="sparkles" />
+            } @else {
+              <fl-thinking-orb state="solving" [size]="20" theme="light" />
+            }
+          </div>
+          @if (aiReady()) {
+            <p><b>Consolidation bonus</b>{{ data().consolidation.insight }}</p>
+          } @else {
+            <p><b>Solving…</b>Scoring route density and utilization.</p>
+          }
         </div>
         <div class="detail-rows">
           <div class="drow"><span>Separate-delivery baseline</span><b>{{ data().consolidation.baselineTrips }} trips · {{ data().consolidation.baselineMiles }} mi</b></div>

@@ -28,6 +28,12 @@ const COPY: Record<
     body: 'Accept consolidated routes, confirm proof of delivery, and track fleet earnings.',
     email: 'marcus@greenroute.org',
   },
+  admin: {
+    eyebrow: 'Admin',
+    title: 'Sign in to reset the demo',
+    body: 'Showcase control for FreshLink. Restores the three stakeholder portals to the demo dataset.',
+    email: 'carlos@northeasternsoftware.com',
+  },
 };
 
 @Component({
@@ -64,7 +70,9 @@ export class LoginPage implements OnInit {
           ? '/client/home'
           : this.persona === 'food'
             ? '/partner/food/dashboard'
-            : '/partner/transport/routes';
+            : this.persona === 'admin'
+              ? '/admin'
+              : '/partner/transport/routes';
       void this.router.navigateByUrl(dest);
     }
   }

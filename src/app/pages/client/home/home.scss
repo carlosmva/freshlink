@@ -60,6 +60,21 @@
   text-align: center;
 }
 
+.ai-hero.is-thinking {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 16px;
+  min-height: 180px;
+}
+
+.ai-hero .thinking-copy {
+  margin: 0;
+  font-size: 15px;
+  color: #c9d7e3;
+}
+
 .kpi-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

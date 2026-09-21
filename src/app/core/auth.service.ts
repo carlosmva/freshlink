@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, tap, catchError, of, map } from 'rxjs';
 
-export type Persona = 'facility' | 'food' | 'transport';
+export type Persona = 'facility' | 'food' | 'transport' | 'admin';
 
 export interface AuthUser {
   id: string;
@@ -98,6 +98,7 @@ export class AuthService {
   loginPath(persona: Persona): string {
     if (persona === 'facility') return '/client/login';
     if (persona === 'food') return '/partner/food/login';
+    if (persona === 'admin') return '/admin/login';
     return '/partner/transport/login';
   }
 

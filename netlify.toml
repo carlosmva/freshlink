@@ -26,3 +26,4 @@
 
 [functions]
   node_bundler = "esbuild"
+  included_files = ["db/seed.sql", "db/reset-demo.cjs"]

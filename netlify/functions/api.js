@@ -1,5 +1,6 @@
-const { json, parseBody, query } = require('./_shared/db');
-const { login, findUserById, publicUser, requireAuth, requireRole } = require('./_shared/auth');
+const { json, parseBody, query, getPool } = require('./_shared/db');
+const { login, findUserById, publicUser, requireAuth, requireRole, requireAdmin } = require('./_shared/auth');
+const { resetDemo } = require('../../db/reset-demo.cjs');
 const { completePrompt, extractJsonObject } = require('./_shared/ai');
 const { publicConfig, verifyTurnstile, clientIp } = require('./_shared/turnstile');
 
@@ -20,6 +21,7 @@ function homePath(role) {
   if (role === 'facility') return '/client/home';
   if (role === 'food') return '/partner/food/dashboard';
   if (role === 'transport') return '/partner/transport/routes';
+  if (role === 'admin') return '/admin';
   return '/';
 }
 
@@ -145,6 +147,142 @@ async function getImpact(facilityId) {
     [facilityId],
   );
   return res.rows[0] || null;
+}
+
+const Q3_MONTHS = new Set(['Jul', 'Aug', 'Sep']);
+
+function moneyFromIndex(indexValue, peakIndex, peakAmount) {
+  const peak = Number(peakIndex) || 1;
+  return Math.round((Number(indexValue) / peak) * (Number(peakAmount) || 0));
+}
+
+function rollupQuarter(impact) {
+  const bars = Array.isArray(impact?.monthly_savings) ? impact.monthly_savings : [];
+  const quarterBars = bars.filter((row) => Q3_MONTHS.has(row.m));
+  const series = quarterBars.length ? quarterBars : bars.slice(-3);
+  const peak = series[series.length - 1];
+  const peakIndex = Number(peak?.v) || 100;
+  const peakSaved = Number(impact?.dollars_saved) || 0;
+  const peakMeals = Number(impact?.meals_supported) || 0;
+  const peakSurplus = Number(impact?.surplus_lb) || 0;
+  const indexSum = series.reduce((sum, row) => sum + Number(row.v || 0), 0);
+  const scale = indexSum / peakIndex;
+  return {
+    periodLabel: 'Q3 2026 · July–September',
+    meals: Math.round(peakMeals * scale),
+    dollarsSaved: Math.round(peakSaved * scale),
+    surplusLb: Math.round(peakSurplus * scale),
+    localSpendPct: Number(impact?.local_spend_pct) || 0,
+    onTimePct: Number(impact?.on_time_pct) || 0,
+    onTime: Number(impact?.deliveries_on_time) || 0,
+    totalDeliveries: Number(impact?.deliveries_total) || 0,
+    fillRatePct: Number(impact?.fill_rate_pct) || 0,
+    monthly: series.map((row) => ({
+      month: row.m,
+      dollarsSaved: moneyFromIndex(row.v, peakIndex, peakSaved),
+    })),
+  };
+}
+
+function fallbackImpactReport(facility, impact, quarter) {
+  const name = facility?.name || 'This facility';
+  const residents = facility?.resident_count || 0;
+  const diets = (facility?.diet_tags || []).join(', ') || 'dietitian-approved templates';
+  const meals = quarter.meals.toLocaleString('en-US');
+  const saved = quarter.dollarsSaved.toLocaleString('en-US');
+  const surplus = quarter.surplusLb.toLocaleString('en-US');
+  return {
+    headline: `${name} kept ${meals} meals on tables in Q3 while cutting purchasing cost.`,
+    executiveSummary: `${name} used FreshLink to plan weekly institutional meals for ${residents} residents on ${diets}. Staff approved every substitution. Over July–September the site supported ${meals} meals, saved $${saved} versus baseline purchasing, directed ${quarter.localSpendPct}% of food spend to Michigan-grown and local partners, and rescued ${surplus} lb of surplus that would otherwise have been written off.`,
+    highlights: [
+      `${meals} meals supported across Q3 with diet-appropriate baskets, not pantry leftovers.`,
+      `$${saved} below the prior purchasing baseline — budget that stays in the kitchen.`,
+      `${surplus} lb surplus recovered into plated meals; ${quarter.localSpendPct}% local / Michigan-grown spend.`,
+    ],
+    chipGoals: [
+      {
+        title: 'CHIP Goal 1 — closer, cheaper healthy food',
+        body: `Shared EV routes and surplus lanes brought healthy bulk food to ${name} on a weekly habit, with ${quarter.onTimePct}% on-time delivery and a ${quarter.fillRatePct}% order fill rate.`,
+      },
+      {
+        title: 'CHIP Goal 2 — nutrition staff can show',
+        body: `In-app cues kept baskets aligned to ${diets}. Every swap stayed under staff control, so funders can see diet compliance without extra reporting labor.`,
+      },
+    ],
+    narrative: `Q3 compiled from weekly orders, approved substitutions, delivery proofs, and sourcing tags already in FreshLink. No extra staff spreadsheet. Figures are site-level and ready to drop into a grant, CHIP, or board packet.`,
+    recommendations: [
+      'Hold the Tuesday (or biweekly) order habit so Q4 meals and local spend stay comparable to this baseline.',
+      'Keep surplus and Michigan-grown SKUs first in the basket so rescued pounds and local share continue to rise.',
+    ],
+    funderClose: `${name} can attach this packet to Q3 grant and CHIP reporting as evidence of meals supported, dollars saved, local spend, surplus recovered, and reliable last-mile delivery.`,
+  };
+}
+
+async function compileImpactReport(facilityId) {
+  const [impact, week] = await Promise.all([getImpact(facilityId), getFacilityWeek(facilityId)]);
+  const facility = week?.facility || null;
+  const quarter = rollupQuarter(impact);
+  const copy = fallbackImpactReport(facility, impact, quarter);
+  const preparedOn = new Date().toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  });
+  const envelope = {
+    source: 'heuristic',
+    periodLabel: quarter.periodLabel,
+    facilityName: facility?.name || 'Facility',
+    residentCount: facility?.resident_count || 0,
+    dietTags: facility?.diet_tags || [],
+    preparedOn,
+    metrics: {
+      meals: quarter.meals,
+      dollarsSaved: quarter.dollarsSaved,
+      localSpendPct: quarter.localSpendPct,
+      surplusLb: quarter.surplusLb,
+    },
+    reliability: {
+      onTimePct: quarter.onTimePct,
+      onTime: quarter.onTime,
+      total: quarter.totalDeliveries,
+      fillRatePct: quarter.fillRatePct,
+    },
+    monthly: quarter.monthly,
+    ...copy,
+  };
+
+  const prompt = `Write a Q3 2026 grant-ready impact report for this Detroit institutional kitchen. Return JSON only with keys: headline (string), executiveSummary (string, 2-4 sentences), highlights (string array, exactly 3), chipGoals (array of {title, body}, exactly 2 — CHIP Goal 1 closer/cheaper healthy food and CHIP Goal 2 in-app nutrition cues), narrative (string), recommendations (string array, exactly 2), funderClose (string, 1-2 sentences). Rules: use only the provided numbers; monthly[].dollarsSaved is USD purchasing savings vs baseline, never meal counts; surplusLb was plated at this facility, not sent to other partners; do not invent clinical outcomes. Tone: funder and grant officer, concrete, no hype. Context: ${JSON.stringify(
+    {
+      facility: facility
+        ? { name: facility.name, residents: facility.resident_count, diets: facility.diet_tags }
+        : null,
+      quarter,
+    },
+  )}`;
+
+  try {
+    const result = await completePrompt(prompt, {
+      maxTokens: 1400,
+      system:
+        "You are FreshLink Detroit's grant-reporting assistant. Reply with a JSON object only. Keep every number consistent with the provided metrics.",
+    });
+    if (!result) return envelope;
+    const parsed = extractJsonObject(result.text);
+    return {
+      ...envelope,
+      source: result.source,
+      headline: parsed?.headline || envelope.headline,
+      executiveSummary: parsed?.executiveSummary || envelope.executiveSummary,
+      highlights: parsed?.highlights || envelope.highlights,
+      chipGoals: parsed?.chipGoals || envelope.chipGoals,
+      narrative: parsed?.narrative || envelope.narrative,
+      recommendations: parsed?.recommendations || envelope.recommendations,
+      funderClose: parsed?.funderClose || envelope.funderClose,
+    };
+  } catch (err) {
+    console.warn('[ai] impact report failed', err.message);
+    return envelope;
+  }
 }
 
 async function getFoodInventory(partnerId) {
@@ -599,6 +737,27 @@ exports.handler = async (event) => {
     if (path === '/ai/recommend-basket' && method === 'POST') {
       requireRole(auth, 'facility');
       return json(200, await recommendBasket(auth.facilityId));
+    }
+
+    if (path === '/ai/impact-report' && method === 'POST') {
+      requireRole(auth, 'facility');
+      return json(200, await compileImpactReport(auth.facilityId));
+    }
+
+    if (path === '/admin/reset' && method === 'POST') {
+      await requireAdmin(auth);
+      const client = await getPool().connect();
+      try {
+        await client.query('BEGIN');
+        const summary = await resetDemo(client);
+        await client.query('COMMIT');
+        return json(200, { ok: true, summary });
+      } catch (err) {
+        await client.query('ROLLBACK');
+        throw err;
+      } finally {
+        client.release();
+      }
     }
 
     return json(404, { error: 'Not found', path });

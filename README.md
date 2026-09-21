@@ -22,6 +22,7 @@ Password for all three: `Pilot2026!`
 | Facility | `dana@hopeharbor.org` |
 | Food | `aisha@coresupply.org` |
 | Transport | `marcus@greenroute.org` |
+| Admin (`/admin`) | `carlos@northeasternsoftware.com` |
 
 Re-seed with `npm run db:seed` if you wipe the database.
 
@@ -33,7 +34,7 @@ Never commit `.env`. Copy `.env.example`.
 |----------|--------|---------|
 | `DATABASE_URL` | local + Netlify | Neon pooled connection |
 | `JWT_SECRET` | local + Netlify | Auth tokens |
-| `API_TOKEN` + `CLOUDFLARE_URL` | **local only** | Cloudflare Workers AI for recommend-basket while developing |
+| `API_TOKEN` + `CLOUDFLARE_URL` | **local only** | Cloudflare Workers AI for recommend-basket and impact-report while developing |
 | `CLAUDE_ANTHROPIC_API_KEY` | **Netlify production** | Claude on the live site (optional `ANTHROPIC_MODEL_ID`, default `claude-haiku-4-5-20251001`) |
 | `TURNSTILE_SITE_KEY` + `TURNSTILE_SECRET_KEY` | **Netlify production** | Live Cloudflare Turnstile on login. Dummy always-pass keys are used only when `NETLIFY_DEV=true` (`netlify dev`). |
 

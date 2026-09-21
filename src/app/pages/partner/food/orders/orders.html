@@ -28,8 +28,18 @@
           }
         </div>
         <div class="ai-insight" style="margin-top:12px">
-          <div class="ic"><fl-icon name="sparkles" /></div>
-          <p><b>Demand insight</b>3 facilities within 5 miles ordered dairy this week. Offer a volume price on whole milk to win all three carts.</p>
+          <div class="ic">
+            @if (aiReady()) {
+              <fl-icon name="sparkles" />
+            } @else {
+              <fl-thinking-orb state="solving" [size]="20" theme="light" />
+            }
+          </div>
+          @if (aiReady()) {
+            <p><b>Demand insight</b>3 facilities within 5 miles ordered dairy this week. Offer a volume price on whole milk to win all three carts.</p>
+          } @else {
+            <p><b>Solving…</b>Looking for nearby volume-price opportunities.</p>
+          }
         </div>
       </div>
 

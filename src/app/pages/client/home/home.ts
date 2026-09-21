@@ -12,10 +12,11 @@ import { RouterLink } from '@angular/router';
 import { ApiService } from '../../../core/api.service';
 import { playDashboardReveal } from '../../../core/motion';
 import { FlIcon } from '../../../shared/icon/icon';
+import { FlThinkingOrb } from '../../../shared/thinking-orb/thinking-orb';
 
 @Component({
   selector: 'app-client-home',
-  imports: [RouterLink, CurrencyPipe, DatePipe, FlIcon],
+  imports: [RouterLink, CurrencyPipe, DatePipe, FlIcon, FlThinkingOrb],
   templateUrl: './home.html',
   styleUrls: ['../facility-chrome.scss', './home.scss'],
 })
@@ -25,6 +26,7 @@ export class ClientHome implements OnInit {
   private readonly injector = inject(Injector);
   readonly data = signal<any | null>(null);
   readonly ai = signal<any | null>(null);
+  readonly aiThinking = signal(true);
   readonly error = signal('');
   private revealed = false;
 
@@ -37,8 +39,14 @@ export class ClientHome implements OnInit {
       error: (e) => this.error.set(e.message || 'Failed to load'),
     });
     this.api.recommendBasket().subscribe({
-      next: (d) => this.ai.set(d),
-      error: () => this.ai.set(null),
+      next: (d) => {
+        this.ai.set(d);
+        this.aiThinking.set(false);
+      },
+      error: () => {
+        this.ai.set(null);
+        this.aiThinking.set(false);
+      },
     });
   }
 

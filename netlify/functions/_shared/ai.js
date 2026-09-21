@@ -30,7 +30,7 @@ function extractText(data) {
   );
 }
 
-async function callClaude(prompt) {
+async function callClaude(prompt, options = {}) {
   const apiKey = process.env.CLAUDE_ANTHROPIC_API_KEY;
   if (!apiKey) return null;
   const preferred = process.env.ANTHROPIC_MODEL_ID || DEFAULT_CLAUDE_MODEL;
@@ -47,9 +47,10 @@ async function callClaude(prompt) {
       },
       body: JSON.stringify({
         model,
-        max_tokens: 400,
+        max_tokens: options.maxTokens || 400,
         system:
-          'You are FreshLink Detroit\'s ordering assistant. Reply with a JSON object only.',
+          options.system ||
+          "You are FreshLink Detroit's ordering assistant. Reply with a JSON object only.",
         messages: [{ role: 'user', content: prompt }],
       }),
     });
@@ -91,9 +92,9 @@ async function callCloudflare(prompt) {
  * Local/dev: CLOUDFLARE_URL + API_TOKEN → Cloudflare Workers AI.
  * Cursor is not used as the app AI backend.
  */
-async function completePrompt(prompt) {
+async function completePrompt(prompt, options) {
   if (process.env.CLAUDE_ANTHROPIC_API_KEY) {
-    const claude = await callClaude(prompt);
+    const claude = await callClaude(prompt, options);
     if (claude) return claude;
   }
   return callCloudflare(prompt);

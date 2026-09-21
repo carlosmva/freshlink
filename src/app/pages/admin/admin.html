@@ -1,0 +1,25 @@
+<fl-site-nav>
+  <button type="button" class="leave" (click)="logout()">Log out</button>
+</fl-site-nav>
+
+<main class="page">
+  <section class="card">
+    <p class="eyebrow">Admin</p>
+    <h1>Demo database</h1>
+    <p class="lede">
+      Restores facility, food, and transport showcase data so the next walkthrough starts clean.
+    </p>
+
+    @if (error()) {
+      <p class="error">{{ error() }}</p>
+    }
+
+    @if (summary(); as counts) {
+      <p class="ok">Reset complete. {{ counts['orders'] }} orders · {{ counts['routes'] }} routes · {{ counts['users'] }} logins.</p>
+    }
+
+    <button type="button" class="reset" [disabled]="busy()" (click)="reset()">
+      {{ busy() ? 'Resetting…' : 'Reset database' }}
+    </button>
+  </section>
+</main>
