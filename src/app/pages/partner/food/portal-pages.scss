@@ -223,6 +223,20 @@ tbody td {
   background: var(--green-tint);
 }
 
+/* Keep Route + Window on one line at 200% browser zoom beside the map. */
+.routes-board thead th:nth-child(1),
+.routes-board thead th:nth-child(2),
+.routes-board tbody td[data-label='Route'],
+.routes-board tbody td[data-label='Window'] {
+  font-size: 10.5px;
+  white-space: nowrap;
+  padding-inline: 10px;
+}
+
+.routes-board tbody td[data-label='Route'] b {
+  font-size: inherit;
+}
+
 .map-wrap {
   background: var(--surface);
   border: 1px solid var(--line);
