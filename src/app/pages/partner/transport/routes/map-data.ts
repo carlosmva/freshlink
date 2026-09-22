@@ -10,10 +10,10 @@ export const PICKUP: MapPoint = {
 export const FACILITY_COORDS: Record<string, Omit<MapPoint, 'id'>> = {
   '11111111-1111-1111-1111-111111111111': { lat: 42.3519, lng: -83.0628, short: 'Hope Harbor' },
   '11111111-1111-1111-1111-111111111112': { lat: 42.3372, lng: -83.0194, short: 'Riverfront' },
-  '11111111-1111-1111-1111-111111111113': { lat: 42.3778, lng: -82.9465, short: 'Eastside Group' },
+  '11111111-1111-1111-1111-111111111113': { lat: 42.3778, lng: -82.9465, short: 'Eastside' },
   '11111111-1111-1111-1111-111111111114': { lat: 42.3304, lng: -83.0668, short: 'Corktown' },
-  '11111111-1111-1111-1111-111111111115': { lat: 42.3482, lng: -83.0576, short: 'Midtown Recovery' },
-  '11111111-1111-1111-1111-111111111116': { lat: 42.3251, lng: -83.0918, short: 'Southwest Senior' },
+  '11111111-1111-1111-1111-111111111115': { lat: 42.3482, lng: -83.0576, short: 'Midtown' },
+  '11111111-1111-1111-1111-111111111116': { lat: 42.3251, lng: -83.0918, short: 'Southwest' },
 };
 
 export const ROUTE_PALETTE = [
@@ -37,7 +37,7 @@ export function stopPoint(stop: any, index: number): MapPoint {
   if (known) return { id: stop.facility_id, ...known };
   return {
     id: String(stop.facility_id || stop.id || index),
-    short: String(stop.label || 'Stop').replace(/\s+(Shelter|Home|House)$/i, ''),
+    short: String(stop.label || 'Stop').replace(/\s+(Shelter|Home|House|Food Bank|Residences|Foster)$/i, ''),
     lat: 42.34 + (index % 5) * 0.012,
     lng: -83.05 - (index % 4) * 0.018,
   };

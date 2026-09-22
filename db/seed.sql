@@ -1,18 +1,18 @@
--- Pilot scenario seed (Hope Harbor / Core Supply / GreenRoute)
+-- Pilot scenario seed (Hope Harbor Food Bank / Core Supply / GreenRoute)
 
 INSERT INTO facilities (id, name, slug, resident_count, weekly_budget, diet_tags, contact_initials)
 VALUES
-  ('11111111-1111-1111-1111-111111111111', 'Hope Harbor Shelter', 'hope-harbor', 75, 2400.00,
+  ('11111111-1111-1111-1111-111111111111', 'Hope Harbor Food Bank', 'hope-harbor', 75, 2400.00,
    ARRAY['Low-sodium','Diabetes-conscious','Easy-chew','Culturally responsive'], 'DM'),
-  ('11111111-1111-1111-1111-111111111112', 'Riverfront Senior Home', 'riverfront-senior', 48, 1800.00,
+  ('11111111-1111-1111-1111-111111111112', 'Riverfront Food Bank', 'riverfront-foodbank', 48, 1800.00,
    ARRAY['Low-sodium','Easy-chew'], 'RS'),
-  ('11111111-1111-1111-1111-111111111113', 'Eastside Group Home', 'eastside-group', 22, 900.00,
+  ('11111111-1111-1111-1111-111111111113', 'Eastside Community Food Bank', 'eastside-foodbank', 22, 900.00,
    ARRAY['Diabetes-conscious'], 'EG'),
-  ('11111111-1111-1111-1111-111111111114', 'Corktown Adult Foster', 'corktown-foster', 18, 720.00,
+  ('11111111-1111-1111-1111-111111111114', 'Corktown Food Bank', 'corktown-foodbank', 18, 720.00,
    ARRAY['Diabetes-conscious','Culturally responsive'], 'CA'),
-  ('11111111-1111-1111-1111-111111111115', 'Midtown Recovery House', 'midtown-recovery', 32, 1280.00,
+  ('11111111-1111-1111-1111-111111111115', 'Midtown Food Bank', 'midtown-foodbank', 32, 1280.00,
    ARRAY['Low-sodium','Culturally responsive'], 'MR'),
-  ('11111111-1111-1111-1111-111111111116', 'Southwest Senior Residences', 'southwest-senior', 60, 2100.00,
+  ('11111111-1111-1111-1111-111111111116', 'Southwest Detroit Food Bank', 'southwest-foodbank', 60, 2100.00,
    ARRAY['Low-sodium','Easy-chew','Diabetes-conscious'], 'SS');
 
 INSERT INTO partners (id, name, slug, partner_type, contact_name, contact_role) VALUES
@@ -129,21 +129,21 @@ INSERT INTO routes (id, partner_id, code, delivery_date, window_label, status, c
   ('66666666-6666-6666-6666-666666666607', '22222222-2222-2222-2222-222222222224', 'D-16', '2026-09-18', '2–4 PM', 'completed', 90, 104, true, 3.4, 236.00);
 
 INSERT INTO route_stops (route_id, facility_id, stop_order, label, detail, status) VALUES
-  ('66666666-6666-6666-6666-666666666601', '11111111-1111-1111-1111-111111111111', 1, 'Hope Harbor Shelter', 'Bulk cold + dry · dock B', 'delivered'),
-  ('66666666-6666-6666-6666-666666666601', '11111111-1111-1111-1111-111111111112', 2, 'Riverfront Senior Home', 'Cold chain required', 'en_route'),
-  ('66666666-6666-6666-6666-666666666601', '11111111-1111-1111-1111-111111111113', 3, 'Eastside Group Home', 'Small drop · 8 cases', 'pending'),
-  ('66666666-6666-6666-6666-666666666602', '11111111-1111-1111-1111-111111111112', 1, 'Riverfront Senior Home', 'Produce-heavy', 'pending'),
-  ('66666666-6666-6666-6666-666666666602', '11111111-1111-1111-1111-111111111113', 2, 'Eastside Group Home', 'Surplus apples', 'pending'),
-  ('66666666-6666-6666-6666-666666666603', '11111111-1111-1111-1111-111111111116', 1, 'Southwest Senior Residences', 'Easy-chew protein + produce', 'pending'),
-  ('66666666-6666-6666-6666-666666666603', '11111111-1111-1111-1111-111111111114', 2, 'Corktown Adult Foster', 'Small dry drop', 'pending'),
-  ('66666666-6666-6666-6666-666666666604', '11111111-1111-1111-1111-111111111115', 1, 'Midtown Recovery House', 'Low-sodium pantry', 'delivered'),
-  ('66666666-6666-6666-6666-666666666604', '11111111-1111-1111-1111-111111111112', 2, 'Riverfront Senior Home', 'Dairy + bread', 'en_route'),
-  ('66666666-6666-6666-6666-666666666605', '11111111-1111-1111-1111-111111111116', 1, 'Southwest Senior Residences', 'Bulk cold', 'pending'),
-  ('66666666-6666-6666-6666-666666666605', '11111111-1111-1111-1111-111111111111', 2, 'Hope Harbor Shelter', 'Overflow dry', 'pending'),
-  ('66666666-6666-6666-6666-666666666606', '11111111-1111-1111-1111-111111111114', 1, 'Corktown Adult Foster', 'Surplus peaches', 'pending'),
-  ('66666666-6666-6666-6666-666666666606', '11111111-1111-1111-1111-111111111115', 2, 'Midtown Recovery House', 'Tortillas + beans', 'pending'),
-  ('66666666-6666-6666-6666-666666666607', '11111111-1111-1111-1111-111111111111', 1, 'Hope Harbor Shelter', 'Completed Tuesday run', 'delivered'),
-  ('66666666-6666-6666-6666-666666666607', '11111111-1111-1111-1111-111111111113', 2, 'Eastside Group Home', 'Completed Tuesday run', 'delivered');
+  ('66666666-6666-6666-6666-666666666601', '11111111-1111-1111-1111-111111111111', 1, 'Hope Harbor Food Bank', 'Bulk cold + dry · dock B', 'delivered'),
+  ('66666666-6666-6666-6666-666666666601', '11111111-1111-1111-1111-111111111112', 2, 'Riverfront Food Bank', 'Cold chain required', 'en_route'),
+  ('66666666-6666-6666-6666-666666666601', '11111111-1111-1111-1111-111111111113', 3, 'Eastside Community Food Bank', 'Small drop · 8 cases', 'pending'),
+  ('66666666-6666-6666-6666-666666666602', '11111111-1111-1111-1111-111111111112', 1, 'Riverfront Food Bank', 'Produce-heavy', 'pending'),
+  ('66666666-6666-6666-6666-666666666602', '11111111-1111-1111-1111-111111111113', 2, 'Eastside Community Food Bank', 'Surplus apples', 'pending'),
+  ('66666666-6666-6666-6666-666666666603', '11111111-1111-1111-1111-111111111116', 1, 'Southwest Detroit Food Bank', 'Easy-chew protein + produce', 'pending'),
+  ('66666666-6666-6666-6666-666666666603', '11111111-1111-1111-1111-111111111114', 2, 'Corktown Food Bank', 'Small dry drop', 'pending'),
+  ('66666666-6666-6666-6666-666666666604', '11111111-1111-1111-1111-111111111115', 1, 'Midtown Food Bank', 'Low-sodium pantry', 'delivered'),
+  ('66666666-6666-6666-6666-666666666604', '11111111-1111-1111-1111-111111111112', 2, 'Riverfront Food Bank', 'Dairy + bread', 'en_route'),
+  ('66666666-6666-6666-6666-666666666605', '11111111-1111-1111-1111-111111111116', 1, 'Southwest Detroit Food Bank', 'Bulk cold', 'pending'),
+  ('66666666-6666-6666-6666-666666666605', '11111111-1111-1111-1111-111111111111', 2, 'Hope Harbor Food Bank', 'Overflow dry', 'pending'),
+  ('66666666-6666-6666-6666-666666666606', '11111111-1111-1111-1111-111111111114', 1, 'Corktown Food Bank', 'Surplus peaches', 'pending'),
+  ('66666666-6666-6666-6666-666666666606', '11111111-1111-1111-1111-111111111115', 2, 'Midtown Food Bank', 'Tortillas + beans', 'pending'),
+  ('66666666-6666-6666-6666-666666666607', '11111111-1111-1111-1111-111111111111', 1, 'Hope Harbor Food Bank', 'Completed Tuesday run', 'delivered'),
+  ('66666666-6666-6666-6666-666666666607', '11111111-1111-1111-1111-111111111113', 2, 'Eastside Community Food Bank', 'Completed Tuesday run', 'delivered');
 
 INSERT INTO impact_metrics (facility_id, month_label, meals_supported, dollars_saved, local_spend_pct, surplus_lb, on_time_pct, deliveries_on_time, deliveries_total, fill_rate_pct, monthly_savings)
 VALUES
@@ -223,17 +223,17 @@ INSERT INTO drivers (id, partner_id, name, initials, status, vehicle, route, sto
 
 INSERT INTO demand_forecasts (partner_id, payload) VALUES (
   '22222222-2222-2222-2222-222222222221',
-  '{"recurringRevenue":12680,"repeatFacilities":18,"avgOrderValue":512,"surplusRecoveredTons":3.4,"demandByCategory":[{"label":"Produce","pct":88,"volume":"2,240 lb"},{"label":"Dairy","pct":71,"volume":"1,560 gal"},{"label":"Protein","pct":63,"volume":"1,420 lb"},{"label":"Pantry","pct":41,"volume":"890 lb"},{"label":"Bakery","pct":36,"volume":"420 lb"}],"weeklyTrend":[34,42,38,52,58,64,78,86,94,100],"aiInsight":"Six clustered kitchens are buying produce and dairy on the same Tuesday. Pull Michigan sweet potatoes and whole milk forward, and offer a volume price that can win Hope Harbor, Riverfront, and Southwest in one cart.","surplusMedianHours":27}'::jsonb
+  '{"recurringRevenue":12680,"repeatFacilities":18,"avgOrderValue":512,"surplusRecoveredTons":3.4,"demandByCategory":[{"label":"Produce","pct":88,"volume":"2,240 lb"},{"label":"Dairy","pct":71,"volume":"1,560 gal"},{"label":"Protein","pct":63,"volume":"1,420 lb"},{"label":"Pantry","pct":41,"volume":"890 lb"},{"label":"Bakery","pct":36,"volume":"420 lb"}],"weeklyTrend":[34,42,38,52,58,64,78,86,94,100],"aiInsight":"Six clustered food banks are buying produce and dairy on the same Tuesday. Pull Michigan sweet potatoes and whole milk forward, and offer a volume price that can win Hope Harbor, Riverfront, and Southwest in one cart.","surplusMedianHours":27}'::jsonb
 );
 
 INSERT INTO partner_payouts (partner_id, payload) VALUES (
   '22222222-2222-2222-2222-222222222221',
-  '{"weekLabel":"Week of Sep 15–21 · Core Supply Co-op","availableBalance":8920.4,"pendingBalance":2410.75,"paidThisMonth":24680,"nextPayoutDate":"2026-09-25","netTerms":"Net-7 via FreshLink","lines":[{"id":"pay-1","orderRef":"FL-1042","facility":"Hope Harbor Shelter","weekOf":"2026-09-22","amount":742.1,"status":"pending","method":"ACH"},{"id":"pay-2","orderRef":"FL-1044","facility":"Riverfront Senior Home","weekOf":"2026-09-22","amount":418.6,"status":"pending","method":"ACH"},{"id":"pay-3","orderRef":"FL-1046","facility":"Southwest Senior Residences","weekOf":"2026-09-22","amount":564.0,"status":"pending","method":"ACH"},{"id":"pay-4","orderRef":"FL-1038","facility":"Riverfront Senior Home","weekOf":"2026-09-15","amount":486.2,"status":"paid","method":"ACH"},{"id":"pay-5","orderRef":"FL-1035","facility":"Eastside Group Home","weekOf":"2026-09-15","amount":312.8,"status":"paid","method":"ACH"},{"id":"pay-6","orderRef":"FL-1039","facility":"Midtown Recovery House","weekOf":"2026-09-15","amount":388.4,"status":"paid","method":"ACH"},{"id":"pay-7","orderRef":"FL-1031","facility":"Hope Harbor Shelter","weekOf":"2026-09-08","amount":598.0,"status":"paid","method":"ACH"},{"id":"pay-8","orderRef":"SUR-094","facility":"Surplus marketplace · 6 buyers","weekOf":"2026-09-18","amount":286.75,"status":"pending","method":"ACH"}]}'::jsonb
+  '{"weekLabel":"Week of Sep 15–21 · Core Supply Co-op","availableBalance":8920.4,"pendingBalance":2410.75,"paidThisMonth":24680,"nextPayoutDate":"2026-09-25","netTerms":"Net-7 via FreshLink","lines":[{"id":"pay-1","orderRef":"FL-1042","facility":"Hope Harbor Food Bank","weekOf":"2026-09-22","amount":742.1,"status":"pending","method":"ACH"},{"id":"pay-2","orderRef":"FL-1044","facility":"Riverfront Food Bank","weekOf":"2026-09-22","amount":418.6,"status":"pending","method":"ACH"},{"id":"pay-3","orderRef":"FL-1046","facility":"Southwest Detroit Food Bank","weekOf":"2026-09-22","amount":564.0,"status":"pending","method":"ACH"},{"id":"pay-4","orderRef":"FL-1038","facility":"Riverfront Food Bank","weekOf":"2026-09-15","amount":486.2,"status":"paid","method":"ACH"},{"id":"pay-5","orderRef":"FL-1035","facility":"Eastside Community Food Bank","weekOf":"2026-09-15","amount":312.8,"status":"paid","method":"ACH"},{"id":"pay-6","orderRef":"FL-1039","facility":"Midtown Food Bank","weekOf":"2026-09-15","amount":388.4,"status":"paid","method":"ACH"},{"id":"pay-7","orderRef":"FL-1031","facility":"Hope Harbor Food Bank","weekOf":"2026-09-08","amount":598.0,"status":"paid","method":"ACH"},{"id":"pay-8","orderRef":"SUR-094","facility":"Surplus marketplace · 6 buyers","weekOf":"2026-09-18","amount":286.75,"status":"pending","method":"ACH"}]}'::jsonb
 );
 
 INSERT INTO partner_earnings (partner_id, payload) VALUES (
   '22222222-2222-2222-2222-222222222224',
-  '{"weekLabel":"Week of Sep 15–21 · GreenRoute Logistics","weeklyRevenue":2684,"revenuePerStop":8.9,"onTimeRate":96,"co2AvoidedLb":312,"foodDeliveredLb":24800,"utilizationSweetSpot":"75–90%","byRoute":[{"code":"D-11","zone":"Midtown","day":"Tue","stops":2,"miles":11.8,"bonus":24,"fee":198.0},{"code":"D-12","zone":"Eastside","day":"Tue","stops":3,"miles":18.4,"bonus":38,"fee":226.1},{"code":"D-13","zone":"Southwest","day":"Wed","stops":2,"miles":15.2,"bonus":28,"fee":188.0},{"code":"D-14","zone":"Northwest","day":"Thu","stops":2,"miles":16.6,"bonus":22,"fee":180.0},{"code":"D-15","zone":"Corktown","day":"Fri","stops":2,"miles":10.4,"bonus":18,"fee":164.0},{"code":"D-16","zone":"Eastside","day":"Thu","stops":2,"miles":13.1,"bonus":32,"fee":236.0},{"code":"D-18","zone":"Southwest","day":"Tue","stops":2,"miles":14.8,"bonus":26,"fee":210.0}],"consolidation":{"insight":"Merging six single-kitchen drops into D-11, D-12, and D-13 earned +$90 this week while driving 41 fewer miles than separate trips.","baselineTrips":14,"baselineMiles":72.4,"consolidatedRoutes":7,"consolidatedMiles":31.6,"feeSavingsPerFacility":14.8,"fillRatePct":94}}'::jsonb
+  '{"weekLabel":"Week of Sep 15–21 · GreenRoute Logistics","weeklyRevenue":2684,"revenuePerStop":8.9,"onTimeRate":96,"co2AvoidedLb":312,"foodDeliveredLb":24800,"utilizationSweetSpot":"75–90%","byRoute":[{"code":"D-11","zone":"Midtown","day":"Tue","stops":2,"miles":11.8,"bonus":24,"fee":198.0},{"code":"D-12","zone":"Eastside","day":"Tue","stops":3,"miles":18.4,"bonus":38,"fee":226.1},{"code":"D-13","zone":"Southwest","day":"Wed","stops":2,"miles":15.2,"bonus":28,"fee":188.0},{"code":"D-14","zone":"Northwest","day":"Thu","stops":2,"miles":16.6,"bonus":22,"fee":180.0},{"code":"D-15","zone":"Corktown","day":"Fri","stops":2,"miles":10.4,"bonus":18,"fee":164.0},{"code":"D-16","zone":"Eastside","day":"Thu","stops":2,"miles":13.1,"bonus":32,"fee":236.0},{"code":"D-18","zone":"Southwest","day":"Tue","stops":2,"miles":14.8,"bonus":26,"fee":210.0}],"consolidation":{"insight":"Merging six single food-bank drops into D-11, D-12, and D-13 earned +$90 this week while driving 41 fewer miles than separate trips.","baselineTrips":14,"baselineMiles":72.4,"consolidatedRoutes":7,"consolidatedMiles":31.6,"feeSavingsPerFacility":14.8,"fillRatePct":94}}'::jsonb
 );
 
 INSERT INTO orders (id, facility_id, week_of, status, food_total, delivery_fee, delivery_savings, baseline_total, meta)
